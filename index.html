@@ -1639,10 +1639,10 @@
       </nav>
 
       <div class="header-actions">
-        <!-- Live Cloud Sync Indicator -->
-        <div style="display: flex; align-items: center; gap: 0.35rem; background: rgba(255,255,255,0.06); padding: 0.3rem 0.65rem; border-radius: 999px; border: 1px solid var(--border-color);" id="cloud-pill" title="Status Pangkalan Data Firestore">
+        <!-- Live Realtime DB Indicator -->
+        <div style="display: flex; align-items: center; gap: 0.35rem; background: rgba(255,255,255,0.06); padding: 0.3rem 0.65rem; border-radius: 999px; border: 1px solid var(--border-color);" id="cloud-pill" title="Status Realtime Database">
           <div style="width: 7px; height: 7px; border-radius: 50%; background: #10b981;" id="cloud-status-dot"></div>
-          <span style="font-size: 0.72rem; font-weight: 600; color: var(--gold-light);" id="cloud-status-text">Cloud Sync</span>
+          <span style="font-size: 0.72rem; font-weight: 600; color: var(--gold-light);" id="cloud-status-text">RTDB Sync</span>
         </div>
 
         <button class="btn btn-gold btn-sm header-btn-new-quote" onclick="window.startNewQuotation()">
@@ -2336,21 +2336,19 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
 
-  <!-- FIREBASE & CORE SYSTEM SCRIPTS -->
+  <!-- FIREBASE REALTIME DATABASE & CORE SYSTEM SCRIPTS -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { 
-      getFirestore, 
-      collection, 
-      doc, 
-      setDoc, 
-      deleteDoc, 
-      onSnapshot,
-      enableIndexedDbPersistence
-    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+      getDatabase, 
+      ref, 
+      set, 
+      remove, 
+      onValue 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // Firebase Config provided by user
+    // Firebase Config pointing directly to your Realtime Database URL
     const firebaseConfig = {
       apiKey: "AIzaSyDqjO6bK9WXbwnsIyNjdEpX8f-LKvCbDNU",
       authDomain: "eventplannerperak-5bfc0.firebaseapp.com",
@@ -2364,7 +2362,8 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
     const fbApp = initializeApp(firebaseConfig);
     const auth = getAuth(fbApp);
-    const db = getFirestore(fbApp);
+    // Explicitly target your Asia-Southeast1 Realtime Database
+    const db = getDatabase(fbApp, firebaseConfig.databaseURL);
 
     // App State
     const STORAGE_KEY_AUTH = 'EPP_AUTH_STATE_2026';
@@ -2378,9 +2377,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
     let quotations = [];
     let deleteTargetId = null;
-    let isFirestoreActive = false;
-    let unsubscribeQuotes = null;
-    let unsubscribeSettings = null;
 
     let companySettings = {
       name: "EVENTPLANNERPERAK",
@@ -2446,7 +2442,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       if ('serviceWorker' in navigator) {
         try {
           const swCode = `
-            const CACHE_NAME = 'epperak-v3';
+            const CACHE_NAME = 'epperak-v4';
             self.addEventListener('install', e => { self.skipWaiting(); });
             self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
             self.addEventListener('fetch', e => {
@@ -2494,7 +2490,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
     }
 
     // ==============================================================
-    // ADVANCED FIRESTORE REAL-TIME SYNC ENGINE
+    // FIREBASE REALTIME DATABASE (RTDB) SYNC ENGINE
     // ==============================================================
     function updateCloudStatus(status) {
       const dot = document.getElementById('cloud-status-dot');
@@ -2503,7 +2499,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
       if (status === 'connected') {
         dot.style.background = '#10b981';
-        text.textContent = 'Cloud Sync';
+        text.textContent = 'RTDB Sync';
       } else if (status === 'syncing') {
         dot.style.background = '#38bdf8';
         text.textContent = 'Menyimpan...';
@@ -2514,29 +2510,22 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
     }
 
     async function initFirebaseSync() {
-      loadLocalData(); // Instant local render first
+      loadLocalData(); // Fast offline render first
 
+      // Attempt anonymous auth, but do not block Realtime Database listeners
       try {
         await signInAnonymously(auth);
-      } catch (err) {
-        console.warn("Auth note, trying direct sync:", err);
+      } catch (authErr) {
+        console.warn("Auth note (connecting directly to Realtime DB):", authErr.message);
       }
 
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          isFirestoreActive = true;
-          updateCloudStatus('connected');
-          listenToFirestore();
-        } else {
-          isFirestoreActive = false;
-          updateCloudStatus('offline');
-        }
-      });
+      // Listen directly to Realtime Database
+      listenToRealtimeDatabase();
 
-      // Auto-reconnect when device comes online
+      // Listen for network changes
       window.addEventListener('online', () => {
         updateCloudStatus('syncing');
-        listenToFirestore();
+        listenToRealtimeDatabase();
       });
 
       window.addEventListener('offline', () => {
@@ -2544,20 +2533,19 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       });
     }
 
-    function listenToFirestore() {
+    function listenToRealtimeDatabase() {
       try {
-        if (unsubscribeQuotes) unsubscribeQuotes();
-        if (unsubscribeSettings) unsubscribeSettings();
-
-        const quotesCol = collection(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations');
-        
-        unsubscribeQuotes = onSnapshot(quotesCol, (snapshot) => {
+        const quotesDbRef = ref(db, 'quotations');
+        onValue(quotesDbRef, (snapshot) => {
+          const val = snapshot.val();
           const cloudData = [];
-          snapshot.forEach((docSnap) => {
-            cloudData.push({ id: docSnap.id, ...docSnap.data() });
-          });
+          if (val) {
+            Object.keys(val).forEach(key => {
+              cloudData.push({ id: key, ...val[key] });
+            });
+          }
 
-          // Sort by creation date descending
+          // Sort by latest created/updated date descending
           cloudData.sort((a, b) => new Date(b.createdAt || b.updatedAt || 0) - new Date(a.createdAt || a.updatedAt || 0));
           
           quotations = cloudData;
@@ -2566,20 +2554,25 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
           renderProgressBars();
           renderHistoryTable();
           updateCloudStatus('connected');
-        }, (err) => {
-          console.warn("Firestore snapshot warning:", err);
+        }, (error) => {
+          console.error("Firebase Realtime DB read error:", error);
           updateCloudStatus('offline');
         });
 
-        const settingsDoc = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'companySettings', 'main');
-        unsubscribeSettings = onSnapshot(settingsDoc, (docSnap) => {
-          if (docSnap.exists()) {
-            companySettings = { ...companySettings, ...docSnap.data() };
+        // Listen to Company Settings node
+        const settingsDbRef = ref(db, 'companySettings');
+        onValue(settingsDbRef, (snapshot) => {
+          const val = snapshot.val();
+          if (val) {
+            companySettings = { ...companySettings, ...val };
             populateSettingsForm();
           }
-        }, () => {});
+        }, (err) => {
+          console.warn("Company settings listener note:", err);
+        });
+
       } catch (err) {
-        console.warn("Firestore listener setup note:", err);
+        console.error("RTDB setup error:", err);
         updateCloudStatus('offline');
       }
     }
@@ -2874,14 +2867,15 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       showToast(`Quotation ${quoteNum} berjaya disimpan!`, 'success');
       navigateTo('history');
 
-      // 2. Continuous Firestore synchronization
+      // 2. Realtime Database continuous sync
       updateCloudStatus('syncing');
       try {
-        const quoteDocRef = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations', docId);
-        await setDoc(quoteDocRef, quoteData, { merge: true });
+        const quoteItemRef = ref(db, `quotations/${docId}`);
+        await set(quoteItemRef, quoteData);
         updateCloudStatus('connected');
       } catch (err) {
-        console.warn("Firestore sync stored locally, will auto-push:", err);
+        console.error("RTDB save error:", err);
+        showToast('Ralat simpan ke Realtime DB. Semak rules pangkalan data!', 'error');
         updateCloudStatus('offline');
       }
     }
@@ -2941,7 +2935,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         updatedAt: new Date().toISOString()
       };
 
-      // Optimistic update
+      // Optimistic local update
       quotations.unshift(duplicated);
       saveLocalData();
       renderHistoryTable();
@@ -2949,13 +2943,14 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       renderProgressBars();
       showToast(`Quotation diduplikasi sebagai ${newQuoteNum}!`, 'success');
 
-      // Sync to cloud
+      // Realtime Database Push
       updateCloudStatus('syncing');
       try {
-        const quoteDocRef = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations', newDocId);
-        await setDoc(quoteDocRef, duplicated);
+        const quoteItemRef = ref(db, `quotations/${newDocId}`);
+        await set(quoteItemRef, duplicated);
         updateCloudStatus('connected');
       } catch (err) {
+        console.error("Duplicate sync error:", err);
         updateCloudStatus('offline');
       }
     }
@@ -2988,13 +2983,14 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       renderHistoryTable();
       renderProgressBars();
 
-      // Firestore deletion
+      // Realtime Database deletion
       updateCloudStatus('syncing');
       try {
-        const quoteDocRef = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations', targetId);
-        await deleteDoc(quoteDocRef);
+        const quoteItemRef = ref(db, `quotations/${targetId}`);
+        await remove(quoteItemRef);
         updateCloudStatus('connected');
       } catch (err) {
+        console.error("Delete sync error:", err);
         updateCloudStatus('offline');
       }
     }
@@ -3375,11 +3371,11 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
       updateCloudStatus('syncing');
       try {
-        const settingsDoc = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'companySettings', 'main');
-        await setDoc(settingsDoc, companySettings, { merge: true });
+        const settingsDbRef = ref(db, 'companySettings');
+        await set(settingsDbRef, companySettings);
         updateCloudStatus('connected');
       } catch (err) {
-        console.warn("Saved settings locally");
+        console.error("RTDB settings save error:", err);
         updateCloudStatus('offline');
       }
     }
