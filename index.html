@@ -51,27 +51,6 @@
       --bottom-nav-height: 64px;
     }
 
-    [data-theme="light"] {
-      --bg-dark: #f1f4fb;
-      --bg-card: rgba(255, 255, 255, 0.88);
-      --bg-card-solid: #ffffff;
-      --bg-input: #ffffff;
-      --gold-primary: #b89322;
-      --gold-light: #8a6a12;
-      --gold-dark: #6e520a;
-      --gold-gradient: linear-gradient(135deg, #e3c467 0%, #c49d27 50%, #8a6a12 100%);
-      --gold-glow: rgba(184, 147, 34, 0.25);
-      --text-white: #0f172a;
-      --text-heading: #090d16;
-      --text-muted: #64748b;
-      --border-color: rgba(0, 0, 0, 0.09);
-      --border-gold: rgba(184, 147, 34, 0.4);
-      --glass-bg: rgba(255, 255, 255, 0.88);
-      --glass-border: rgba(255, 255, 255, 0.95);
-      --glass-shadow: 0 12px 32px rgba(148, 163, 184, 0.25);
-      --shadow-sm: 0 4px 16px rgba(0,0,0,0.06);
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -89,7 +68,6 @@
       flex-direction: column;
       overflow-x: hidden;
       position: relative;
-      transition: background-color 0.35s ease, color 0.35s ease;
       padding-top: env(safe-area-inset-top, 0px);
       padding-bottom: env(safe-area-inset-bottom, 0px);
       padding-left: env(safe-area-inset-left, 0px);
@@ -106,10 +84,6 @@
       opacity: 0.38;
       transition: opacity 0.5s ease;
       will-change: transform;
-    }
-
-    [data-theme="light"] .ambient-glow-orb {
-      opacity: 0.2;
     }
 
     .orb-purple {
@@ -150,7 +124,7 @@
       color: var(--text-heading);
     }
 
-    /* Fixed Top Header (Safe Area Responsive) */
+    /* Fixed Top Header */
     .top-header {
       position: sticky;
       top: 0;
@@ -210,7 +184,7 @@
       text-transform: uppercase;
     }
 
-    /* Desktop Navigation Links */
+    /* Desktop Navigation Links (Dashboard, Sejarah, Create Quo, Syarikat) */
     .nav-links {
       display: flex;
       gap: 0.35rem;
@@ -218,10 +192,6 @@
       padding: 0.3rem;
       border-radius: var(--radius-md);
       border: 1px solid var(--border-color);
-    }
-
-    [data-theme="light"] .nav-links {
-      background: rgba(0, 0, 0, 0.04);
     }
 
     .nav-btn {
@@ -330,22 +300,6 @@
       padding: 0.38rem 0.7rem;
       font-size: 0.76rem;
       border-radius: var(--radius-sm);
-    }
-
-    .theme-toggle-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border-gold);
-      color: var(--text-white);
-      padding: 0.38rem 0.75rem;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-      backdrop-filter: blur(8px);
     }
 
     /* Container Layout with Safe Area Spacing */
@@ -524,10 +478,6 @@
       border-radius: var(--radius-md);
       padding: 0.9rem 1rem;
       transition: var(--transition);
-    }
-
-    [data-theme="light"] .progress-bar-card {
-      background: rgba(255, 255, 255, 0.9);
     }
 
     .progress-info-row {
@@ -745,11 +695,6 @@
       border-bottom: 1px solid var(--border-color);
     }
 
-    [data-theme="light"] .items-table th, [data-theme="light"] .data-table th {
-      background: #e2e8f0;
-      color: #0f172a;
-    }
-
     .items-table td, .data-table td {
       padding: 0.7rem 0.85rem;
       border-bottom: 1px solid var(--border-color);
@@ -757,7 +702,7 @@
       font-size: 0.84rem;
     }
 
-    /* Mobile Quotation Cards (Modern List view on phone) */
+    /* Mobile Quotation Cards */
     .mobile-cards-list {
       display: none;
       flex-direction: column;
@@ -886,7 +831,7 @@
     .badge-draft { background: rgba(156, 163, 175, 0.15); color: #d1d5db; border: 1px solid rgba(156, 163, 175, 0.4); }
     .badge-expired { background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.4); }
 
-    /* Modals (Safe Area & Mobile Scroll Optimized) */
+    /* Modals */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -963,7 +908,7 @@
       flex-shrink: 0;
     }
 
-    /* Toast Container with Safe Area Offset */
+    /* Toast Container */
     .toast-container {
       position: fixed;
       bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 0.85rem);
@@ -1067,7 +1012,7 @@
     }
 
     /* ==============================================================
-       MOBILE PWA BOTTOM TAB NAVIGATION (Safe-Area & Ultra Fluid)
+       MOBILE BOTTOM TAB BAR (DASHBOARD, SEJARAH, CREATE QUO, SYARIKAT)
        ============================================================== */
     .mobile-bottom-nav {
       display: none;
@@ -1081,7 +1026,7 @@
       -webkit-backdrop-filter: blur(28px);
       border-top: 1px solid var(--border-gold);
       box-shadow: 0 -8px 30px rgba(0,0,0,0.45);
-      padding: 0.35rem 0.65rem max(0.45rem, env(safe-area-inset-bottom, 0px)) 0.65rem;
+      padding: 0.35rem 0.5rem max(0.45rem, env(safe-area-inset-bottom, 0px)) 0.5rem;
       justify-content: space-around;
       align-items: center;
       transition: var(--transition);
@@ -1096,14 +1041,14 @@
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 0.4rem 0.5rem;
-      border-radius: 14px;
+      padding: 0.4rem 0.35rem;
+      border-radius: 12px;
       cursor: pointer;
       position: relative;
       transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
       font-family: inherit;
       flex: 1;
-      max-width: 74px;
+      max-width: 82px;
       touch-action: manipulation;
     }
 
@@ -1114,7 +1059,7 @@
     .mobile-tab-item span {
       font-size: 0.65rem;
       font-weight: 600;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.2px;
       transition: color 0.25s ease, font-weight 0.25s ease;
       white-space: nowrap;
     }
@@ -1141,7 +1086,7 @@
     .mobile-tab-indicator {
       position: absolute;
       bottom: 1px;
-      width: 16px;
+      width: 18px;
       height: 3px;
       background: var(--gold-gradient);
       border-radius: 999px;
@@ -1154,37 +1099,6 @@
     .mobile-tab-item.active .mobile-tab-indicator {
       opacity: 1;
       transform: scaleX(1);
-    }
-
-    /* Floating Center "Add Quote" Button for PWA Mobile */
-    .mobile-tab-item.fab-tab {
-      background: var(--gold-gradient);
-      color: #0d0f13;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      flex: 0 0 48px;
-      margin-top: -16px;
-      box-shadow: 0 6px 18px rgba(212, 175, 55, 0.55), 0 0 10px rgba(212, 175, 55, 0.3);
-      border: 2px solid rgba(255, 255, 255, 0.4);
-      padding: 0;
-    }
-
-    .mobile-tab-item.fab-tab svg {
-      stroke: #0d0f13;
-      stroke-width: 2.6;
-    }
-
-    .mobile-tab-item.fab-tab:active {
-      transform: scale(1.05);
-    }
-
-    .mobile-tab-item.fab-tab .mobile-tab-indicator {
-      display: none;
-    }
-
-    .mobile-tab-item.fab-tab.active {
-      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.4), 0 8px 24px rgba(212, 175, 55, 0.7);
     }
 
     /* PRINTABLE DOCUMENT (A4 PAPER) */
@@ -1547,7 +1461,7 @@
         font-size: 0.6rem;
       }
 
-      .header-btn-new-quote, .theme-label-text {
+      .header-btn-new-quote {
         display: none;
       }
 
@@ -1555,7 +1469,6 @@
         padding: 0.85rem 0.75rem calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 1.25rem) 0.75rem;
       }
 
-      /* 2x2 Clean Mobile KPI Grid */
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.65rem;
@@ -1601,7 +1514,6 @@
         margin-bottom: 1rem;
       }
 
-      /* Switch Data Table to Mobile Cards */
       .data-table-wrapper {
         display: none;
       }
@@ -1610,7 +1522,6 @@
         display: flex;
       }
 
-      /* Mobile Safe Action Modals */
       .modal-overlay {
         padding: 0.5rem;
         align-items: flex-end;
@@ -1707,42 +1618,36 @@
         </div>
       </div>
 
-      <!-- Desktop Nav Links -->
+      <!-- Desktop Nav Links (Dashboard, Sejarah, Create Quo, Syarikat) -->
       <nav class="nav-links">
         <button class="nav-btn active" id="nav-dashboard" onclick="window.navigateTo('dashboard')">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
           <span>Dashboard</span>
         </button>
-        <button class="nav-btn" id="nav-create" onclick="window.startNewQuotation()">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          <span>Create Quote</span>
-        </button>
         <button class="nav-btn" id="nav-history" onclick="window.navigateTo('history')">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-          <span>History</span>
+          <span>Sejarah</span>
+        </button>
+        <button class="nav-btn" id="nav-create" onclick="window.startNewQuotation()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>Create Quo</span>
         </button>
         <button class="nav-btn" id="nav-settings" onclick="window.navigateTo('settings')">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-          <span>Company</span>
+          <span>Syarikat</span>
         </button>
       </nav>
 
       <div class="header-actions">
-        <!-- Cloud Sync Pill -->
-        <div style="display: flex; align-items: center; gap: 0.35rem; background: rgba(255,255,255,0.06); padding: 0.3rem 0.65rem; border-radius: 999px; border: 1px solid var(--border-color);">
+        <!-- Live Cloud Sync Indicator -->
+        <div style="display: flex; align-items: center; gap: 0.35rem; background: rgba(255,255,255,0.06); padding: 0.3rem 0.65rem; border-radius: 999px; border: 1px solid var(--border-color);" id="cloud-pill" title="Status Pangkalan Data Firestore">
           <div style="width: 7px; height: 7px; border-radius: 50%; background: #10b981;" id="cloud-status-dot"></div>
-          <span style="font-size: 0.72rem; font-weight: 600; color: var(--gold-light);" id="cloud-status-text">Cloud</span>
+          <span style="font-size: 0.72rem; font-weight: 600; color: var(--gold-light);" id="cloud-status-text">Cloud Sync</span>
         </div>
-
-        <!-- Light / Night Mode Switcher -->
-        <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="window.toggleTheme()" title="Tukar Mod Cerah/Gelap">
-          <span id="theme-toggle-icon">🌙</span>
-          <span id="theme-toggle-label" class="theme-label-text">Night</span>
-        </button>
 
         <button class="btn btn-gold btn-sm header-btn-new-quote" onclick="window.startNewQuotation()">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          <span>+ Quote</span>
+          <span>+ Create Quo</span>
         </button>
 
         <button class="btn btn-secondary btn-sm" onclick="window.handleLogout()" title="Log Keluar">
@@ -1761,7 +1666,7 @@
   <!-- MAIN APP CONTAINER -->
   <main class="app-main">
 
-    <!-- VIEW 1: DASHBOARD (MOBILE OPTIMIZED HIERARCHY) -->
+    <!-- VIEW 1: DASHBOARD -->
     <section id="view-dashboard" class="view-section active">
       
       <!-- Mobile Hero Action Card -->
@@ -1772,7 +1677,7 @@
         </div>
         <button class="btn btn-gold btn-sm" onclick="window.startNewQuotation()">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          <span>+ Jana Quote</span>
+          <span>+ Create Quo</span>
         </button>
       </div>
 
@@ -1795,7 +1700,7 @@
         </div>
         <div class="stat-card stat-card-pipeline">
           <div class="stat-label">Pipeline Value</div>
-          <div class="stat-value" style="color: var(--gold-light);" id="stat-total-val">RM 0</div>
+          <div class="stat-value" style="color: var(--gold-light);" id="stat-total-val">RM 0.00</div>
           <div class="stat-sub">Nilai keseluruhan</div>
         </div>
       </div>
@@ -1827,7 +1732,7 @@
         </div>
       </div>
 
-      <!-- Recent Quotations Card with Adaptive Desktop Table & Mobile Card View -->
+      <!-- Recent Quotations Card -->
       <div class="card">
         <div class="card-header">
           <h2 class="card-title">
@@ -1856,7 +1761,7 @@
           </table>
         </div>
 
-        <!-- Mobile Card View (Optimized for Small Screens) -->
+        <!-- Mobile Card View -->
         <div class="mobile-cards-list" id="dashboard-recent-mobile-cards">
           <!-- Dynamically populated -->
         </div>
@@ -1868,7 +1773,7 @@
       </div>
     </section>
 
-    <!-- VIEW 2: CREATE / EDIT QUOTATION (TOUCH-OPTIMIZED) -->
+    <!-- VIEW 2: CREATE / EDIT QUOTATION -->
     <section id="view-create" class="view-section">
       <div class="card">
         <div class="card-header">
@@ -2096,7 +2001,7 @@
       </div>
     </section>
 
-    <!-- VIEW 3: QUOTATION HISTORY (MOBILE OPTIMIZED CARDS & SEARCH) -->
+    <!-- VIEW 3: QUOTATION HISTORY -->
     <section id="view-history" class="view-section">
       <div class="card">
         <div class="card-header">
@@ -2219,39 +2124,35 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
   </main>
 
   <!-- ==============================================================
-       MOBILE PWA BOTTOM TAB NAVIGATION (Safe-Area Aware & Fluid)
+       MOBILE BOTTOM TAB BAR (DASHBOARD, SEJARAH, CREATE QUO, SYARIKAT)
        ============================================================== -->
   <nav class="mobile-bottom-nav no-print" id="mobile-bottom-nav">
     <!-- Tab 1: Dashboard -->
-    <button class="mobile-tab-item active" id="mob-nav-dashboard" onclick="window.navigateTo('dashboard')">
-      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-      <span>Utama</span>
+    <button class="mobile-tab-item active" id="mob-nav-dashboard" onclick="window.navigateTo('dashboard')" title="Dashboard Utama">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span>Dashboard</span>
       <div class="mobile-tab-indicator"></div>
     </button>
 
-    <!-- Tab 2: History -->
-    <button class="mobile-tab-item" id="mob-nav-history" onclick="window.navigateTo('history')">
-      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+    <!-- Tab 2: Sejarah -->
+    <button class="mobile-tab-item" id="mob-nav-history" onclick="window.navigateTo('history')" title="Sejarah Quotation">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
       <span>Sejarah</span>
       <div class="mobile-tab-indicator"></div>
     </button>
 
-    <!-- Center Floating Action Button: Create Quote -->
-    <button class="mobile-tab-item fab-tab" id="mob-nav-create" onclick="window.startNewQuotation()" title="Jana Sebut Harga Baru">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-    </button>
-
-    <!-- Tab 3: Settings / Company -->
-    <button class="mobile-tab-item" id="mob-nav-settings" onclick="window.navigateTo('settings')">
-      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-      <span>Syarikat</span>
+    <!-- Tab 3: Create Quo -->
+    <button class="mobile-tab-item" id="mob-nav-create" onclick="window.startNewQuotation()" title="Cipta Sebut Harga">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      <span>Create Quo</span>
       <div class="mobile-tab-indicator"></div>
     </button>
 
-    <!-- Tab 4: Theme Toggle Shortcut -->
-    <button class="mobile-tab-item" onclick="window.toggleTheme()" title="Tukar Tema">
-      <span style="font-size: 1.05rem; line-height: 1; margin-bottom: 2px;" id="mob-theme-icon">🌙</span>
-      <span id="mob-theme-text">Mod</span>
+    <!-- Tab 4: Syarikat -->
+    <button class="mobile-tab-item" id="mob-nav-settings" onclick="window.navigateTo('settings')" title="Profil Syarikat">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <span>Syarikat</span>
+      <div class="mobile-tab-indicator"></div>
     </button>
   </nav>
 
@@ -2445,7 +2346,8 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       doc, 
       setDoc, 
       deleteDoc, 
-      onSnapshot 
+      onSnapshot,
+      enableIndexedDbPersistence
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     // Firebase Config provided by user
@@ -2466,7 +2368,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
     // App State
     const STORAGE_KEY_AUTH = 'EPP_AUTH_STATE_2026';
-    const STORAGE_KEY_THEME = 'EPP_THEME_PREF';
     const STORAGE_KEY_QUOTES = 'EPP_LOCAL_QUOTES';
     
     // Credentials specified by user
@@ -2477,13 +2378,16 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
     let quotations = [];
     let deleteTargetId = null;
+    let isFirestoreActive = false;
+    let unsubscribeQuotes = null;
+    let unsubscribeSettings = null;
 
     let companySettings = {
       name: "EVENTPLANNERPERAK",
       address: "7983 Kg. Tok Mydeen, Batu 21, 34520 Batu Kurau, Taiping, Perak.",
       phone: "011-20908746",
       email: "eventplannerperak@gmail.com",
-      bank: "Maybank: 158051788426 (AIMI DIANA)",
+      bank: "Maybank: 158051788426 (AIMI DIANA)\nDuitNow / Touch 'n Go: 011-20908746",
       terms: "1. Tempahan hanya disahkan setelah bayaran deposit 50% diterima.\n2. Baki bayaran hendaklah diselesaikan sepenuhnya sebelum hari majlis.\n3. Sebarang pembatalan dalam tempoh 7 hari dari tarikh majlis tidak akan dikembalikan deposit."
     };
 
@@ -2536,13 +2440,13 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         const manifestTag = document.getElementById('pwa-manifest');
         if (manifestTag) manifestTag.setAttribute('href', manifestUrl);
       } catch (e) {
-        console.warn("Manifest Blob creation fallback:", e);
+        console.warn("Manifest Blob note:", e);
       }
 
       if ('serviceWorker' in navigator) {
         try {
           const swCode = `
-            const CACHE_NAME = 'epperak-v2';
+            const CACHE_NAME = 'epperak-v3';
             self.addEventListener('install', e => { self.skipWaiting(); });
             self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
             self.addEventListener('fetch', e => {
@@ -2551,45 +2455,8 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
           `;
           const swBlob = new Blob([swCode], { type: 'application/javascript' });
           navigator.serviceWorker.register(URL.createObjectURL(swBlob))
-            .then(() => console.log('PWA Service Worker Active'))
-            .catch(err => console.log('SW Note:', err));
-        } catch (err) {
-          console.warn('SW registration skipped:', err);
-        }
-      }
-    }
-
-    // Initialize Theme
-    function initTheme() {
-      const savedTheme = localStorage.getItem(STORAGE_KEY_THEME) || 'dark';
-      applyTheme(savedTheme);
-    }
-
-    function toggleTheme() {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      applyTheme(newTheme);
-      localStorage.setItem(STORAGE_KEY_THEME, newTheme);
-      showToast(`Mod ${newTheme === 'dark' ? 'Malam (Night)' : 'Cerah (Light)'} diaktifkan`, 'info');
-    }
-
-    function applyTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      const icon = document.getElementById('theme-toggle-icon');
-      const label = document.getElementById('theme-toggle-label');
-      const mobIcon = document.getElementById('mob-theme-icon');
-      const metaThemeColor = document.getElementById('theme-color-meta');
-
-      if (theme === 'light') {
-        if (icon) icon.textContent = '☀️';
-        if (label) label.textContent = 'Light';
-        if (mobIcon) mobIcon.textContent = '☀️';
-        if (metaThemeColor) metaThemeColor.setAttribute('content', '#f1f4fb');
-      } else {
-        if (icon) icon.textContent = '🌙';
-        if (label) label.textContent = 'Night';
-        if (mobIcon) mobIcon.textContent = '🌙';
-        if (metaThemeColor) metaThemeColor.setAttribute('content', '#080b11');
+            .catch(() => {});
+        } catch (err) {}
       }
     }
 
@@ -2626,65 +2493,95 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       showToast('Anda telah log keluar.', 'info');
     }
 
-    // Firebase Sync with LocalStorage Fallback
-    async function initFirebaseSync() {
-      try {
-        await signInAnonymously(auth);
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            updateCloudStatus(true);
-            listenToFirestore();
-          } else {
-            updateCloudStatus(false);
-          }
-        });
-      } catch (err) {
-        console.warn("Firestore offline, using local storage mode:", err);
-        updateCloudStatus(false);
-        loadLocalData();
+    // ==============================================================
+    // ADVANCED FIRESTORE REAL-TIME SYNC ENGINE
+    // ==============================================================
+    function updateCloudStatus(status) {
+      const dot = document.getElementById('cloud-status-dot');
+      const text = document.getElementById('cloud-status-text');
+      if (!dot || !text) return;
+
+      if (status === 'connected') {
+        dot.style.background = '#10b981';
+        text.textContent = 'Cloud Sync';
+      } else if (status === 'syncing') {
+        dot.style.background = '#38bdf8';
+        text.textContent = 'Menyimpan...';
+      } else if (status === 'offline') {
+        dot.style.background = '#f59e0b';
+        text.textContent = 'Mod Lokal';
       }
     }
 
-    function updateCloudStatus(connected) {
-      const dot = document.getElementById('cloud-status-dot');
-      const text = document.getElementById('cloud-status-text');
-      if (dot && text) {
-        if (connected) {
-          dot.style.background = '#10b981';
-          text.textContent = 'Cloud';
-        } else {
-          dot.style.background = '#f59e0b';
-          text.textContent = 'Local';
-        }
+    async function initFirebaseSync() {
+      loadLocalData(); // Instant local render first
+
+      try {
+        await signInAnonymously(auth);
+      } catch (err) {
+        console.warn("Auth note, trying direct sync:", err);
       }
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          isFirestoreActive = true;
+          updateCloudStatus('connected');
+          listenToFirestore();
+        } else {
+          isFirestoreActive = false;
+          updateCloudStatus('offline');
+        }
+      });
+
+      // Auto-reconnect when device comes online
+      window.addEventListener('online', () => {
+        updateCloudStatus('syncing');
+        listenToFirestore();
+      });
+
+      window.addEventListener('offline', () => {
+        updateCloudStatus('offline');
+      });
     }
 
     function listenToFirestore() {
-      const quotesCol = collection(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations');
-      onSnapshot(quotesCol, (snapshot) => {
-        const cloudData = [];
-        snapshot.forEach((docSnap) => {
-          cloudData.push({ id: docSnap.id, ...docSnap.data() });
+      try {
+        if (unsubscribeQuotes) unsubscribeQuotes();
+        if (unsubscribeSettings) unsubscribeSettings();
+
+        const quotesCol = collection(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations');
+        
+        unsubscribeQuotes = onSnapshot(quotesCol, (snapshot) => {
+          const cloudData = [];
+          snapshot.forEach((docSnap) => {
+            cloudData.push({ id: docSnap.id, ...docSnap.data() });
+          });
+
+          // Sort by creation date descending
+          cloudData.sort((a, b) => new Date(b.createdAt || b.updatedAt || 0) - new Date(a.createdAt || a.updatedAt || 0));
+          
+          quotations = cloudData;
+          saveLocalData();
+          renderDashboard();
+          renderProgressBars();
+          renderHistoryTable();
+          updateCloudStatus('connected');
+        }, (err) => {
+          console.warn("Firestore snapshot warning:", err);
+          updateCloudStatus('offline');
         });
 
-        cloudData.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-        quotations = cloudData;
-        saveLocalData();
-        renderDashboard();
-        renderProgressBars();
-        renderHistoryTable();
-      }, (err) => {
-        console.warn("Firestore snapshot error, falling back to local:", err);
-        loadLocalData();
-      });
-
-      const settingsDoc = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'companySettings', 'main');
-      onSnapshot(settingsDoc, (docSnap) => {
-        if (docSnap.exists()) {
-          companySettings = { ...companySettings, ...docSnap.data() };
-          populateSettingsForm();
-        }
-      });
+        const settingsDoc = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'companySettings', 'main');
+        unsubscribeSettings = onSnapshot(settingsDoc, (docSnap) => {
+          if (docSnap.exists()) {
+            companySettings = { ...companySettings, ...docSnap.data() };
+            populateSettingsForm();
+          }
+        }, () => {});
+      } catch (err) {
+        console.warn("Firestore listener setup note:", err);
+        updateCloudStatus('offline');
+      }
     }
 
     function saveLocalData() {
@@ -2760,7 +2657,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       return `EPP-${year}-${nextNum}`;
     }
 
-    // Fully Responsive Navigation for Desktop Header & Mobile Bottom Tab Bar
+    // Responsive Navigation for (Dashboard, Sejarah, Create Quo, Syarikat)
     function navigateTo(viewName) {
       document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
@@ -2965,18 +2862,28 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
       if (!isEdit) quoteData.createdAt = new Date().toISOString();
 
-      try {
-        const quoteDocRef = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations', docId);
-        await setDoc(quoteDocRef, quoteData, { merge: true });
-      } catch (err) {
-        const idx = quotations.findIndex(q => q.id === docId);
-        if (idx >= 0) quotations[idx] = quoteData;
-        else quotations.unshift(quoteData);
-        saveLocalData();
-      }
+      // 1. Instant local update (optimistic UI)
+      const idx = quotations.findIndex(q => q.id === docId);
+      if (idx >= 0) quotations[idx] = quoteData;
+      else quotations.unshift(quoteData);
+      saveLocalData();
+      renderDashboard();
+      renderProgressBars();
+      renderHistoryTable();
 
       showToast(`Quotation ${quoteNum} berjaya disimpan!`, 'success');
       navigateTo('history');
+
+      // 2. Continuous Firestore synchronization
+      updateCloudStatus('syncing');
+      try {
+        const quoteDocRef = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations', docId);
+        await setDoc(quoteDocRef, quoteData, { merge: true });
+        updateCloudStatus('connected');
+      } catch (err) {
+        console.warn("Firestore sync stored locally, will auto-push:", err);
+        updateCloudStatus('offline');
+      }
     }
 
     function editQuotation(quoteId) {
@@ -3034,16 +2941,23 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         updatedAt: new Date().toISOString()
       };
 
+      // Optimistic update
+      quotations.unshift(duplicated);
+      saveLocalData();
+      renderHistoryTable();
+      renderDashboard();
+      renderProgressBars();
+      showToast(`Quotation diduplikasi sebagai ${newQuoteNum}!`, 'success');
+
+      // Sync to cloud
+      updateCloudStatus('syncing');
       try {
         const quoteDocRef = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations', newDocId);
         await setDoc(quoteDocRef, duplicated);
+        updateCloudStatus('connected');
       } catch (err) {
-        quotations.unshift(duplicated);
-        saveLocalData();
+        updateCloudStatus('offline');
       }
-
-      showToast(`Quotation diduplikasi sebagai ${newQuoteNum}!`, 'success');
-      renderHistoryTable();
     }
 
     function confirmDeleteQuotation(quoteId) {
@@ -3063,18 +2977,26 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
     async function executeDelete() {
       if (!deleteTargetId) return;
-      try {
-        const quoteDocRef = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations', deleteTargetId);
-        await deleteDoc(quoteDocRef);
-      } catch (err) {
-        quotations = quotations.filter(q => q.id !== deleteTargetId);
-        saveLocalData();
-      }
+      const targetId = deleteTargetId;
       closeConfirmModal();
+
+      // Instant optimistic local removal
+      quotations = quotations.filter(q => q.id !== targetId);
+      saveLocalData();
       showToast('Quotation berjaya dipadam.', 'info');
       renderDashboard();
       renderHistoryTable();
       renderProgressBars();
+
+      // Firestore deletion
+      updateCloudStatus('syncing');
+      try {
+        const quoteDocRef = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations', targetId);
+        await deleteDoc(quoteDocRef);
+        updateCloudStatus('connected');
+      } catch (err) {
+        updateCloudStatus('offline');
+      }
     }
 
     function renderDashboard() {
@@ -3124,7 +3046,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         `;
         recentTbody.appendChild(tr);
 
-        // Mobile Card (Safe-touch friendly)
+        // Mobile Card
         if (mobileCardsContainer) {
           const cardEl = document.createElement('div');
           cardEl.className = 'mobile-quote-card';
@@ -3449,20 +3371,22 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       companySettings.bank = document.getElementById('setting-company-bank').value.trim();
       companySettings.terms = document.getElementById('setting-company-terms').value.trim();
 
+      showToast('Maklumat syarikat berjaya dikemaskini!', 'success');
+
+      updateCloudStatus('syncing');
       try {
         const settingsDoc = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'companySettings', 'main');
-        await setDoc(settingsDoc, companySettings);
+        await setDoc(settingsDoc, companySettings, { merge: true });
+        updateCloudStatus('connected');
       } catch (err) {
         console.warn("Saved settings locally");
+        updateCloudStatus('offline');
       }
-
-      showToast('Maklumat syarikat berjaya dikemaskini!', 'success');
     }
 
     // Attach to window object for global access
     window.handleLogin = handleLogin;
     window.handleLogout = handleLogout;
-    window.toggleTheme = toggleTheme;
     window.navigateTo = navigateTo;
     window.startNewQuotation = startNewQuotation;
     window.resetFormToBlank = resetFormToBlank;
@@ -3486,7 +3410,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
     // Boot system
     document.addEventListener('DOMContentLoaded', () => {
       setupPWA();
-      initTheme();
       checkAuthState();
       initFirebaseSync();
       populateSettingsForm();
