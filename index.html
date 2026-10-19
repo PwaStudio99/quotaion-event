@@ -124,7 +124,6 @@
       color: var(--text-heading);
     }
 
-    /* Fixed Top Header */
     .top-header {
       position: sticky;
       top: 0;
@@ -184,7 +183,6 @@
       text-transform: uppercase;
     }
 
-    /* Desktop Navigation Links (Dashboard, Sejarah, Create Quo, Syarikat) */
     .nav-links {
       display: flex;
       gap: 0.35rem;
@@ -302,7 +300,16 @@
       border-radius: var(--radius-sm);
     }
 
-    /* Container Layout with Safe Area Spacing */
+    @keyframes pulseDot {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 0.65; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .dot-pulse {
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+
     .app-main {
       flex: 1;
       max-width: 1400px;
@@ -326,7 +333,6 @@
       transform: translateY(0) scale(1);
     }
 
-    /* Mobile Quick Banner / Header Bar */
     .mobile-dashboard-hero {
       display: none;
       background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(18, 24, 38, 0.85) 100%);
@@ -339,7 +345,6 @@
       gap: 0.8rem;
     }
 
-    /* Colorful Glassmorphism Stat Cards */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -422,7 +427,6 @@
       text-overflow: ellipsis;
     }
 
-    /* Glass Panels */
     .glass-panel {
       background: var(--glass-bg);
       backdrop-filter: blur(22px);
@@ -546,7 +550,6 @@
       color: var(--text-white);
     }
 
-    /* Cards */
     .card {
       background: var(--glass-bg);
       backdrop-filter: blur(20px);
@@ -577,7 +580,6 @@
       gap: 0.45rem;
     }
 
-    /* Form & Grid */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
@@ -632,7 +634,6 @@
       min-height: 75px;
     }
 
-    /* Presets Chips */
     .preset-container {
       display: flex;
       flex-wrap: wrap;
@@ -668,7 +669,6 @@
       background: rgba(212, 175, 55, 0.28);
     }
 
-    /* Items Table & Mobile Item Cards */
     .items-table-wrapper, .data-table-wrapper {
       overflow-x: auto;
       margin: 0.85rem 0;
@@ -702,7 +702,6 @@
       font-size: 0.84rem;
     }
 
-    /* Mobile Quotation Cards */
     .mobile-cards-list {
       display: none;
       flex-direction: column;
@@ -773,7 +772,6 @@
       flex-wrap: wrap;
     }
 
-    /* Calc Summary Card */
     .calc-card {
       background: var(--bg-card);
       border: 1px solid var(--border-gold);
@@ -812,7 +810,6 @@
       font-size: 1rem;
     }
 
-    /* Status Badges */
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -831,7 +828,6 @@
     .badge-draft { background: rgba(156, 163, 175, 0.15); color: #d1d5db; border: 1px solid rgba(156, 163, 175, 0.4); }
     .badge-expired { background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.4); }
 
-    /* Modals */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -908,7 +904,6 @@
       flex-shrink: 0;
     }
 
-    /* Toast Container */
     .toast-container {
       position: fixed;
       bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 0.85rem);
@@ -948,7 +943,6 @@
       to { transform: translateY(0); opacity: 1; }
     }
 
-    /* Login Screen Gate */
     .login-screen {
       position: fixed;
       top: 0;
@@ -1011,9 +1005,6 @@
       margin-bottom: 1.5rem;
     }
 
-    /* ==============================================================
-       MOBILE BOTTOM TAB BAR (DASHBOARD, SEJARAH, CREATE QUO, SYARIKAT)
-       ============================================================== */
     .mobile-bottom-nav {
       display: none;
       position: fixed;
@@ -1101,7 +1092,6 @@
       transform: scaleX(1);
     }
 
-    /* PRINTABLE DOCUMENT (A4 PAPER) */
     .quotation-paper {
       background: #ffffff;
       color: #1a1a1a;
@@ -1300,7 +1290,6 @@
       padding-top: 0.35rem;
     }
 
-    /* Paper Signatures */
     .paper-signatures {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1357,7 +1346,6 @@
       color: #6b7280;
     }
 
-    /* Print Setup */
     @page {
       size: A4 portrait;
       margin: 10mm 12mm;
@@ -1432,137 +1420,42 @@
       .quote-doc-meta { text-align: left; }
     }
 
-    /* ==============================================================
-       RESPONSIVE MOBILE VIEWPORT OPTIMIZATIONS (< 768px)
-       ============================================================== */
     @media (max-width: 768px) {
-      .top-header .nav-links {
-        display: none;
-      }
-
-      .mobile-bottom-nav {
-        display: flex;
-      }
-
-      .mobile-dashboard-hero {
-        display: flex;
-      }
-
-      .header-container {
-        padding: 0.5rem 0.85rem;
-      }
-
-      .brand-name {
-        font-size: 0.92rem;
-        letter-spacing: 0.8px;
-      }
-
-      .brand-tag {
-        font-size: 0.6rem;
-      }
-
-      .header-btn-new-quote {
-        display: none;
-      }
-
-      .app-main {
-        padding: 0.85rem 0.75rem calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 1.25rem) 0.75rem;
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.65rem;
-        margin-bottom: 1rem;
-      }
-
-      .stat-card {
-        padding: 0.85rem 0.75rem;
-        border-radius: var(--radius-sm);
-      }
-
-      .stat-label {
-        font-size: 0.65rem;
-        letter-spacing: 0.5px;
-      }
-
-      .stat-value {
-        font-size: 1.35rem;
-      }
-
-      .stat-sub {
-        font-size: 0.64rem;
-      }
-
-      .glass-panel {
-        padding: 1rem 0.85rem;
-        border-radius: var(--radius-md);
-        margin-bottom: 1rem;
-      }
-
-      .progress-bars-grid {
-        grid-template-columns: 1fr;
-        gap: 0.65rem;
-      }
-
-      .progress-bar-card {
-        padding: 0.75rem 0.85rem;
-      }
-
-      .card {
-        padding: 1rem 0.85rem;
-        border-radius: var(--radius-md);
-        margin-bottom: 1rem;
-      }
-
-      .data-table-wrapper {
-        display: none;
-      }
-
-      .mobile-cards-list {
-        display: flex;
-      }
-
-      .modal-overlay {
-        padding: 0.5rem;
-        align-items: flex-end;
-      }
-
-      .modal-card {
-        max-height: 94vh;
-        border-radius: var(--radius-md) var(--radius-md) 0 0;
-      }
-
-      .modal-header {
-        padding: 0.75rem 1rem;
-      }
-
-      .modal-body {
-        padding: 0.85rem;
-      }
-
-      .modal-footer {
-        padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom));
-      }
-
-      .quotation-paper {
-        padding: 1.2rem 1rem;
-      }
-
-      .paper-signatures {
-        grid-template-columns: 1fr;
-        gap: 1.8rem;
-      }
+      .top-header .nav-links { display: none; }
+      .mobile-bottom-nav { display: flex; }
+      .mobile-dashboard-hero { display: flex; }
+      .header-container { padding: 0.5rem 0.85rem; }
+      .brand-name { font-size: 0.92rem; letter-spacing: 0.8px; }
+      .brand-tag { font-size: 0.6rem; }
+      .header-btn-new-quote { display: none; }
+      .app-main { padding: 0.85rem 0.75rem calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 1.25rem) 0.75rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.65rem; margin-bottom: 1rem; }
+      .stat-card { padding: 0.85rem 0.75rem; border-radius: var(--radius-sm); }
+      .stat-label { font-size: 0.65rem; letter-spacing: 0.5px; }
+      .stat-value { font-size: 1.35rem; }
+      .stat-sub { font-size: 0.64rem; }
+      .glass-panel { padding: 1rem 0.85rem; border-radius: var(--radius-md); margin-bottom: 1rem; }
+      .progress-bars-grid { grid-template-columns: 1fr; gap: 0.65rem; }
+      .progress-bar-card { padding: 0.75rem 0.85rem; }
+      .card { padding: 1rem 0.85rem; border-radius: var(--radius-md); margin-bottom: 1rem; }
+      .data-table-wrapper { display: none; }
+      .mobile-cards-list { display: flex; }
+      .modal-overlay { padding: 0.5rem; align-items: flex-end; }
+      .modal-card { max-height: 94vh; border-radius: var(--radius-md) var(--radius-md) 0 0; }
+      .modal-header { padding: 0.75rem 1rem; }
+      .modal-body { padding: 0.85rem; }
+      .modal-footer { padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom)); }
+      .quotation-paper { padding: 1.2rem 1rem; }
+      .paper-signatures { grid-template-columns: 1fr; gap: 1.8rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Hidden SVG Template for Official EP Monogram Logo -->
   <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <g id="epp-official-logo-symbol">
         <rect width="400" height="400" rx="28" fill="#000000"/>
-        <!-- Interlocking Serif EP Monogram -->
         <g transform="translate(130, 95)">
           <path d="M 0 15 L 22 15 L 22 25 L 14 25 L 14 125 L 22 125 L 22 135 L 0 135 L 0 125 L 8 125 L 8 25 L 0 25 Z" fill="#cfb16e"/>
           <path d="M 14 15 L 68 15 L 68 25 L 14 25 Z" fill="#cfb16e"/>
@@ -1597,14 +1490,13 @@
           <label class="form-label required">Kata Laluan</label>
           <input type="password" id="login-password" class="form-control" placeholder="aimi123@" required autocomplete="current-password">
         </div>
-        <button type="submit" class="btn btn-gold" style="width: 100%; padding: 0.75rem;">
+        <button type="submit" class="btn btn-gold" id="login-submit-btn" style="width: 100%; padding: 0.75rem;">
           Log Masuk Sistem
         </button>
       </form>
     </div>
   </div>
 
-  <!-- FIXED TOP HEADER (SAFE AREA ADAPTIVE) -->
   <header class="top-header no-print">
     <div class="header-container">
       <div class="brand-section" onclick="window.navigateTo('dashboard')">
@@ -1618,7 +1510,7 @@
         </div>
       </div>
 
-      <!-- Desktop Nav Links (Dashboard, Sejarah, Create Quo, Syarikat) -->
+      <!-- Desktop Nav Links -->
       <nav class="nav-links">
         <button class="nav-btn active" id="nav-dashboard" onclick="window.navigateTo('dashboard')">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
@@ -1639,11 +1531,11 @@
       </nav>
 
       <div class="header-actions">
-        <!-- Live Realtime DB Indicator -->
-        <div style="display: flex; align-items: center; gap: 0.35rem; background: rgba(255,255,255,0.06); padding: 0.3rem 0.65rem; border-radius: 999px; border: 1px solid var(--border-color);" id="cloud-pill" title="Status Realtime Database">
-          <div style="width: 7px; height: 7px; border-radius: 50%; background: #10b981;" id="cloud-status-dot"></div>
-          <span style="font-size: 0.72rem; font-weight: 600; color: var(--gold-light);" id="cloud-status-text">RTDB Sync</span>
-        </div>
+        <!-- Live Realtime DB Indicator (Click to force manual sync check) -->
+        <button type="button" onclick="window.forceSyncRealtimeDB()" style="display: flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.06); padding: 0.32rem 0.7rem; border-radius: 999px; border: 1px solid var(--border-color); cursor: pointer;" id="cloud-pill" title="Klik untuk paksa sync Realtime Database">
+          <div class="dot-pulse" style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;" id="cloud-status-dot"></div>
+          <span style="font-size: 0.72rem; font-weight: 600; color: var(--gold-light);" id="cloud-status-text">RTDB Live</span>
+        </button>
 
         <button class="btn btn-gold btn-sm header-btn-new-quote" onclick="window.startNewQuotation()">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -1663,13 +1555,10 @@
   <div class="ambient-glow-orb orb-gold"></div>
   <div class="ambient-glow-orb orb-pink"></div>
 
-  <!-- MAIN APP CONTAINER -->
   <main class="app-main">
 
     <!-- VIEW 1: DASHBOARD -->
     <section id="view-dashboard" class="view-section active">
-      
-      <!-- Mobile Hero Action Card -->
       <div class="mobile-dashboard-hero">
         <div>
           <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Selamat Datang</div>
@@ -1681,7 +1570,6 @@
         </button>
       </div>
 
-      <!-- 2x2 Clean Mobile KPI Grid -->
       <div class="stats-grid">
         <div class="stat-card stat-card-total">
           <div class="stat-label">Total Quotes</div>
@@ -1705,7 +1593,6 @@
         </div>
       </div>
 
-      <!-- Glassmorphic Progress Bar Tracker -->
       <div class="glass-panel progress-tracker-container">
         <div class="progress-tracker-header">
           <div>
@@ -1713,7 +1600,7 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
               Kemajuan Pakej & Penukaran
             </h3>
-            <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Pemantauan sasaran jualan dekorasi & perkhidmatan acara</p>
+            <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Pemantauan sasaran jualan dekorasi & perkhidmatan acara (Realtime Sync)</p>
           </div>
           <div class="progress-stats-summary">
             <div class="progress-metric-pill">
@@ -1727,12 +1614,9 @@
           </div>
         </div>
 
-        <div class="progress-bars-grid" id="progress-bars-container">
-          <!-- Dynamically populated via JS -->
-        </div>
+        <div class="progress-bars-grid" id="progress-bars-container"></div>
       </div>
 
-      <!-- Recent Quotations Card -->
       <div class="card">
         <div class="card-header">
           <h2 class="card-title">
@@ -1742,7 +1626,6 @@
           <button class="btn btn-outline-gold btn-sm" onclick="window.navigateTo('history')">Lihat Semua →</button>
         </div>
 
-        <!-- Desktop Table View -->
         <div class="data-table-wrapper">
           <table class="data-table">
             <thead>
@@ -1755,16 +1638,11 @@
                 <th style="text-align: right;">Tindakan</th>
               </tr>
             </thead>
-            <tbody id="dashboard-recent-tbody">
-              <!-- Dynamically populated -->
-            </tbody>
+            <tbody id="dashboard-recent-tbody"></tbody>
           </table>
         </div>
 
-        <!-- Mobile Card View -->
-        <div class="mobile-cards-list" id="dashboard-recent-mobile-cards">
-          <!-- Dynamically populated -->
-        </div>
+        <div class="mobile-cards-list" id="dashboard-recent-mobile-cards"></div>
 
         <div id="dashboard-empty-state" style="text-align: center; padding: 2.2rem 1rem; color: var(--text-muted); display: none;">
           <p style="font-size: 0.85rem;">Belum ada sebut harga dijana.</p>
@@ -1909,9 +1787,7 @@
                   <th style="width: 6%; text-align: center;">Padam</th>
                 </tr>
               </thead>
-              <tbody id="items-tbody">
-                <!-- Dynamically injected item rows -->
-              </tbody>
+              <tbody id="items-tbody"></tbody>
             </table>
           </div>
 
@@ -2028,7 +1904,6 @@
           </div>
         </div>
 
-        <!-- Desktop History Table -->
         <div class="data-table-wrapper">
           <table class="data-table">
             <thead>
@@ -2042,16 +1917,11 @@
                 <th style="text-align: right;">Tindakan</th>
               </tr>
             </thead>
-            <tbody id="history-tbody">
-              <!-- Dynamically populated -->
-            </tbody>
+            <tbody id="history-tbody"></tbody>
           </table>
         </div>
 
-        <!-- Mobile History Cards -->
-        <div class="mobile-cards-list" id="history-mobile-cards">
-          <!-- Dynamically populated -->
-        </div>
+        <div class="mobile-cards-list" id="history-mobile-cards"></div>
 
         <div id="history-empty-state" style="text-align: center; padding: 2.2rem 1rem; color: var(--text-muted); display: none;">
           <p style="font-size: 0.85rem;">Tiada rekod sepadan ditemui.</p>
@@ -2103,8 +1973,7 @@
             <div class="col-12">
               <div class="form-group">
                 <label class="form-label">Maklumat Bank / Pembayaran</label>
-                <textarea id="setting-company-bank" class="form-control" rows="2">Maybank: 158051788426 (AIMI DIANA)
-DuitNow / Touch 'n Go: 011-20908746</textarea>
+                <textarea id="setting-company-bank" class="form-control" rows="2">Maybank: 158051788426 (AIMI DIANA)</textarea>
               </div>
             </div>
 
@@ -2123,32 +1992,25 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
   </main>
 
-  <!-- ==============================================================
-       MOBILE BOTTOM TAB BAR (DASHBOARD, SEJARAH, CREATE QUO, SYARIKAT)
-       ============================================================== -->
   <nav class="mobile-bottom-nav no-print" id="mobile-bottom-nav">
-    <!-- Tab 1: Dashboard -->
     <button class="mobile-tab-item active" id="mob-nav-dashboard" onclick="window.navigateTo('dashboard')" title="Dashboard Utama">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
       <span>Dashboard</span>
       <div class="mobile-tab-indicator"></div>
     </button>
 
-    <!-- Tab 2: Sejarah -->
     <button class="mobile-tab-item" id="mob-nav-history" onclick="window.navigateTo('history')" title="Sejarah Quotation">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
       <span>Sejarah</span>
       <div class="mobile-tab-indicator"></div>
     </button>
 
-    <!-- Tab 3: Create Quo -->
     <button class="mobile-tab-item" id="mob-nav-create" onclick="window.startNewQuotation()" title="Cipta Sebut Harga">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       <span>Create Quo</span>
       <div class="mobile-tab-indicator"></div>
     </button>
 
-    <!-- Tab 4: Syarikat -->
     <button class="mobile-tab-item" id="mob-nav-settings" onclick="window.navigateTo('settings')" title="Profil Syarikat">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
       <span>Syarikat</span>
@@ -2172,7 +2034,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       
       <div class="modal-body">
         <div class="quotation-paper" id="quotation-print-area">
-          <!-- Header -->
           <div class="quote-paper-header">
             <div class="quote-paper-brand">
               <svg class="paper-logo" viewBox="0 0 400 400">
@@ -2198,7 +2059,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
             </div>
           </div>
 
-          <!-- Client & Event Info -->
           <div class="quote-paper-details">
             <div class="paper-info-block">
               <h4>Disediakan Untuk (Pelanggan)</h4>
@@ -2216,7 +2076,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
             </div>
           </div>
 
-          <!-- Items Table -->
           <table class="paper-table">
             <thead>
               <tr>
@@ -2227,12 +2086,9 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
                 <th style="width: 15%; text-align: right;">Jumlah (RM)</th>
               </tr>
             </thead>
-            <tbody id="paper-items-tbody">
-              <!-- Dynamically populated -->
-            </tbody>
+            <tbody id="paper-items-tbody"></tbody>
           </table>
 
-          <!-- Financials & Terms -->
           <div class="paper-financial-split">
             <div class="paper-terms">
               <h4>Nota & Terma Bayaran:</h4>
@@ -2270,27 +2126,18 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
             </div>
           </div>
 
-          <!-- Official Signatures (Owner signature in purple ink on the bottom-left) -->
           <div class="paper-signatures">
             <div class="signature-slot">
               <div class="sig-official-container">
                 <div class="sig-official-heading">DISEDIAKAN OLEH :</div>
                 
-                <!-- Official Purple Pen Signature SVG -->
                 <svg class="sig-vector-svg" viewBox="0 0 320 135" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Initial wide cursive curve loop -->
                   <path d="M 125 45 C 95 35, 45 42, 38 68 C 30 92, 55 115, 88 112 C 118 108, 138 82, 134 58 C 130 42, 114 36, 95 40" stroke="#2e2778" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <!-- Horizontal internal flow stroke -->
                   <path d="M 52 55 C 75 54, 105 55, 128 58" stroke="#2e2778" stroke-width="2.3" stroke-linecap="round"/>
-                  <!-- Lower cursive loops -->
                   <path d="M 58 84 C 62 76, 70 74, 75 86 C 80 96, 74 100, 68 98 C 64 96, 68 86, 78 79 C 86 74, 92 83, 91 94 C 90 98, 94 98, 100 89 C 104 82, 110 83, 110 93" stroke="#2e2778" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  <!-- Middle tall loop into oval body -->
                   <path d="M 110 93 C 114 79, 122 53, 128 47 C 132 44, 136 49, 134 59 C 131 73, 128 87, 134 92 C 140 96, 150 95, 158 87 C 168 77, 171 63, 162 59 C 151 55, 140 66, 142 79 C 144 91, 156 96, 170 91" stroke="#2e2778" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  <!-- Transition connector -->
                   <path d="M 168 89 C 178 79, 188 69, 196 83 C 201 89, 208 89, 214 85" stroke="#2e2778" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <!-- Right sharp vertical stem and loop -->
                   <path d="M 194 81 C 208 57, 218 27, 224 15 C 226 11, 225 17, 221 39 L 212 127" stroke="#2e2778" stroke-width="2.6" stroke-linecap="round"/>
-                  <!-- Cross bar and right side wing -->
                   <path d="M 182 83 C 196 81, 216 80, 232 83" stroke="#2e2778" stroke-width="2.2" stroke-linecap="round"/>
                   <path d="M 214 75 C 224 74, 231 79, 229 87 C 226 93, 210 94, 204 91 C 198 89, 206 85, 222 85 C 228 85, 232 88, 228 93" stroke="#2e2778" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -2336,19 +2183,26 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
 
-  <!-- FIREBASE REALTIME DATABASE & CORE SYSTEM SCRIPTS -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAnalytics, isSupported as isAnalyticsSupported } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+    import { 
+      getAuth, 
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { 
       getDatabase, 
       ref, 
       set, 
+      update,
       remove, 
-      onValue 
-    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+      onValue,
+      get
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    // Firebase Config pointing directly to your Realtime Database URL
+    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyDqjO6bK9WXbwnsIyNjdEpX8f-LKvCbDNU",
       authDomain: "eventplannerperak-5bfc0.firebaseapp.com",
@@ -2360,36 +2214,39 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       measurementId: "G-039NBLHSZ3"
     };
 
-    const fbApp = initializeApp(firebaseConfig);
-    const auth = getAuth(fbApp);
-    // Explicitly target your Asia-Southeast1 Realtime Database
-    const db = getDatabase(fbApp, firebaseConfig.databaseURL);
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    let analytics = null;
+    isAnalyticsSupported().then(yes => {
+      if (yes) analytics = getAnalytics(app);
+    }).catch(() => {});
 
-    // App State
+    const auth = getAuth(app);
+    const db = getDatabase(app, firebaseConfig.databaseURL);
+
+    // Kredensial Admin & Domain Pemetaan
+    const ADMIN_ID = "aimidiana";
+    const AUTH_DOMAIN_SUFFIX = "@eventplannerperak.com";
+    const TARGET_ADMIN_EMAIL = `${ADMIN_ID}${AUTH_DOMAIN_SUFFIX}`.toLowerCase();
+
     const STORAGE_KEY_AUTH = 'EPP_AUTH_STATE_2026';
     const STORAGE_KEY_QUOTES = 'EPP_LOCAL_QUOTES';
-    
-    // Credentials specified by user
-    const AUTH_CREDENTIALS = {
-      username: "aimidiana",
-      password: "aimi123@"
-    };
+    const STORAGE_KEY_SETTINGS = 'EPP_LOCAL_SETTINGS';
+    const STORAGE_KEY_PENDING_QUEUE = 'EPP_PENDING_RTDB_QUEUE';
 
     let quotations = [];
     let deleteTargetId = null;
+    let isRtdbConnected = false;
 
     let companySettings = {
       name: "EVENTPLANNERPERAK",
       address: "7983 Kg. Tok Mydeen, Batu 21, 34520 Batu Kurau, Taiping, Perak.",
       phone: "011-20908746",
       email: "eventplannerperak@gmail.com",
-      bank: "Maybank: 158051788426 (AIMI DIANA)\nDuitNow / Touch 'n Go: 011-20908746",
+      bank: "Maybank: 158051788426 (AIMI DIANA)",
       terms: "1. Tempahan hanya disahkan setelah bayaran deposit 50% diterima.\n2. Baki bayaran hendaklah diselesaikan sepenuhnya sebelum hari majlis.\n3. Sebarang pembatalan dalam tempoh 7 hari dari tarikh majlis tidak akan dikembalikan deposit."
     };
 
-    // ==============================================================
-    // PWA STANDALONE & SERVICE WORKER SETUP
-    // ==============================================================
     function setupPWA() {
       const svgIconRaw = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
         <rect width="400" height="400" rx="30" fill="#000000"/>
@@ -2435,63 +2292,86 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         const manifestUrl = URL.createObjectURL(manifestBlob);
         const manifestTag = document.getElementById('pwa-manifest');
         if (manifestTag) manifestTag.setAttribute('href', manifestUrl);
-      } catch (e) {
-        console.warn("Manifest Blob note:", e);
-      }
-
-      if ('serviceWorker' in navigator) {
-        try {
-          const swCode = `
-            const CACHE_NAME = 'epperak-v4';
-            self.addEventListener('install', e => { self.skipWaiting(); });
-            self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
-            self.addEventListener('fetch', e => {
-              e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-            });
-          `;
-          const swBlob = new Blob([swCode], { type: 'application/javascript' });
-          navigator.serviceWorker.register(URL.createObjectURL(swBlob))
-            .catch(() => {});
-        } catch (err) {}
-      }
+      } catch (e) {}
     }
 
-    // Check Login Auth State
-    function checkAuthState() {
-      const isAuth = localStorage.getItem(STORAGE_KEY_AUTH) === 'true';
+    // Pantau Status Autentikasi Firebase secara Realtime
+    function setupAuthListener() {
       const screen = document.getElementById('login-screen');
-      if (isAuth) {
-        screen.classList.add('hidden');
-      } else {
-        screen.classList.remove('hidden');
-      }
+      onAuthStateChanged(auth, (user) => {
+        if (user && user.email && user.email.toLowerCase() === TARGET_ADMIN_EMAIL) {
+          localStorage.setItem(STORAGE_KEY_AUTH, 'true');
+          screen.classList.add('hidden');
+          updateCloudStatus('connected');
+          listenToRealtimeDatabase();
+        } else {
+          localStorage.removeItem(STORAGE_KEY_AUTH);
+          screen.classList.remove('hidden');
+        }
+      });
     }
 
-    function handleLogin() {
-      const user = document.getElementById('login-username').value.trim();
+    async function handleLogin() {
+      const userRaw = document.getElementById('login-username').value.trim();
       const pass = document.getElementById('login-password').value.trim();
+      const submitBtn = document.getElementById('login-submit-btn');
 
-      if (user === AUTH_CREDENTIALS.username && pass === AUTH_CREDENTIALS.password) {
+      if (!userRaw || !pass) {
+        showToast('Sila masukkan ID dan Kata Laluan!', 'error');
+        return;
+      }
+
+      // Format email automatik: 'aimidiana' -> 'aimidiana@eventplannerperak.com'
+      const authEmail = userRaw.includes('@') ? userRaw : `${userRaw}${AUTH_DOMAIN_SUFFIX}`;
+
+      try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Mengesahkan...';
+        }
+
+        const userCredential = await signInWithEmailAndPassword(auth, authEmail, pass);
+        const user = userCredential.user;
+
+        if (user.email.toLowerCase() !== TARGET_ADMIN_EMAIL) {
+          await signOut(auth);
+          throw new Error('Akaun anda tidak mempunyai kebenaran admin.');
+        }
+
         localStorage.setItem(STORAGE_KEY_AUTH, 'true');
         document.getElementById('login-screen').classList.add('hidden');
         showToast('Selamat kembali, Aimi Diana!', 'success');
+        
         renderDashboard();
         renderProgressBars();
-      } else {
-        showToast('ID atau Kata Laluan tidak sah! Sila semak semula.', 'error');
+        listenToRealtimeDatabase();
+      } catch (error) {
+        console.error("Login failed:", error);
+        let msg = 'ID atau Kata Laluan tidak tepat! Sila cuba lagi.';
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+          msg = 'ID atau Kata Laluan salah. Pastikan akaun telah didaftarkan di Firebase Console Authentication.';
+        } else if (error.message) {
+          msg = error.message;
+        }
+        showToast(msg, 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Log Masuk Sistem';
+        }
       }
     }
 
-    function handleLogout() {
+    async function handleLogout() {
+      try {
+        await signOut(auth);
+      } catch (e) {}
       localStorage.removeItem(STORAGE_KEY_AUTH);
       document.getElementById('login-screen').classList.remove('hidden');
       document.getElementById('login-password').value = '';
       showToast('Anda telah log keluar.', 'info');
     }
 
-    // ==============================================================
-    // FIREBASE REALTIME DATABASE (RTDB) SYNC ENGINE
-    // ==============================================================
     function updateCloudStatus(status) {
       const dot = document.getElementById('cloud-status-dot');
       const text = document.getElementById('cloud-status-text');
@@ -2499,81 +2379,163 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
       if (status === 'connected') {
         dot.style.background = '#10b981';
-        text.textContent = 'RTDB Sync';
+        text.textContent = 'RTDB Auth OK';
       } else if (status === 'syncing') {
         dot.style.background = '#38bdf8';
-        text.textContent = 'Menyimpan...';
+        text.textContent = 'Syncing...';
       } else if (status === 'offline') {
         dot.style.background = '#f59e0b';
-        text.textContent = 'Mod Lokal';
+        text.textContent = 'Offline';
+      } else if (status === 'error') {
+        dot.style.background = '#ef4444';
+        text.textContent = 'Akses Ditolak';
+      }
+    }
+
+    function enqueuePendingSync(action, path, payload = null) {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_PENDING_QUEUE);
+        const queue = raw ? JSON.parse(raw) : [];
+        queue.push({ action, path, payload, timestamp: Date.now() });
+        localStorage.setItem(STORAGE_KEY_PENDING_QUEUE, JSON.stringify(queue));
+      } catch (e) {
+        console.warn("Queue storage error:", e);
+      }
+    }
+
+    async function flushPendingSyncQueue() {
+      try {
+        if (!auth.currentUser) return;
+        const raw = localStorage.getItem(STORAGE_KEY_PENDING_QUEUE);
+        if (!raw) return;
+        const queue = JSON.parse(raw);
+        if (!Array.isArray(queue) || queue.length === 0) return;
+
+        updateCloudStatus('syncing');
+        for (const item of queue) {
+          const itemRef = ref(db, item.path);
+          if (item.action === 'set') {
+            await set(itemRef, item.payload);
+          } else if (item.action === 'remove') {
+            await remove(itemRef);
+          }
+        }
+        localStorage.removeItem(STORAGE_KEY_PENDING_QUEUE);
+        updateCloudStatus('connected');
+        showToast('Data luar talian telah diselaraskan ke Firebase!', 'success');
+      } catch (e) {
+        console.warn("Flush queue error:", e);
       }
     }
 
     async function initFirebaseSync() {
-      loadLocalData(); // Fast offline render first
+      loadLocalData();
 
-      // Attempt anonymous auth, but do not block Realtime Database listeners
-      try {
-        await signInAnonymously(auth);
-      } catch (authErr) {
-        console.warn("Auth note (connecting directly to Realtime DB):", authErr.message);
-      }
-
-      // Listen directly to Realtime Database
-      listenToRealtimeDatabase();
-
-      // Listen for network changes
-      window.addEventListener('online', () => {
-        updateCloudStatus('syncing');
-        listenToRealtimeDatabase();
-      });
-
-      window.addEventListener('offline', () => {
-        updateCloudStatus('offline');
+      // Monitor socket connection state
+      const connectedRef = ref(db, ".info/connected");
+      onValue(connectedRef, (snap) => {
+        if (snap.val() === true) {
+          isRtdbConnected = true;
+          if (auth.currentUser) {
+            updateCloudStatus('connected');
+            flushPendingSyncQueue();
+          }
+        } else {
+          isRtdbConnected = false;
+          updateCloudStatus('offline');
+        }
       });
     }
 
     function listenToRealtimeDatabase() {
       try {
         const quotesDbRef = ref(db, 'quotations');
-        onValue(quotesDbRef, (snapshot) => {
+        onValue(quotesDbRef, async (snapshot) => {
           const val = snapshot.val();
-          const cloudData = [];
+          
           if (val) {
+            const cloudData = [];
             Object.keys(val).forEach(key => {
               cloudData.push({ id: key, ...val[key] });
             });
+
+            cloudData.sort((a, b) => new Date(b.createdAt || b.updatedAt || 0) - new Date(a.createdAt || a.updatedAt || 0));
+            quotations = cloudData;
+            saveLocalData();
+          } else if (quotations.length > 0 && isRtdbConnected && auth.currentUser) {
+            const batchUpdates = {};
+            quotations.forEach(q => {
+              if (q.id) batchUpdates[q.id] = q;
+            });
+            if (Object.keys(batchUpdates).length > 0) {
+              try {
+                await update(quotesDbRef, batchUpdates);
+              } catch (seedErr) {}
+            }
+          } else {
+            quotations = [];
+            saveLocalData();
           }
 
-          // Sort by latest created/updated date descending
-          cloudData.sort((a, b) => new Date(b.createdAt || b.updatedAt || 0) - new Date(a.createdAt || a.updatedAt || 0));
-          
-          quotations = cloudData;
+          renderDashboard();
+          renderProgressBars();
+          renderHistoryTable();
+          if (isRtdbConnected && auth.currentUser) updateCloudStatus('connected');
+        }, (error) => {
+          console.error("Firebase Realtime DB read error:", error);
+          if (error.code === "PERMISSION_DENIED") {
+            updateCloudStatus('error');
+            showToast("Akses Realtime Database ditolak oleh Rules.", "error");
+          } else {
+            updateCloudStatus('offline');
+          }
+        });
+
+        const settingsDbRef = ref(db, 'companySettings');
+        onValue(settingsDbRef, async (snapshot) => {
+          const val = snapshot.val();
+          if (val) {
+            companySettings = { ...companySettings, ...val };
+            localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(companySettings));
+            populateSettingsForm();
+          } else if (isRtdbConnected && auth.currentUser) {
+            try {
+              await set(settingsDbRef, companySettings);
+            } catch (e) {}
+          }
+        });
+
+      } catch (err) {
+        console.error("RTDB listener error:", err);
+        updateCloudStatus('offline');
+      }
+    }
+
+    async function forceSyncRealtimeDB() {
+      if (!auth.currentUser) {
+        showToast('Sila log masuk terlebih dahulu untuk akses Realtime DB.', 'error');
+        return;
+      }
+
+      updateCloudStatus('syncing');
+      try {
+        await flushPendingSyncQueue();
+        const snap = await get(ref(db, 'quotations'));
+        if (snap.exists()) {
+          const val = snap.val();
+          const list = Object.keys(val).map(k => ({ id: k, ...val[k] }));
+          list.sort((a, b) => new Date(b.createdAt || b.updatedAt || 0) - new Date(a.createdAt || a.updatedAt || 0));
+          quotations = list;
           saveLocalData();
           renderDashboard();
           renderProgressBars();
           renderHistoryTable();
-          updateCloudStatus('connected');
-        }, (error) => {
-          console.error("Firebase Realtime DB read error:", error);
-          updateCloudStatus('offline');
-        });
-
-        // Listen to Company Settings node
-        const settingsDbRef = ref(db, 'companySettings');
-        onValue(settingsDbRef, (snapshot) => {
-          const val = snapshot.val();
-          if (val) {
-            companySettings = { ...companySettings, ...val };
-            populateSettingsForm();
-          }
-        }, (err) => {
-          console.warn("Company settings listener note:", err);
-        });
-
+        }
+        updateCloudStatus('connected');
+        showToast('Realtime Database berjaya diselaraskan!', 'success');
       } catch (err) {
-        console.error("RTDB setup error:", err);
-        updateCloudStatus('offline');
+        updateCloudStatus(err.code === "PERMISSION_DENIED" ? 'error' : 'offline');
+        showToast(`Gagal menyambung: ${err.message}`, 'error');
       }
     }
 
@@ -2586,14 +2548,22 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
     }
 
     function loadLocalData() {
-      const stored = localStorage.getItem(STORAGE_KEY_QUOTES);
-      if (stored) {
+      const storedQuotes = localStorage.getItem(STORAGE_KEY_QUOTES);
+      if (storedQuotes) {
         try {
-          quotations = JSON.parse(stored);
+          quotations = JSON.parse(storedQuotes);
         } catch (e) {
           quotations = [];
         }
       }
+
+      const storedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
+      if (storedSettings) {
+        try {
+          companySettings = { ...companySettings, ...JSON.parse(storedSettings) };
+        } catch (e) {}
+      }
+
       renderDashboard();
       renderProgressBars();
       renderHistoryTable();
@@ -2650,7 +2620,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       return `EPP-${year}-${nextNum}`;
     }
 
-    // Responsive Navigation for (Dashboard, Sejarah, Create Quo, Syarikat)
     function navigateTo(viewName) {
       document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
@@ -2824,6 +2793,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       if (!isEdit && !quoteNum) quoteNum = getNextQuotationNumber();
 
       const docId = isEdit ? editId : 'EPP_' + Date.now();
+      const existingQuote = quotations.find(q => q.id === docId);
 
       const quoteData = {
         id: docId,
@@ -2850,12 +2820,11 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         notes: document.getElementById('quote-notes').value.trim(),
         paymentTerms: document.getElementById('quote-payment-terms').value.trim(),
         terms: document.getElementById('quote-terms').value.trim(),
+        createdAt: existingQuote?.createdAt || new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
 
-      if (!isEdit) quoteData.createdAt = new Date().toISOString();
-
-      // 1. Instant local update (optimistic UI)
+      // Simpan terus ke lokal
       const idx = quotations.findIndex(q => q.id === docId);
       if (idx >= 0) quotations[idx] = quoteData;
       else quotations.unshift(quoteData);
@@ -2867,7 +2836,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       showToast(`Quotation ${quoteNum} berjaya disimpan!`, 'success');
       navigateTo('history');
 
-      // 2. Realtime Database continuous sync
+      // Tulis ke Realtime DB (Hanya dibenarkan jika auth sah)
       updateCloudStatus('syncing');
       try {
         const quoteItemRef = ref(db, `quotations/${docId}`);
@@ -2875,8 +2844,13 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         updateCloudStatus('connected');
       } catch (err) {
         console.error("RTDB save error:", err);
-        showToast('Ralat simpan ke Realtime DB. Semak rules pangkalan data!', 'error');
-        updateCloudStatus('offline');
+        enqueuePendingSync('set', `quotations/${docId}`, quoteData);
+        if (err.code === "PERMISSION_DENIED") {
+          updateCloudStatus('error');
+          showToast("Kebenaran menulis (write) ditolak. Sila semak login ID.", "error");
+        } else {
+          updateCloudStatus('offline');
+        }
       }
     }
 
@@ -2935,7 +2909,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         updatedAt: new Date().toISOString()
       };
 
-      // Optimistic local update
       quotations.unshift(duplicated);
       saveLocalData();
       renderHistoryTable();
@@ -2943,15 +2916,14 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       renderProgressBars();
       showToast(`Quotation diduplikasi sebagai ${newQuoteNum}!`, 'success');
 
-      // Realtime Database Push
       updateCloudStatus('syncing');
       try {
         const quoteItemRef = ref(db, `quotations/${newDocId}`);
         await set(quoteItemRef, duplicated);
         updateCloudStatus('connected');
       } catch (err) {
-        console.error("Duplicate sync error:", err);
-        updateCloudStatus('offline');
+        enqueuePendingSync('set', `quotations/${newDocId}`, duplicated);
+        updateCloudStatus(err.code === "PERMISSION_DENIED" ? 'error' : 'offline');
       }
     }
 
@@ -2975,7 +2947,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       const targetId = deleteTargetId;
       closeConfirmModal();
 
-      // Instant optimistic local removal
       quotations = quotations.filter(q => q.id !== targetId);
       saveLocalData();
       showToast('Quotation berjaya dipadam.', 'info');
@@ -2983,15 +2954,14 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       renderHistoryTable();
       renderProgressBars();
 
-      // Realtime Database deletion
       updateCloudStatus('syncing');
       try {
         const quoteItemRef = ref(db, `quotations/${targetId}`);
         await remove(quoteItemRef);
         updateCloudStatus('connected');
       } catch (err) {
-        console.error("Delete sync error:", err);
-        updateCloudStatus('offline');
+        enqueuePendingSync('remove', `quotations/${targetId}`);
+        updateCloudStatus(err.code === "PERMISSION_DENIED" ? 'error' : 'offline');
       }
     }
 
@@ -3022,7 +2992,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       const recentList = quotations.slice(0, 5);
 
       recentList.forEach(q => {
-        // Desktop Row
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><strong style="color: var(--gold-light);">${q.quoteNumber}</strong></td>
@@ -3042,7 +3011,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         `;
         recentTbody.appendChild(tr);
 
-        // Mobile Card
         if (mobileCardsContainer) {
           const cardEl = document.createElement('div');
           cardEl.className = 'mobile-quote-card';
@@ -3130,8 +3098,8 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       if (mobileCardsContainer) mobileCardsContainer.innerHTML = '';
 
       const filtered = quotations.filter(q => {
-        const matchSearch = q.quoteNumber.toLowerCase().includes(searchTerm) ||
-                            q.clientName.toLowerCase().includes(searchTerm) ||
+        const matchSearch = (q.quoteNumber || '').toLowerCase().includes(searchTerm) ||
+                            (q.clientName || '').toLowerCase().includes(searchTerm) ||
                             (q.clientPhone && q.clientPhone.toLowerCase().includes(searchTerm));
         const matchStatus = (statusFilter === 'ALL') || (q.status === statusFilter);
         return matchSearch && matchStatus;
@@ -3144,7 +3112,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       emptyState.style.display = 'none';
 
       filtered.forEach(q => {
-        // Desktop Row
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><strong style="color: var(--gold-light);">${q.quoteNumber}</strong></td>
@@ -3167,7 +3134,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         `;
         tbody.appendChild(tr);
 
-        // Mobile Card
         if (mobileCardsContainer) {
           const cardEl = document.createElement('div');
           cardEl.className = 'mobile-quote-card';
@@ -3367,6 +3333,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       companySettings.bank = document.getElementById('setting-company-bank').value.trim();
       companySettings.terms = document.getElementById('setting-company-terms').value.trim();
 
+      localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(companySettings));
       showToast('Maklumat syarikat berjaya dikemaskini!', 'success');
 
       updateCloudStatus('syncing');
@@ -3375,8 +3342,8 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         await set(settingsDbRef, companySettings);
         updateCloudStatus('connected');
       } catch (err) {
-        console.error("RTDB settings save error:", err);
-        updateCloudStatus('offline');
+        enqueuePendingSync('set', 'companySettings', companySettings);
+        updateCloudStatus(err.code === "PERMISSION_DENIED" ? 'error' : 'offline');
       }
     }
 
@@ -3402,11 +3369,12 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
     window.confirmDeleteQuotation = confirmDeleteQuotation;
     window.filterQuotations = filterQuotations;
     window.previewQuotationById = previewQuotationById;
+    window.forceSyncRealtimeDB = forceSyncRealtimeDB;
 
     // Boot system
     document.addEventListener('DOMContentLoaded', () => {
       setupPWA();
-      checkAuthState();
+      setupAuthListener();
       initFirebaseSync();
       populateSettingsForm();
       initDefaultFormDates();
