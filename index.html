@@ -40,20 +40,20 @@
       --text-muted: #94a3b8;
       --border-color: rgba(255, 255, 255, 0.1);
       --border-gold: rgba(212, 175, 55, 0.35);
-      --glass-bg: rgba(18, 24, 38, 0.75);
+      --glass-bg: rgba(18, 24, 38, 0.82);
       --glass-border: rgba(255, 255, 255, 0.12);
       --glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 20px;
       --shadow-sm: 0 4px 16px rgba(0,0,0,0.3);
-      --transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-      --bottom-nav-height: 68px;
+      --transition: all 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+      --bottom-nav-height: 64px;
     }
 
     [data-theme="light"] {
       --bg-dark: #f1f4fb;
-      --bg-card: rgba(255, 255, 255, 0.85);
+      --bg-card: rgba(255, 255, 255, 0.88);
       --bg-card-solid: #ffffff;
       --bg-input: #ffffff;
       --gold-primary: #b89322;
@@ -66,7 +66,7 @@
       --text-muted: #64748b;
       --border-color: rgba(0, 0, 0, 0.09);
       --border-gold: rgba(184, 147, 34, 0.4);
-      --glass-bg: rgba(255, 255, 255, 0.82);
+      --glass-bg: rgba(255, 255, 255, 0.88);
       --glass-border: rgba(255, 255, 255, 0.95);
       --glass-shadow: 0 12px 32px rgba(148, 163, 184, 0.25);
       --shadow-sm: 0 4px 16px rgba(0,0,0,0.06);
@@ -90,100 +90,102 @@
       overflow-x: hidden;
       position: relative;
       transition: background-color 0.35s ease, color 0.35s ease;
-      padding-bottom: env(safe-area-inset-bottom);
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
     }
 
-    /* Ambient Colorful Glow Orbs */
+    /* Ambient Glow Orbs */
     .ambient-glow-orb {
       position: fixed;
       border-radius: 50%;
       filter: blur(120px);
       pointer-events: none;
       z-index: 0;
-      opacity: 0.45;
+      opacity: 0.38;
       transition: opacity 0.5s ease;
       will-change: transform;
     }
 
     [data-theme="light"] .ambient-glow-orb {
-      opacity: 0.25;
+      opacity: 0.2;
     }
 
     .orb-purple {
-      width: 440px;
-      height: 440px;
-      top: -100px;
-      left: -80px;
+      width: 380px;
+      height: 380px;
+      top: -80px;
+      left: -60px;
       background: radial-gradient(circle, #8b5cf6 0%, rgba(139, 92, 246, 0) 70%);
     }
 
     .orb-cyan {
-      width: 420px;
-      height: 420px;
-      top: 25%;
+      width: 360px;
+      height: 360px;
+      top: 30%;
       right: -80px;
       background: radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0) 70%);
     }
 
     .orb-gold {
-      width: 480px;
-      height: 480px;
-      bottom: 10%;
-      left: 15%;
+      width: 420px;
+      height: 420px;
+      bottom: 12%;
+      left: 10%;
       background: radial-gradient(circle, #f59e0b 0%, rgba(245, 158, 11, 0) 70%);
     }
 
     .orb-pink {
-      width: 360px;
-      height: 360px;
+      width: 320px;
+      height: 320px;
       bottom: -40px;
-      right: 10%;
+      right: 5%;
       background: radial-gradient(circle, #ec4899 0%, rgba(236, 72, 153, 0) 70%);
     }
 
-    /* Typography */
     h1, h2, h3, .brand-title {
       font-family: 'Cinzel', serif;
       letter-spacing: 0.5px;
       color: var(--text-heading);
     }
 
-    /* Fixed Top Header */
+    /* Fixed Top Header (Safe Area Responsive) */
     .top-header {
       position: sticky;
       top: 0;
       z-index: 100;
       background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
       border-bottom: 1px solid var(--border-color);
-      box-shadow: 0 4px 25px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
       transition: var(--transition);
-      padding-top: env(safe-area-inset-top);
+      padding-top: max(0.4rem, env(safe-area-inset-top));
     }
 
     .header-container {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 0.75rem 1.25rem;
+      padding: 0.55rem 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
+      gap: 0.8rem;
     }
 
     .brand-section {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
+      gap: 0.75rem;
       cursor: pointer;
       user-select: none;
     }
 
     .brand-logo-svg {
-      width: 42px;
-      height: 42px;
-      filter: drop-shadow(0 2px 8px rgba(212,175,55,0.4));
+      width: 38px;
+      height: 38px;
+      filter: drop-shadow(0 2px 6px rgba(212,175,55,0.4));
       flex-shrink: 0;
       border-radius: 8px;
     }
@@ -194,26 +196,26 @@
     }
 
     .brand-name {
-      font-size: 1.12rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--gold-light);
-      letter-spacing: 1.5px;
-      line-height: 1.2;
+      letter-spacing: 1.2px;
+      line-height: 1.15;
     }
 
     .brand-tag {
-      font-size: 0.68rem;
+      font-size: 0.64rem;
       color: var(--text-muted);
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
     }
 
     /* Desktop Navigation Links */
     .nav-links {
       display: flex;
-      gap: 0.4rem;
+      gap: 0.35rem;
       background: rgba(255, 255, 255, 0.05);
-      padding: 0.35rem;
+      padding: 0.3rem;
       border-radius: var(--radius-md);
       border: 1px solid var(--border-color);
     }
@@ -226,14 +228,14 @@
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 0.5rem 0.95rem;
+      padding: 0.45rem 0.85rem;
       border-radius: var(--radius-sm);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.4rem;
       transition: var(--transition);
       font-family: inherit;
     }
@@ -253,24 +255,25 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 0.65rem;
+      gap: 0.5rem;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.45rem;
       font-family: inherit;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
-      padding: 0.55rem 1.15rem;
+      padding: 0.5rem 1rem;
       border-radius: var(--radius-sm);
       cursor: pointer;
       transition: var(--transition);
       border: 1px solid transparent;
       text-decoration: none;
       white-space: nowrap;
+      touch-action: manipulation;
     }
 
     .btn:active {
@@ -286,7 +289,6 @@
     }
 
     .btn-gold:hover {
-      transform: translateY(-1px);
       box-shadow: 0 5px 20px rgba(212,175,55,0.48);
       filter: brightness(1.08);
     }
@@ -325,39 +327,34 @@
     }
 
     .btn-sm {
-      padding: 0.4rem 0.75rem;
-      font-size: 0.78rem;
+      padding: 0.38rem 0.7rem;
+      font-size: 0.76rem;
       border-radius: var(--radius-sm);
     }
 
     .theme-toggle-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.35rem;
       background: var(--bg-card);
       border: 1px solid var(--border-gold);
       color: var(--text-white);
-      padding: 0.4rem 0.8rem;
+      padding: 0.38rem 0.75rem;
       border-radius: 999px;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
       backdrop-filter: blur(8px);
     }
 
-    .theme-toggle-btn:hover {
-      transform: scale(1.04);
-      box-shadow: 0 0 12px var(--gold-glow);
-    }
-
-    /* Container Layout */
+    /* Container Layout with Safe Area Spacing */
     .app-main {
       flex: 1;
       max-width: 1400px;
       width: 100%;
       margin: 0 auto;
-      padding: 1.5rem 1.25rem calc(var(--bottom-nav-height) + 2rem) 1.25rem;
+      padding: 1.25rem 1rem calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 2rem) 1rem;
       position: relative;
       z-index: 1;
     }
@@ -365,8 +362,8 @@
     .view-section {
       display: none;
       opacity: 0;
-      transform: translateY(10px) scale(0.995);
-      transition: opacity 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform: translateY(8px) scale(0.995);
+      transition: opacity 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     .view-section.active {
@@ -375,12 +372,25 @@
       transform: translateY(0) scale(1);
     }
 
+    /* Mobile Quick Banner / Header Bar */
+    .mobile-dashboard-hero {
+      display: none;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(18, 24, 38, 0.85) 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1rem;
+      margin-bottom: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
     /* Colorful Glassmorphism Stat Cards */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.15rem;
-      margin-bottom: 1.65rem;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
     }
 
     .stat-card {
@@ -388,8 +398,8 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
       position: relative;
       overflow: hidden;
       box-shadow: var(--glass-shadow);
@@ -397,8 +407,7 @@
     }
 
     .stat-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      transform: translateY(-2px);
     }
 
     .stat-card::before {
@@ -406,7 +415,7 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 5px;
+      width: 4px;
       height: 100%;
     }
 
@@ -435,24 +444,28 @@
     .stat-card-pipeline::before { background: var(--gold-gradient); }
 
     .stat-label {
-      font-size: 0.76rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.8px;
       color: var(--text-muted);
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.25rem;
     }
 
     .stat-value {
-      font-size: 1.8rem;
+      font-size: 1.65rem;
       font-weight: 700;
       color: var(--text-white);
       font-family: 'Cinzel', serif;
+      line-height: 1.15;
     }
 
     .stat-sub {
-      font-size: 0.74rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
-      margin-top: 0.3rem;
+      margin-top: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* Glass Panels */
@@ -463,29 +476,26 @@
       border: 1px solid var(--border-gold);
       border-radius: var(--radius-lg);
       box-shadow: var(--glass-shadow);
-      padding: 1.45rem;
+      padding: 1.25rem;
       position: relative;
       overflow: hidden;
-    }
-
-    .progress-tracker-container {
-      margin-bottom: 1.65rem;
+      margin-bottom: 1.4rem;
     }
 
     .progress-tracker-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
       border-bottom: 1px solid var(--border-color);
-      padding-bottom: 0.85rem;
+      padding-bottom: 0.75rem;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 0.65rem;
     }
 
     .progress-stats-summary {
       display: flex;
-      gap: 0.85rem;
+      gap: 0.6rem;
       align-items: center;
       flex-wrap: wrap;
     }
@@ -493,26 +503,26 @@
     .progress-metric-pill {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-gold);
-      padding: 0.35rem 0.85rem;
+      padding: 0.3rem 0.75rem;
       border-radius: 999px;
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       color: var(--gold-light);
       display: flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.4rem;
     }
 
     .progress-bars-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.15rem;
+      gap: 0.9rem;
     }
 
     .progress-bar-card {
       background: rgba(15, 18, 26, 0.75);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
-      padding: 1rem 1.15rem;
+      padding: 0.9rem 1rem;
       transition: var(--transition);
     }
 
@@ -520,29 +530,24 @@
       background: rgba(255, 255, 255, 0.9);
     }
 
-    .progress-bar-card:hover {
-      border-color: var(--border-gold);
-      transform: translateY(-2px);
-    }
-
     .progress-info-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
     }
 
     .progress-title-tag {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: var(--text-white);
       display: flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.4rem;
     }
 
     .progress-percentage {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 800;
       color: var(--gold-light);
       font-family: 'Cinzel', serif;
@@ -550,11 +555,10 @@
 
     .progress-track {
       width: 100%;
-      height: 9px;
+      height: 8px;
       background: rgba(255, 255, 255, 0.08);
       border-radius: 999px;
       overflow: hidden;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
     }
 
     .progress-fill {
@@ -565,30 +569,26 @@
 
     .progress-fill.gold {
       background: linear-gradient(90deg, #aa8214 0%, #d4af37 60%, #fef08a 100%);
-      box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
     }
 
     .progress-fill.green {
       background: linear-gradient(90deg, #059669 0%, #10b981 70%, #6ee7b7 100%);
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
     }
 
     .progress-fill.blue {
       background: linear-gradient(90deg, #2563eb 0%, #3b82f6 70%, #93c5fd 100%);
-      box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
     }
 
     .progress-fill.purple {
       background: linear-gradient(90deg, #7c3aed 0%, #8b5cf6 70%, #c4b5fd 100%);
-      box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
     }
 
     .progress-footer-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 0.55rem;
-      font-size: 0.72rem;
+      margin-top: 0.45rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
     }
 
@@ -603,34 +603,35 @@
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
-      padding: 1.45rem;
+      padding: 1.35rem;
       box-shadow: var(--shadow-sm);
+      margin-bottom: 1.25rem;
     }
 
     .card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1.2rem;
-      padding-bottom: 0.85rem;
+      margin-bottom: 1.15rem;
+      padding-bottom: 0.75rem;
       border-bottom: 1px solid var(--border-color);
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 0.65rem;
     }
 
     .card-title {
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       color: var(--gold-light);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.45rem;
     }
 
     /* Form & Grid */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 1rem;
+      gap: 0.9rem;
     }
 
     .col-12 { grid-column: span 12; }
@@ -642,11 +643,11 @@
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.3rem;
     }
 
     .form-label {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 600;
       color: var(--text-muted);
       text-transform: uppercase;
@@ -662,8 +663,8 @@
       background: var(--bg-input);
       border: 1px solid var(--border-color);
       color: var(--text-white);
-      padding: 0.65rem 0.85rem;
-      font-size: 0.88rem;
+      padding: 0.62rem 0.8rem;
+      font-size: 0.86rem;
       font-family: inherit;
       border-radius: var(--radius-sm);
       transition: var(--transition);
@@ -678,48 +679,49 @@
 
     textarea.form-control {
       resize: vertical;
-      min-height: 80px;
+      min-height: 75px;
     }
 
     /* Presets Chips */
     .preset-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.35rem;
       margin-bottom: 0.85rem;
       align-items: center;
     }
 
     .preset-label {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
-      margin-right: 0.3rem;
+      margin-right: 0.2rem;
+      width: 100%;
     }
 
     .chip-btn {
       background: rgba(212, 175, 55, 0.1);
       border: 1px solid var(--border-gold);
       color: var(--gold-light);
-      padding: 0.3rem 0.65rem;
+      padding: 0.32rem 0.65rem;
       border-radius: 999px;
-      font-size: 0.73rem;
+      font-size: 0.72rem;
       cursor: pointer;
       transition: var(--transition);
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
+      touch-action: manipulation;
     }
 
-    .chip-btn:hover, .chip-btn:active {
-      background: rgba(212, 175, 55, 0.25);
-      border-color: var(--gold-primary);
-      transform: translateY(-1px);
+    .chip-btn:active {
+      transform: scale(0.96);
+      background: rgba(212, 175, 55, 0.28);
     }
 
-    /* Tables */
+    /* Items Table & Mobile Item Cards */
     .items-table-wrapper, .data-table-wrapper {
       overflow-x: auto;
-      margin: 1rem 0;
+      margin: 0.85rem 0;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
       -webkit-overflow-scrolling: touch;
@@ -728,17 +730,17 @@
     .items-table, .data-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 640px;
+      min-width: 600px;
     }
 
     .items-table th, .data-table th {
       background: rgba(0, 0, 0, 0.25);
       color: var(--gold-light);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.6px;
-      padding: 0.85rem 1rem;
+      padding: 0.75rem 0.85rem;
       text-align: left;
       border-bottom: 1px solid var(--border-color);
     }
@@ -749,14 +751,81 @@
     }
 
     .items-table td, .data-table td {
-      padding: 0.75rem 1rem;
+      padding: 0.7rem 0.85rem;
       border-bottom: 1px solid var(--border-color);
       vertical-align: middle;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
     }
 
-    .data-table tr:hover td {
-      background: rgba(255, 255, 255, 0.03);
+    /* Mobile Quotation Cards (Modern List view on phone) */
+    .mobile-cards-list {
+      display: none;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .mobile-quote-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.95rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    }
+
+    .mobile-quote-card:active {
+      border-color: var(--border-gold);
+    }
+
+    .mq-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mq-quote-no {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--gold-light);
+    }
+
+    .mq-client-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .mq-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .mq-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 0.5rem;
+      margin-top: 0.2rem;
+    }
+
+    .mq-total-val {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+    }
+
+    .mq-actions-row {
+      display: flex;
+      gap: 0.4rem;
+      justify-content: flex-end;
+      flex-wrap: wrap;
     }
 
     /* Calc Summary Card */
@@ -764,16 +833,16 @@
       background: var(--bg-card);
       border: 1px solid var(--border-gold);
       border-radius: var(--radius-md);
-      padding: 1.25rem;
-      margin-top: 1.25rem;
+      padding: 1.15rem;
+      margin-top: 1rem;
     }
 
     .calc-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.45rem 0;
-      font-size: 0.88rem;
+      padding: 0.4rem 0;
+      font-size: 0.85rem;
       color: var(--text-muted);
       border-bottom: 1px dashed var(--border-color);
     }
@@ -784,9 +853,9 @@
 
     .calc-row.total-row {
       color: var(--gold-light);
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 700;
-      padding-top: 0.75rem;
+      padding-top: 0.65rem;
       border-top: 1px solid var(--border-gold);
       border-bottom: none;
       font-family: 'Cinzel', serif;
@@ -795,17 +864,17 @@
     .calc-row.balance-row {
       color: #10b981;
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 1rem;
     }
 
     /* Status Badges */
     .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      padding: 0.25rem 0.65rem;
+      gap: 0.3rem;
+      padding: 0.22rem 0.6rem;
       border-radius: 999px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -817,23 +886,24 @@
     .badge-draft { background: rgba(156, 163, 175, 0.15); color: #d1d5db; border: 1px solid rgba(156, 163, 175, 0.4); }
     .badge-expired { background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.4); }
 
-    /* Modals */
+    /* Modals (Safe Area & Mobile Scroll Optimized) */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(5, 7, 10, 0.85);
-      backdrop-filter: blur(10px);
+      background: rgba(5, 7, 10, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 1rem;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.3s ease;
+      transition: all 0.28s ease;
     }
 
     .modal-overlay.active {
@@ -847,12 +917,12 @@
       border-radius: var(--radius-lg);
       width: 100%;
       max-width: 960px;
-      max-height: 90vh;
+      max-height: 92vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.65);
-      transform: translateY(20px) scale(0.97);
-      transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+      transform: translateY(15px) scale(0.98);
+      transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     .modal-overlay.active .modal-card {
@@ -860,70 +930,77 @@
     }
 
     .modal-header {
-      padding: 1rem 1.5rem;
+      padding: 0.85rem 1.25rem;
       border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 0.5rem;
+      flex-shrink: 0;
     }
 
     .modal-title {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       color: var(--gold-light);
     }
 
     .modal-body {
-      padding: 1.5rem;
+      padding: 1.25rem;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       flex: 1;
     }
 
     .modal-footer {
-      padding: 1rem 1.5rem;
+      padding: 0.85rem 1.25rem;
       border-top: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 0.75rem;
-      background: rgba(0,0,0,0.2);
+      gap: 0.65rem;
+      background: rgba(0,0,0,0.25);
       border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      flex-shrink: 0;
     }
 
-    /* Toast */
+    /* Toast Container with Safe Area Offset */
     .toast-container {
       position: fixed;
-      bottom: calc(var(--bottom-nav-height) + 1.25rem);
-      right: 1.25rem;
+      bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 0.85rem);
+      right: 1rem;
+      left: 1rem;
       z-index: 2000;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.45rem;
       pointer-events: none;
+      align-items: center;
     }
 
     .toast {
-      background: #1e2430;
+      background: #181f2c;
       color: #fff;
-      padding: 0.75rem 1.25rem;
+      padding: 0.7rem 1.15rem;
       border-radius: var(--radius-sm);
       border-left: 4px solid var(--gold-primary);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
       display: flex;
       align-items: center;
-      gap: 0.65rem;
-      font-size: 0.85rem;
-      animation: slideInRight 0.3s ease;
+      gap: 0.55rem;
+      font-size: 0.82rem;
+      animation: slideUpToast 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
       pointer-events: auto;
-      max-width: 360px;
+      max-width: 420px;
+      width: 100%;
     }
 
     .toast.success { border-left-color: #10b981; }
     .toast.error { border-left-color: #ef4444; }
     .toast.info { border-left-color: var(--gold-primary); }
 
-    @keyframes slideInRight {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+    @keyframes slideUpToast {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     /* Login Screen Gate */
@@ -938,8 +1015,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
-      transition: opacity 0.35s ease, visibility 0.35s ease;
+      padding: 1.25rem;
+      transition: opacity 0.32s ease, visibility 0.32s ease;
+      padding-top: max(1.25rem, env(safe-area-inset-top));
+      padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
     }
 
     .login-screen.hidden {
@@ -949,22 +1028,22 @@
     }
 
     .login-card {
-      background: rgba(18, 24, 34, 0.88);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
+      background: rgba(18, 24, 34, 0.9);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
       border: 1px solid rgba(212, 175, 55, 0.35);
       border-radius: var(--radius-lg);
       width: 100%;
-      max-width: 420px;
-      padding: 2.5rem 2rem;
-      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.12);
+      max-width: 400px;
+      padding: 2.2rem 1.8rem;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7);
       text-align: center;
     }
 
     .login-logo-box {
-      width: 110px;
-      height: 110px;
-      margin: 0 auto 1.25rem;
+      width: 95px;
+      height: 95px;
+      margin: 0 auto 1.15rem;
     }
 
     .login-logo-box svg {
@@ -975,20 +1054,20 @@
     }
 
     .login-title {
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--gold-light);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
 
     .login-sub {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
     }
 
     /* ==============================================================
-       MOBILE PWA BOTTOM TAB NAVIGATION (Smooth & Glassmorphic)
+       MOBILE PWA BOTTOM TAB NAVIGATION (Safe-Area & Ultra Fluid)
        ============================================================== */
     .mobile-bottom-nav {
       display: none;
@@ -998,11 +1077,11 @@
       right: 0;
       z-index: 95;
       background: var(--glass-bg);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
       border-top: 1px solid var(--border-gold);
-      box-shadow: 0 -8px 30px rgba(0,0,0,0.35);
-      padding: 0.45rem 0.85rem calc(0.45rem + env(safe-area-inset-bottom)) 0.85rem;
+      box-shadow: 0 -8px 30px rgba(0,0,0,0.45);
+      padding: 0.35rem 0.65rem max(0.45rem, env(safe-area-inset-bottom, 0px)) 0.65rem;
       justify-content: space-around;
       align-items: center;
       transition: var(--transition);
@@ -1013,30 +1092,31 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.25rem;
+      gap: 0.2rem;
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 0.45rem 0.75rem;
-      border-radius: 16px;
+      padding: 0.4rem 0.5rem;
+      border-radius: 14px;
       cursor: pointer;
       position: relative;
-      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
       font-family: inherit;
       flex: 1;
-      max-width: 82px;
+      max-width: 74px;
       touch-action: manipulation;
     }
 
     .mobile-tab-item svg {
-      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.3s ease;
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.25s ease;
     }
 
     .mobile-tab-item span {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 600;
       letter-spacing: 0.3px;
-      transition: color 0.3s ease, font-weight 0.3s ease;
+      transition: color 0.25s ease, font-weight 0.25s ease;
+      white-space: nowrap;
     }
 
     .mobile-tab-item:active {
@@ -1049,8 +1129,8 @@
 
     .mobile-tab-item.active svg {
       stroke: var(--gold-light);
-      transform: translateY(-2px) scale(1.12);
-      filter: drop-shadow(0 2px 8px var(--gold-glow));
+      transform: translateY(-2px) scale(1.1);
+      filter: drop-shadow(0 2px 6px var(--gold-glow));
     }
 
     .mobile-tab-item.active span {
@@ -1060,15 +1140,15 @@
 
     .mobile-tab-indicator {
       position: absolute;
-      bottom: 2px;
-      width: 18px;
+      bottom: 1px;
+      width: 16px;
       height: 3px;
       background: var(--gold-gradient);
       border-radius: 999px;
       box-shadow: 0 0 8px var(--gold-primary);
       opacity: 0;
       transform: scaleX(0.2);
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transition: opacity 0.25s ease, transform 0.25s ease;
     }
 
     .mobile-tab-item.active .mobile-tab-indicator {
@@ -1081,11 +1161,11 @@
       background: var(--gold-gradient);
       color: #0d0f13;
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      flex: 0 0 50px;
-      margin-top: -18px;
-      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.55), 0 0 12px rgba(212, 175, 55, 0.3);
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      margin-top: -16px;
+      box-shadow: 0 6px 18px rgba(212, 175, 55, 0.55), 0 0 10px rgba(212, 175, 55, 0.3);
       border: 2px solid rgba(255, 255, 255, 0.4);
       padding: 0;
     }
@@ -1095,12 +1175,16 @@
       stroke-width: 2.6;
     }
 
-    .mobile-tab-item.fab-tab:hover, .mobile-tab-item.fab-tab:active {
-      transform: scale(1.06);
+    .mobile-tab-item.fab-tab:active {
+      transform: scale(1.05);
     }
 
     .mobile-tab-item.fab-tab .mobile-tab-indicator {
       display: none;
+    }
+
+    .mobile-tab-item.fab-tab.active {
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.4), 0 8px 24px rgba(212, 175, 55, 0.7);
     }
 
     /* PRINTABLE DOCUMENT (A4 PAPER) */
@@ -1370,6 +1454,7 @@
         background: #ffffff !important;
         color: #000000 !important;
         font-size: 11pt;
+        padding: 0 !important;
       }
 
       .top-header,
@@ -1433,61 +1518,128 @@
       .quote-doc-meta { text-align: left; }
     }
 
-    /* Responsive Mobile Screen Optimizations */
+    /* ==============================================================
+       RESPONSIVE MOBILE VIEWPORT OPTIMIZATIONS (< 768px)
+       ============================================================== */
     @media (max-width: 768px) {
       .top-header .nav-links {
-        display: none; /* Hidden on mobile; replaced by bottom tab bar */
+        display: none;
       }
 
       .mobile-bottom-nav {
-        display: flex; /* Active floating glass tab bar */
+        display: flex;
+      }
+
+      .mobile-dashboard-hero {
+        display: flex;
       }
 
       .header-container {
-        padding: 0.6rem 1rem;
+        padding: 0.5rem 0.85rem;
       }
 
       .brand-name {
-        font-size: 1rem;
-        letter-spacing: 1px;
+        font-size: 0.92rem;
+        letter-spacing: 0.8px;
       }
 
       .brand-tag {
-        font-size: 0.62rem;
+        font-size: 0.6rem;
       }
 
-      .header-btn-new-quote {
-        display: none; /* Available in mobile tab bar as primary gold action */
-      }
-
-      .theme-label-text {
+      .header-btn-new-quote, .theme-label-text {
         display: none;
       }
 
       .app-main {
-        padding: 1rem 0.85rem calc(var(--bottom-nav-height) + 1.5rem) 0.85rem;
+        padding: 0.85rem 0.75rem calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 1.25rem) 0.75rem;
       }
 
-      .card {
-        padding: 1.15rem;
-      }
-
-      .glass-panel {
-        padding: 1.15rem;
+      /* 2x2 Clean Mobile KPI Grid */
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.65rem;
+        margin-bottom: 1rem;
       }
 
       .stat-card {
-        padding: 1.1rem;
+        padding: 0.85rem 0.75rem;
+        border-radius: var(--radius-sm);
       }
 
-      .toast-container {
-        right: 0.85rem;
-        left: 0.85rem;
-        bottom: calc(var(--bottom-nav-height) + 1rem);
+      .stat-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.5px;
       }
 
-      .toast {
-        max-width: 100%;
+      .stat-value {
+        font-size: 1.35rem;
+      }
+
+      .stat-sub {
+        font-size: 0.64rem;
+      }
+
+      .glass-panel {
+        padding: 1rem 0.85rem;
+        border-radius: var(--radius-md);
+        margin-bottom: 1rem;
+      }
+
+      .progress-bars-grid {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+      }
+
+      .progress-bar-card {
+        padding: 0.75rem 0.85rem;
+      }
+
+      .card {
+        padding: 1rem 0.85rem;
+        border-radius: var(--radius-md);
+        margin-bottom: 1rem;
+      }
+
+      /* Switch Data Table to Mobile Cards */
+      .data-table-wrapper {
+        display: none;
+      }
+
+      .mobile-cards-list {
+        display: flex;
+      }
+
+      /* Mobile Safe Action Modals */
+      .modal-overlay {
+        padding: 0.5rem;
+        align-items: flex-end;
+      }
+
+      .modal-card {
+        max-height: 94vh;
+        border-radius: var(--radius-md) var(--radius-md) 0 0;
+      }
+
+      .modal-header {
+        padding: 0.75rem 1rem;
+      }
+
+      .modal-body {
+        padding: 0.85rem;
+      }
+
+      .modal-footer {
+        padding: 0.75rem 1rem max(0.75rem, env(safe-area-inset-bottom));
+      }
+
+      .quotation-paper {
+        padding: 1.2rem 1rem;
+      }
+
+      .paper-signatures {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
       }
     }
   </style>
@@ -1526,11 +1678,11 @@
       <p class="login-sub">Log masuk untuk menguruskan sebut harga & resit</p>
 
       <form id="login-form" onsubmit="event.preventDefault(); window.handleLogin();">
-        <div class="form-group" style="text-align: left; margin-bottom: 1rem;">
+        <div class="form-group" style="text-align: left; margin-bottom: 0.85rem;">
           <label class="form-label required">ID Pengguna</label>
           <input type="text" id="login-username" class="form-control" placeholder="aimidiana" required autocomplete="username">
         </div>
-        <div class="form-group" style="text-align: left; margin-bottom: 1.5rem;">
+        <div class="form-group" style="text-align: left; margin-bottom: 1.25rem;">
           <label class="form-label required">Kata Laluan</label>
           <input type="password" id="login-password" class="form-control" placeholder="aimi123@" required autocomplete="current-password">
         </div>
@@ -1541,7 +1693,7 @@
     </div>
   </div>
 
-  <!-- FIXED TOP HEADER -->
+  <!-- FIXED TOP HEADER (SAFE AREA ADAPTIVE) -->
   <header class="top-header no-print">
     <div class="header-container">
       <div class="brand-section" onclick="window.navigateTo('dashboard')">
@@ -1555,31 +1707,31 @@
         </div>
       </div>
 
-      <!-- Desktop Nav -->
+      <!-- Desktop Nav Links -->
       <nav class="nav-links">
         <button class="nav-btn active" id="nav-dashboard" onclick="window.navigateTo('dashboard')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
           <span>Dashboard</span>
         </button>
         <button class="nav-btn" id="nav-create" onclick="window.startNewQuotation()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           <span>Create Quote</span>
         </button>
         <button class="nav-btn" id="nav-history" onclick="window.navigateTo('history')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
           <span>History</span>
         </button>
         <button class="nav-btn" id="nav-settings" onclick="window.navigateTo('settings')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
           <span>Company</span>
         </button>
       </nav>
 
       <div class="header-actions">
         <!-- Cloud Sync Pill -->
-        <div style="display: flex; align-items: center; gap: 0.45rem; background: rgba(255,255,255,0.06); padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid var(--border-color);">
-          <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;" id="cloud-status-dot"></div>
-          <span style="font-size: 0.74rem; font-weight: 600; color: var(--gold-light);" id="cloud-status-text">Cloud Sync</span>
+        <div style="display: flex; align-items: center; gap: 0.35rem; background: rgba(255,255,255,0.06); padding: 0.3rem 0.65rem; border-radius: 999px; border: 1px solid var(--border-color);">
+          <div style="width: 7px; height: 7px; border-radius: 50%; background: #10b981;" id="cloud-status-dot"></div>
+          <span style="font-size: 0.72rem; font-weight: 600; color: var(--gold-light);" id="cloud-status-text">Cloud</span>
         </div>
 
         <!-- Light / Night Mode Switcher -->
@@ -1589,11 +1741,12 @@
         </button>
 
         <button class="btn btn-gold btn-sm header-btn-new-quote" onclick="window.startNewQuotation()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          <span>+ New Quote</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>+ Quote</span>
         </button>
+
         <button class="btn btn-secondary btn-sm" onclick="window.handleLogout()" title="Log Keluar">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
         </button>
       </div>
     </div>
@@ -1608,29 +1761,42 @@
   <!-- MAIN APP CONTAINER -->
   <main class="app-main">
 
-    <!-- VIEW 1: DASHBOARD -->
+    <!-- VIEW 1: DASHBOARD (MOBILE OPTIMIZED HIERARCHY) -->
     <section id="view-dashboard" class="view-section active">
-      <!-- Colorful KPI Stats Grid -->
+      
+      <!-- Mobile Hero Action Card -->
+      <div class="mobile-dashboard-hero">
+        <div>
+          <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Selamat Datang</div>
+          <div style="font-size: 1rem; font-weight: 700; color: var(--gold-light);">Aimi Diana</div>
+        </div>
+        <button class="btn btn-gold btn-sm" onclick="window.startNewQuotation()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>+ Jana Quote</span>
+        </button>
+      </div>
+
+      <!-- 2x2 Clean Mobile KPI Grid -->
       <div class="stats-grid">
         <div class="stat-card stat-card-total">
-          <div class="stat-label">Total Quotations</div>
+          <div class="stat-label">Total Quotes</div>
           <div class="stat-value" style="color: #a78bfa;" id="stat-total-count">0</div>
           <div class="stat-sub">Semua rekod sebut harga</div>
         </div>
         <div class="stat-card stat-card-pending">
-          <div class="stat-label">Pending Decision</div>
+          <div class="stat-label">Pending</div>
           <div class="stat-value" style="color: #fbbf24;" id="stat-pending-count">0</div>
           <div class="stat-sub">Menunggu kelulusan</div>
         </div>
         <div class="stat-card stat-card-accepted">
-          <div class="stat-label">Accepted / Confirmed</div>
+          <div class="stat-label">Accepted</div>
           <div class="stat-value" style="color: #34d399;" id="stat-accepted-count">0</div>
-          <div class="stat-sub">Tawaran diterima</div>
+          <div class="stat-sub">Tawaran disahkan</div>
         </div>
         <div class="stat-card stat-card-pipeline">
-          <div class="stat-label">Total Pipeline Value</div>
-          <div class="stat-value" style="color: var(--gold-light);" id="stat-total-val">RM 0.00</div>
-          <div class="stat-sub">Nilai keseluruhan sebut harga</div>
+          <div class="stat-label">Pipeline Value</div>
+          <div class="stat-value" style="color: var(--gold-light);" id="stat-total-val">RM 0</div>
+          <div class="stat-sub">Nilai keseluruhan</div>
         </div>
       </div>
 
@@ -1638,19 +1804,19 @@
       <div class="glass-panel progress-tracker-container">
         <div class="progress-tracker-header">
           <div>
-            <h3 style="font-size: 1.05rem; color: var(--gold-light); display: flex; align-items: center; gap: 0.5rem;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              Quotation Pipeline & Package Progress Bar
+            <h3 style="font-size: 0.98rem; color: var(--gold-light); display: flex; align-items: center; gap: 0.45rem;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Kemajuan Pakej & Penukaran
             </h3>
-            <p style="font-size: 0.74rem; color: var(--text-muted); margin-top: 0.25rem;">Pemantauan prestasi pakej dekorasi & penukaran jualan acara (Glassmorphic UI)</p>
+            <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Pemantauan sasaran jualan dekorasi & perkhidmatan acara</p>
           </div>
           <div class="progress-stats-summary">
             <div class="progress-metric-pill">
-              <span>Kadar Kejayaan:</span>
+              <span>Kejayaan:</span>
               <strong id="prog-overall-rate" style="color: #34d399;">0%</strong>
             </div>
             <div class="progress-metric-pill">
-              <span>Sasaran Bulanan:</span>
+              <span>Sasaran:</span>
               <strong id="prog-target-val" style="color: var(--gold-light);">RM 5,000</strong>
             </div>
           </div>
@@ -1661,16 +1827,17 @@
         </div>
       </div>
 
-      <!-- Recent Quotations Card -->
+      <!-- Recent Quotations Card with Adaptive Desktop Table & Mobile Card View -->
       <div class="card">
         <div class="card-header">
           <h2 class="card-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
             Quotation Terkini
           </h2>
           <button class="btn btn-outline-gold btn-sm" onclick="window.navigateTo('history')">Lihat Semua →</button>
         </div>
 
+        <!-- Desktop Table View -->
         <div class="data-table-wrapper">
           <table class="data-table">
             <thead>
@@ -1688,29 +1855,35 @@
             </tbody>
           </table>
         </div>
-        <div id="dashboard-empty-state" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); display: none;">
-          <p>Belum ada sebut harga dijana.</p>
-          <button class="btn btn-gold btn-sm" style="margin-top: 0.85rem;" onclick="window.startNewQuotation()">+ Jana Sebut Harga Baru</button>
+
+        <!-- Mobile Card View (Optimized for Small Screens) -->
+        <div class="mobile-cards-list" id="dashboard-recent-mobile-cards">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div id="dashboard-empty-state" style="text-align: center; padding: 2.2rem 1rem; color: var(--text-muted); display: none;">
+          <p style="font-size: 0.85rem;">Belum ada sebut harga dijana.</p>
+          <button class="btn btn-gold btn-sm" style="margin-top: 0.75rem;" onclick="window.startNewQuotation()">+ Jana Sebut Harga Baru</button>
         </div>
       </div>
     </section>
 
-    <!-- VIEW 2: CREATE / EDIT QUOTATION -->
+    <!-- VIEW 2: CREATE / EDIT QUOTATION (TOUCH-OPTIMIZED) -->
     <section id="view-create" class="view-section">
       <div class="card">
         <div class="card-header">
           <h2 class="card-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
             <span id="form-heading">Jana Quotation Baru</span>
           </h2>
-          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-            <button class="btn btn-secondary btn-sm" onclick="window.resetFormToBlank()">Set Semula</button>
+          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="window.resetFormToBlank()">Reset</button>
             <button class="btn btn-outline-gold btn-sm" onclick="window.previewCurrentForm()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               Preview
             </button>
             <button class="btn btn-gold btn-sm" onclick="window.saveQuotation()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline></svg>
               Simpan
             </button>
           </div>
@@ -1720,8 +1893,8 @@
           <input type="hidden" id="edit-quote-id">
 
           <!-- Section 1: Client & Dates -->
-          <h3 style="color: var(--gold-light); font-size: 0.95rem; margin-bottom: 0.75rem; border-left: 3px solid var(--gold-primary); padding-left: 0.5rem;">1. Maklumat Quotation & Pelanggan</h3>
-          <div class="form-grid" style="margin-bottom: 1.5rem;">
+          <h3 style="color: var(--gold-light); font-size: 0.92rem; margin-bottom: 0.65rem; border-left: 3px solid var(--gold-primary); padding-left: 0.45rem;">1. Maklumat Quotation & Pelanggan</h3>
+          <div class="form-grid" style="margin-bottom: 1.25rem;">
             <div class="col-4">
               <div class="form-group">
                 <label class="form-label required">No. Quotation</label>
@@ -1749,7 +1922,7 @@
             </div>
             <div class="col-6">
               <div class="form-group">
-                <label class="form-label">Nama Syarikat / Organisasi</label>
+                <label class="form-label">Syarikat / Organisasi</label>
                 <input type="text" id="client-company" class="form-control" placeholder="cth: SK Batu Kurau / Persendirian">
               </div>
             </div>
@@ -1776,11 +1949,11 @@
           </div>
 
           <!-- Section 2: Event Details -->
-          <h3 style="color: var(--gold-light); font-size: 0.95rem; margin-bottom: 0.75rem; border-left: 3px solid var(--gold-primary); padding-left: 0.5rem;">2. Butiran Majlis & Acara</h3>
-          <div class="form-grid" style="margin-bottom: 1.5rem;">
+          <h3 style="color: var(--gold-light); font-size: 0.92rem; margin-bottom: 0.65rem; border-left: 3px solid var(--gold-primary); padding-left: 0.45rem;">2. Butiran Majlis & Acara</h3>
+          <div class="form-grid" style="margin-bottom: 1.25rem;">
             <div class="col-6">
               <div class="form-group">
-                <label class="form-label">Tarikh Acara (Event Date)</label>
+                <label class="form-label">Tarikh Acara</label>
                 <input type="date" id="event-date" class="form-control">
               </div>
             </div>
@@ -1805,8 +1978,8 @@
           </div>
 
           <!-- Section 3: Line Items -->
-          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
-            <h3 style="color: var(--gold-light); font-size: 0.95rem; border-left: 3px solid var(--gold-primary); padding-left: 0.5rem;">3. Senarai Pakej & Perkhidmatan</h3>
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.45rem; flex-wrap: wrap; gap: 0.4rem;">
+            <h3 style="color: var(--gold-light); font-size: 0.92rem; border-left: 3px solid var(--gold-primary); padding-left: 0.45rem;">3. Senarai Pakej & Perkhidmatan</h3>
             <button type="button" class="btn btn-gold btn-sm" onclick="window.addItemRow()">+ Tambah Item</button>
           </div>
 
@@ -1824,10 +1997,10 @@
             <table class="items-table">
               <thead>
                 <tr>
-                  <th style="width: 42%;">Item / Perkhidmatan</th>
+                  <th style="width: 44%;">Item / Perkhidmatan</th>
                   <th style="width: 14%; text-align: center;">Kuantiti</th>
-                  <th style="width: 20%; text-align: right;">Harga Seunit (RM)</th>
-                  <th style="width: 18%; text-align: right;">Jumlah (RM)</th>
+                  <th style="width: 20%; text-align: right;">Harga Seunit</th>
+                  <th style="width: 16%; text-align: right;">Jumlah</th>
                   <th style="width: 6%; text-align: center;">Padam</th>
                 </tr>
               </thead>
@@ -1840,14 +2013,14 @@
           <!-- Section 4: Notes & Financials -->
           <div class="form-grid" style="align-items: flex-start;">
             <div class="col-6">
-              <h3 style="color: var(--gold-light); font-size: 0.95rem; margin-bottom: 0.75rem; border-left: 3px solid var(--gold-primary); padding-left: 0.5rem;">4. Nota & Terma</h3>
+              <h3 style="color: var(--gold-light); font-size: 0.92rem; margin-bottom: 0.65rem; border-left: 3px solid var(--gold-primary); padding-left: 0.45rem;">4. Nota & Terma</h3>
               
-              <div class="form-group" style="margin-bottom: 0.75rem;">
+              <div class="form-group" style="margin-bottom: 0.65rem;">
                 <label class="form-label">Nota Kepada Pelanggan</label>
                 <textarea id="quote-notes" class="form-control" rows="2" placeholder="Terima kasih atas sokongan anda memilih EventPlannerPerak."></textarea>
               </div>
 
-              <div class="form-group" style="margin-bottom: 0.75rem;">
+              <div class="form-group" style="margin-bottom: 0.65rem;">
                 <label class="form-label">Polisi & Kaedah Pembayaran</label>
                 <textarea id="quote-payment-terms" class="form-control" rows="3"></textarea>
               </div>
@@ -1860,7 +2033,7 @@
 
             <div class="col-6">
               <div class="calc-card">
-                <h4 style="color: var(--gold-light); font-size: 1rem; margin-bottom: 0.75rem; font-family: 'Cinzel', serif;">Ringkasan Kewangan</h4>
+                <h4 style="color: var(--gold-light); font-size: 0.95rem; margin-bottom: 0.65rem; font-family: 'Cinzel', serif;">Ringkasan Kewangan</h4>
                 
                 <div class="calc-row">
                   <span>Subtotal</span>
@@ -1868,21 +2041,21 @@
                 </div>
 
                 <div class="calc-row">
-                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <div style="display: flex; align-items: center; gap: 0.4rem;">
                     <span>Diskaun:</span>
-                    <select id="discount-type" class="form-control" style="width: 75px; padding: 0.2rem 0.4rem; font-size: 0.75rem;" onchange="window.calculateFinancials()">
+                    <select id="discount-type" class="form-control" style="width: 70px; padding: 0.2rem 0.35rem; font-size: 0.74rem;" onchange="window.calculateFinancials()">
                       <option value="RM">RM</option>
                       <option value="%">%</option>
                     </select>
-                    <input type="number" id="discount-val" class="form-control" style="width: 80px; padding: 0.2rem 0.4rem; font-size: 0.75rem;" value="0" min="0" step="any" oninput="window.calculateFinancials()">
+                    <input type="number" id="discount-val" class="form-control" style="width: 75px; padding: 0.2rem 0.35rem; font-size: 0.74rem;" value="0" min="0" step="any" oninput="window.calculateFinancials()">
                   </div>
                   <span id="calc-discount-display" style="color: #ef4444;">- RM 0.00</span>
                 </div>
 
                 <div class="calc-row">
-                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <div style="display: flex; align-items: center; gap: 0.4rem;">
                     <span>Caj Tambahan / Setup:</span>
-                    <input type="number" id="extra-charge" class="form-control" style="width: 90px; padding: 0.2rem 0.4rem; font-size: 0.75rem;" value="0" min="0" step="any" oninput="window.calculateFinancials()">
+                    <input type="number" id="extra-charge" class="form-control" style="width: 85px; padding: 0.2rem 0.35rem; font-size: 0.74rem;" value="0" min="0" step="any" oninput="window.calculateFinancials()">
                   </div>
                   <span id="calc-extra-display" style="color: var(--text-white);">+ RM 0.00</span>
                 </div>
@@ -1893,9 +2066,9 @@
                 </div>
 
                 <div class="calc-row">
-                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <div style="display: flex; align-items: center; gap: 0.4rem;">
                     <span>Deposit Dibayar (RM):</span>
-                    <input type="number" id="deposit-amount" class="form-control" style="width: 100px; padding: 0.2rem 0.4rem; font-size: 0.75rem;" value="0" min="0" step="any" oninput="window.calculateFinancials()">
+                    <input type="number" id="deposit-amount" class="form-control" style="width: 90px; padding: 0.2rem 0.35rem; font-size: 0.74rem;" value="0" min="0" step="any" oninput="window.calculateFinancials()">
                   </div>
                   <span id="calc-deposit-display" style="color: #f59e0b;">- RM 0.00</span>
                 </div>
@@ -1908,14 +2081,14 @@
             </div>
           </div>
 
-          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; flex-wrap: wrap;">
+          <div style="display: flex; justify-content: flex-end; gap: 0.65rem; margin-top: 1.25rem; border-top: 1px solid var(--border-color); padding-top: 0.85rem; flex-wrap: wrap;">
             <button type="button" class="btn btn-secondary" onclick="window.navigateTo('dashboard')">Batal</button>
             <button type="button" class="btn btn-outline-gold" onclick="window.previewCurrentForm()">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               Preview Quotation
             </button>
             <button type="submit" class="btn btn-gold">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline></svg>
               Simpan Quotation
             </button>
           </div>
@@ -1923,22 +2096,22 @@
       </div>
     </section>
 
-    <!-- VIEW 3: QUOTATION HISTORY -->
+    <!-- VIEW 3: QUOTATION HISTORY (MOBILE OPTIMIZED CARDS & SEARCH) -->
     <section id="view-history" class="view-section">
       <div class="card">
         <div class="card-header">
           <h2 class="card-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
             Senarai Rekod Quotation & Resit
           </h2>
-          <button class="btn btn-gold btn-sm" onclick="window.startNewQuotation()">+ Tambah Quotation</button>
+          <button class="btn btn-gold btn-sm" onclick="window.startNewQuotation()">+ Tambah</button>
         </div>
 
-        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.25rem;">
-          <div style="flex: 1; min-width: 220px;">
-            <input type="text" id="search-input" class="form-control" placeholder="Cari nombor quote atau nama pelanggan..." oninput="window.filterQuotations()">
+        <div style="display: flex; flex-wrap: wrap; gap: 0.65rem; margin-bottom: 1rem;">
+          <div style="flex: 1; min-width: 200px;">
+            <input type="text" id="search-input" class="form-control" placeholder="Cari nombor quote atau pelanggan..." oninput="window.filterQuotations()">
           </div>
-          <div style="width: 180px;">
+          <div style="width: 150px;">
             <select id="filter-status" class="form-control" onchange="window.filterQuotations()">
               <option value="ALL">Semua Status</option>
               <option value="Draft">Draft</option>
@@ -1950,6 +2123,7 @@
           </div>
         </div>
 
+        <!-- Desktop History Table -->
         <div class="data-table-wrapper">
           <table class="data-table">
             <thead>
@@ -1969,8 +2143,13 @@
           </table>
         </div>
 
-        <div id="history-empty-state" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); display: none;">
-          <p>Tiada rekod sepadan ditemui.</p>
+        <!-- Mobile History Cards -->
+        <div class="mobile-cards-list" id="history-mobile-cards">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div id="history-empty-state" style="text-align: center; padding: 2.2rem 1rem; color: var(--text-muted); display: none;">
+          <p style="font-size: 0.85rem;">Tiada rekod sepadan ditemui.</p>
         </div>
       </div>
     </section>
@@ -1980,7 +2159,7 @@
       <div class="card" style="max-width: 800px; margin: 0 auto;">
         <div class="card-header">
           <h2 class="card-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
             Profil & Maklumat Syarikat
           </h2>
           <button class="btn btn-gold btn-sm" onclick="window.saveCompanySettings()">Simpan Tetapan</button>
@@ -2040,38 +2219,38 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
   </main>
 
   <!-- ==============================================================
-       MOBILE PWA BOTTOM TAB NAVIGATION (Ultra-Smooth, Glassmorphism)
+       MOBILE PWA BOTTOM TAB NAVIGATION (Safe-Area Aware & Fluid)
        ============================================================== -->
   <nav class="mobile-bottom-nav no-print" id="mobile-bottom-nav">
     <!-- Tab 1: Dashboard -->
     <button class="mobile-tab-item active" id="mob-nav-dashboard" onclick="window.navigateTo('dashboard')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
       <span>Utama</span>
       <div class="mobile-tab-indicator"></div>
     </button>
 
     <!-- Tab 2: History -->
     <button class="mobile-tab-item" id="mob-nav-history" onclick="window.navigateTo('history')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
       <span>Sejarah</span>
       <div class="mobile-tab-indicator"></div>
     </button>
 
     <!-- Center Floating Action Button: Create Quote -->
     <button class="mobile-tab-item fab-tab" id="mob-nav-create" onclick="window.startNewQuotation()" title="Jana Sebut Harga Baru">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
     </button>
 
     <!-- Tab 3: Settings / Company -->
     <button class="mobile-tab-item" id="mob-nav-settings" onclick="window.navigateTo('settings')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
       <span>Syarikat</span>
       <div class="mobile-tab-indicator"></div>
     </button>
 
     <!-- Tab 4: Theme Toggle Shortcut -->
     <button class="mobile-tab-item" onclick="window.toggleTheme()" title="Tukar Tema">
-      <span style="font-size: 1.15rem; line-height: 1; margin-bottom: 2px;" id="mob-theme-icon">🌙</span>
+      <span style="font-size: 1.05rem; line-height: 1; margin-bottom: 2px;" id="mob-theme-icon">🌙</span>
       <span id="mob-theme-text">Mod</span>
     </button>
   </nav>
@@ -2080,13 +2259,13 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
   <div class="modal-overlay" id="preview-modal">
     <div class="modal-card">
       <div class="modal-header no-print">
-        <h3 class="modal-title">Pratonton Rasmi Dokumen Sebut Harga (A4)</h3>
-        <div style="display: flex; gap: 0.5rem;">
+        <h3 class="modal-title">Pratonton Rasmi Dokumen Sebut Harga</h3>
+        <div style="display: flex; gap: 0.45rem;">
           <button class="btn btn-gold btn-sm" onclick="window.print()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
             Cetak / PDF
           </button>
-          <button class="btn btn-secondary btn-sm" onclick="window.closePreviewModal()">✕ Tutup</button>
+          <button class="btn btn-secondary btn-sm" onclick="window.closePreviewModal()">✕</button>
         </div>
       </div>
       
@@ -2238,13 +2417,13 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
   <!-- MODAL: CONFIRM DELETE -->
   <div class="modal-overlay" id="confirm-modal">
-    <div class="modal-card" style="max-width: 420px;">
+    <div class="modal-card" style="max-width: 400px;">
       <div class="modal-header">
         <h3 class="modal-title" style="color: #ef4444;">Pengesahan Padam</h3>
         <button class="btn btn-secondary btn-sm" onclick="window.closeConfirmModal()">✕</button>
       </div>
       <div class="modal-body">
-        <p id="confirm-modal-msg" style="font-size: 0.9rem; line-height: 1.5;">Adakah anda pasti ingin memadamkan sebut harga ini?</p>
+        <p id="confirm-modal-msg" style="font-size: 0.88rem; line-height: 1.5;">Adakah anda pasti ingin memadamkan sebut harga ini?</p>
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary btn-sm" onclick="window.closeConfirmModal()">Batal</button>
@@ -2304,7 +2483,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       address: "7983 Kg. Tok Mydeen, Batu 21, 34520 Batu Kurau, Taiping, Perak.",
       phone: "011-20908746",
       email: "eventplannerperak@gmail.com",
-      bank: "Maybank: 158051788426(AIMI DIANA)",
+      bank: "Maybank: 158051788426 (AIMI DIANA)",
       terms: "1. Tempahan hanya disahkan setelah bayaran deposit 50% diterima.\n2. Baki bayaran hendaklah diselesaikan sepenuhnya sebelum hari majlis.\n3. Sebarang pembatalan dalam tempoh 7 hari dari tarikh majlis tidak akan dikembalikan deposit."
     };
 
@@ -2312,7 +2491,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
     // PWA STANDALONE & SERVICE WORKER SETUP
     // ==============================================================
     function setupPWA() {
-      // 1. Generate SVG Data URI for EP Logo Icon
       const svgIconRaw = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
         <rect width="400" height="400" rx="30" fill="#000000"/>
         <g transform="translate(130, 95)">
@@ -2334,7 +2512,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       const appleIconEl = document.getElementById('apple-touch-icon');
       if (appleIconEl) appleIconEl.setAttribute('href', svgDataUri);
 
-      // 2. Generate and attach Web App Manifest dynamically
       const manifestObject = {
         name: "EventPlannerPerak Quotation",
         short_name: "EPPerak",
@@ -2362,17 +2539,14 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         console.warn("Manifest Blob creation fallback:", e);
       }
 
-      // 3. Register lightweight Service Worker for standalone caching
       if ('serviceWorker' in navigator) {
         try {
           const swCode = `
-            const CACHE_NAME = 'epperak-v1';
+            const CACHE_NAME = 'epperak-v2';
             self.addEventListener('install', e => { self.skipWaiting(); });
             self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
             self.addEventListener('fetch', e => {
-              e.respondWith(
-                fetch(e.request).catch(() => caches.match(e.request))
-              );
+              e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
             });
           `;
           const swBlob = new Blob([swCode], { type: 'application/javascript' });
@@ -2477,10 +2651,10 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       if (dot && text) {
         if (connected) {
           dot.style.background = '#10b981';
-          text.textContent = 'Cloud Connected';
+          text.textContent = 'Cloud';
         } else {
           dot.style.background = '#f59e0b';
-          text.textContent = 'Local Mode';
+          text.textContent = 'Local';
         }
       }
     }
@@ -2586,7 +2760,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       return `EPP-${year}-${nextNum}`;
     }
 
-    // Synchronized Navigation for both Desktop Top-Header & Mobile Bottom Tab Bar
+    // Fully Responsive Navigation for Desktop Header & Mobile Bottom Tab Bar
     function navigateTo(viewName) {
       document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
@@ -2645,14 +2819,14 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
       row.innerHTML = `
         <td>
-          <input type="text" class="form-control item-name" placeholder="Nama Pakej / Servis" value="${escapeHtml(name)}" required style="margin-bottom: 0.35rem; font-weight: 600;">
-          <input type="text" class="form-control item-desc" placeholder="Keterangan ringkas / spesifikasi" value="${escapeHtml(desc)}" style="font-size: 0.78rem;">
+          <input type="text" class="form-control item-name" placeholder="Nama Pakej / Servis" value="${escapeHtml(name)}" required style="margin-bottom: 0.3rem; font-weight: 600;">
+          <input type="text" class="form-control item-desc" placeholder="Keterangan / spesifikasi" value="${escapeHtml(desc)}" style="font-size: 0.76rem;">
         </td>
         <td style="text-align: center;">
-          <input type="number" class="form-control item-qty" value="${qty}" min="1" step="1" style="text-align: center; width: 70px; margin: 0 auto;">
+          <input type="number" class="form-control item-qty" value="${qty}" min="1" step="1" style="text-align: center; width: 68px; margin: 0 auto;">
         </td>
         <td style="text-align: right;">
-          <input type="number" class="form-control item-price" value="${unitPrice}" min="0" step="any" style="text-align: right; width: 110px; margin-left: auto;">
+          <input type="number" class="form-control item-price" value="${unitPrice}" min="0" step="any" style="text-align: right; width: 100px; margin-left: auto;">
         </td>
         <td style="text-align: right; vertical-align: middle; font-weight: 700; color: var(--text-white);">
           <span class="row-total">RM 0.00</span>
@@ -2915,8 +3089,11 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       document.getElementById('stat-total-val').textContent = formatCurrency(totalPipelineVal);
 
       const recentTbody = document.getElementById('dashboard-recent-tbody');
+      const mobileCardsContainer = document.getElementById('dashboard-recent-mobile-cards');
       const emptyState = document.getElementById('dashboard-empty-state');
+      
       recentTbody.innerHTML = '';
+      if (mobileCardsContainer) mobileCardsContainer.innerHTML = '';
 
       if (quotations.length === 0) {
         emptyState.style.display = 'block';
@@ -2924,7 +3101,10 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       }
       emptyState.style.display = 'none';
 
-      quotations.slice(0, 5).forEach(q => {
+      const recentList = quotations.slice(0, 5);
+
+      recentList.forEach(q => {
+        // Desktop Row
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><strong style="color: var(--gold-light);">${q.quoteNumber}</strong></td>
@@ -2943,6 +3123,32 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
           </td>
         `;
         recentTbody.appendChild(tr);
+
+        // Mobile Card (Safe-touch friendly)
+        if (mobileCardsContainer) {
+          const cardEl = document.createElement('div');
+          cardEl.className = 'mobile-quote-card';
+          cardEl.innerHTML = `
+            <div class="mq-card-header">
+              <span class="mq-quote-no">${q.quoteNumber}</span>
+              ${getStatusBadge(q.status)}
+            </div>
+            <div class="mq-client-name">${escapeHtml(q.clientName)}</div>
+            <div class="mq-meta-row">
+              <span>📅 Event: ${q.eventDate || '-'}</span>
+              <span>📞 ${escapeHtml(q.clientPhone || '-')}</span>
+            </div>
+            <div class="mq-total-row">
+              <span style="font-size: 0.74rem; color: var(--text-muted);">Jumlah:</span>
+              <span class="mq-total-val">${formatCurrency(q.grandTotal)}</span>
+            </div>
+            <div class="mq-actions-row">
+              <button class="btn btn-secondary btn-sm" onclick="window.previewQuotationById('${q.id}')">👁️ Preview</button>
+              <button class="btn btn-outline-gold btn-sm" onclick="window.editQuotation('${q.id}')">✏️ Edit</button>
+            </div>
+          `;
+          mobileCardsContainer.appendChild(cardEl);
+        }
       });
     }
 
@@ -2997,11 +3203,13 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
     function renderHistoryTable() {
       const tbody = document.getElementById('history-tbody');
+      const mobileCardsContainer = document.getElementById('history-mobile-cards');
       const emptyState = document.getElementById('history-empty-state');
       const searchTerm = (document.getElementById('search-input')?.value || '').toLowerCase().trim();
       const statusFilter = document.getElementById('filter-status')?.value || 'ALL';
 
       tbody.innerHTML = '';
+      if (mobileCardsContainer) mobileCardsContainer.innerHTML = '';
 
       const filtered = quotations.filter(q => {
         const matchSearch = q.quoteNumber.toLowerCase().includes(searchTerm) ||
@@ -3018,6 +3226,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       emptyState.style.display = 'none';
 
       filtered.forEach(q => {
+        // Desktop Row
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><strong style="color: var(--gold-light);">${q.quoteNumber}</strong></td>
@@ -3039,6 +3248,34 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
           </td>
         `;
         tbody.appendChild(tr);
+
+        // Mobile Card
+        if (mobileCardsContainer) {
+          const cardEl = document.createElement('div');
+          cardEl.className = 'mobile-quote-card';
+          cardEl.innerHTML = `
+            <div class="mq-card-header">
+              <span class="mq-quote-no">${q.quoteNumber}</span>
+              ${getStatusBadge(q.status)}
+            </div>
+            <div class="mq-client-name">${escapeHtml(q.clientName)}</div>
+            <div class="mq-meta-row">
+              <span>📅 Event: ${q.eventDate || '-'}</span>
+              <span>Dikeluarkan: ${q.issueDate || '-'}</span>
+            </div>
+            <div class="mq-total-row">
+              <span style="font-size: 0.74rem; color: var(--text-muted);">Jumlah:</span>
+              <span class="mq-total-val">${formatCurrency(q.grandTotal)}</span>
+            </div>
+            <div class="mq-actions-row">
+              <button class="btn btn-secondary btn-sm" onclick="window.previewQuotationById('${q.id}')">👁️</button>
+              <button class="btn btn-outline-gold btn-sm" onclick="window.editQuotation('${q.id}')">✏️</button>
+              <button class="btn btn-secondary btn-sm" onclick="window.duplicateQuotation('${q.id}')">📋</button>
+              <button class="btn btn-danger btn-sm" onclick="window.confirmDeleteQuotation('${q.id}')">🗑️</button>
+            </div>
+          `;
+          mobileCardsContainer.appendChild(cardEl);
+        }
       });
     }
 
@@ -3222,7 +3459,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       showToast('Maklumat syarikat berjaya dikemaskini!', 'success');
     }
 
-    // Attach to window object for inline HTML event access
+    // Attach to window object for global access
     window.handleLogin = handleLogin;
     window.handleLogout = handleLogout;
     window.toggleTheme = toggleTheme;
