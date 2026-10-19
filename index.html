@@ -1,0 +1,2949 @@
+
+<!DOCTYPE html>
+<html lang="ms" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventPlannerPerak — Quotation Management System</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #080b11;
+      --bg-card: rgba(18, 24, 38, 0.72);
+      --bg-card-solid: #121826;
+      --bg-input: rgba(11, 15, 25, 0.88);
+      --gold-primary: #d4af37;
+      --gold-light: #f5e298;
+      --gold-dark: #997c1d;
+      --gold-gradient: linear-gradient(135deg, #f5e298 0%, #d4af37 50%, #aa8214 100%);
+      --gold-glow: rgba(212, 175, 55, 0.35);
+      --text-white: #ffffff;
+      --text-heading: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --border-gold: rgba(212, 175, 55, 0.35);
+      --glass-bg: rgba(18, 24, 38, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-sm: 0 4px 16px rgba(0,0,0,0.3);
+      --transition: all 0.25s ease;
+    }
+
+    [data-theme="light"] {
+      --bg-dark: #f1f4fb;
+      --bg-card: rgba(255, 255, 255, 0.82);
+      --bg-card-solid: #ffffff;
+      --bg-input: #ffffff;
+      --gold-primary: #b89322;
+      --gold-light: #8a6a12;
+      --gold-dark: #6e520a;
+      --gold-gradient: linear-gradient(135deg, #e3c467 0%, #c49d27 50%, #8a6a12 100%);
+      --gold-glow: rgba(184, 147, 34, 0.25);
+      --text-white: #0f172a;
+      --text-heading: #090d16;
+      --text-muted: #64748b;
+      --border-color: rgba(0, 0, 0, 0.09);
+      --border-gold: rgba(184, 147, 34, 0.4);
+      --glass-bg: rgba(255, 255, 255, 0.8);
+      --glass-border: rgba(255, 255, 255, 0.95);
+      --glass-shadow: 0 12px 32px rgba(148, 163, 184, 0.22);
+      --shadow-sm: 0 4px 16px rgba(0,0,0,0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Ambient Colorful Glow Orbs */
+    .ambient-glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(110px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+      transition: opacity 0.5s ease;
+    }
+
+    [data-theme="light"] .ambient-glow-orb {
+      opacity: 0.28;
+    }
+
+    .orb-purple {
+      width: 460px;
+      height: 460px;
+      top: -120px;
+      left: -100px;
+      background: radial-gradient(circle, #8b5cf6 0%, rgba(139, 92, 246, 0) 70%);
+    }
+
+    .orb-cyan {
+      width: 440px;
+      height: 440px;
+      top: 25%;
+      right: -100px;
+      background: radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0) 70%);
+    }
+
+    .orb-gold {
+      width: 500px;
+      height: 500px;
+      bottom: 5%;
+      left: 20%;
+      background: radial-gradient(circle, #f59e0b 0%, rgba(245, 158, 11, 0) 70%);
+    }
+
+    .orb-pink {
+      width: 380px;
+      height: 380px;
+      bottom: -60px;
+      right: 15%;
+      background: radial-gradient(circle, #ec4899 0%, rgba(236, 72, 153, 0) 70%);
+    }
+
+    /* Typography */
+    h1, h2, h3, .brand-title {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.5px;
+      color: var(--text-heading);
+    }
+
+    /* Fixed Top Header */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      transition: var(--transition);
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      cursor: pointer;
+    }
+
+    .brand-logo-svg {
+      width: 44px;
+      height: 44px;
+      filter: drop-shadow(0 2px 6px rgba(212,175,55,0.4));
+      flex-shrink: 0;
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 1.5px;
+      line-height: 1.2;
+    }
+
+    .brand-tag {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.35rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+    }
+
+    [data-theme="light"] .nav-links {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.5rem 0.9rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-white);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .nav-btn.active {
+      background: var(--gold-gradient);
+      color: #0b0d10;
+      font-weight: 700;
+      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.35);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.55rem 1.15rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-gold {
+      background: var(--gold-gradient);
+      color: #0d0f13;
+      border-color: #ffd700;
+      font-weight: 700;
+      box-shadow: 0 2px 12px rgba(212,175,55,0.3);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 18px rgba(212,175,55,0.45);
+      filter: brightness(1.08);
+    }
+
+    .btn-outline-gold {
+      background: transparent;
+      color: var(--gold-light);
+      border-color: var(--border-gold);
+    }
+
+    .btn-outline-gold:hover {
+      background: rgba(212, 175, 55, 0.12);
+      border-color: var(--gold-primary);
+      color: var(--text-white);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-white);
+      border-color: var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-danger:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.78rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      color: var(--text-white);
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      backdrop-filter: blur(8px);
+    }
+
+    .theme-toggle-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 12px var(--gold-glow);
+    }
+
+    /* Container Layout */
+    .app-main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 4rem 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .view-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Colorful Glassmorphism Stat Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .stat-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 1.35rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--glass-shadow);
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+    }
+
+    .stat-card-total {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.16) 0%, var(--glass-bg) 65%);
+      border-color: rgba(99, 102, 241, 0.35);
+    }
+    .stat-card-total::before { background: linear-gradient(180deg, #6366f1, #a855f7); }
+
+    .stat-card-pending {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.16) 0%, var(--glass-bg) 65%);
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+    .stat-card-pending::before { background: linear-gradient(180deg, #f59e0b, #ef4444); }
+
+    .stat-card-accepted {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, var(--glass-bg) 65%);
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+    .stat-card-accepted::before { background: linear-gradient(180deg, #10b981, #06b6d4); }
+
+    .stat-card-pipeline {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0%, var(--glass-bg) 65%);
+      border-color: rgba(212, 175, 55, 0.45);
+    }
+    .stat-card-pipeline::before { background: var(--gold-gradient); }
+
+    .stat-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-value {
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--text-white);
+      font-family: 'Cinzel', serif;
+    }
+
+    .stat-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+    }
+
+    /* Glass Panels */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--glass-shadow);
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-tracker-container {
+      margin-bottom: 1.75rem;
+    }
+
+    .progress-tracker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.85rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .progress-stats-summary {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .progress-metric-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-gold);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .progress-bars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .progress-bar-card {
+      background: rgba(15, 18, 26, 0.75);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.15rem;
+      transition: var(--transition);
+    }
+
+    [data-theme="light"] .progress-bar-card {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .progress-bar-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-2px);
+    }
+
+    .progress-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-title-tag {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .progress-percentage {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 9px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .progress-fill.gold {
+      background: linear-gradient(90deg, #aa8214 0%, #d4af37 60%, #fef08a 100%);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+
+    .progress-fill.green {
+      background: linear-gradient(90deg, #059669 0%, #10b981 70%, #6ee7b7 100%);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+
+    .progress-fill.blue {
+      background: linear-gradient(90deg, #2563eb 0%, #3b82f6 70%, #93c5fd 100%);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    }
+
+    .progress-fill.purple {
+      background: linear-gradient(90deg, #7c3aed 0%, #8b5cf6 70%, #c4b5fd 100%);
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+    }
+
+    .progress-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.55rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .progress-footer-row strong {
+      color: var(--text-white);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Form & Grid */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+    }
+
+    .col-12 { grid-column: span 12; }
+    .col-8 { grid-column: span 8; }
+    .col-6 { grid-column: span 6; }
+    .col-4 { grid-column: span 4; }
+    .col-3 { grid-column: span 3; }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-label.required::after {
+      content: ' *';
+      color: #ef4444;
+    }
+
+    .form-control {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-white);
+      padding: 0.65rem 0.85rem;
+      font-size: 0.88rem;
+      font-family: inherit;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 0 2px var(--gold-glow);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Presets Chips */
+    .preset-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.85rem;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-right: 0.3rem;
+    }
+
+    .chip-btn {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.73rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .chip-btn:hover {
+      background: rgba(212, 175, 55, 0.25);
+      border-color: var(--gold-primary);
+      transform: translateY(-1px);
+    }
+
+    /* Tables */
+    .items-table-wrapper, .data-table-wrapper {
+      overflow-x: auto;
+      margin: 1rem 0;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+    }
+
+    .items-table, .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 650px;
+    }
+
+    .items-table th, .data-table th {
+      background: rgba(0, 0, 0, 0.25);
+      color: var(--gold-light);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    [data-theme="light"] .items-table th, [data-theme="light"] .data-table th {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .items-table td, .data-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+      font-size: 0.85rem;
+    }
+
+    .data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Calc Summary Card */
+    .calc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .calc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.45rem 0;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      border-bottom: 1px dashed var(--border-color);
+    }
+
+    .calc-row:last-child {
+      border-bottom: none;
+    }
+
+    .calc-row.total-row {
+      color: var(--gold-light);
+      font-size: 1.2rem;
+      font-weight: 700;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-gold);
+      border-bottom: none;
+      font-family: 'Cinzel', serif;
+    }
+
+    .calc-row.balance-row {
+      color: #10b981;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    /* Status Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .badge-accepted { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .badge-rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .badge-draft { background: rgba(156, 163, 175, 0.15); color: #d1d5db; border: 1px solid rgba(156, 163, 175, 0.4); }
+    .badge-expired { background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.4); }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(5, 7, 10, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      background: var(--bg-card-solid);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 960px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 1.15rem;
+      color: var(--gold-light);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      background: rgba(0,0,0,0.2);
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: #1e2430;
+      color: #fff;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      border-left: 4px solid var(--gold-primary);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.85rem;
+      animation: slideInRight 0.3s ease;
+      pointer-events: auto;
+      max-width: 360px;
+    }
+
+    .toast.success { border-left-color: #10b981; }
+    .toast.error { border-left-color: #ef4444; }
+    .toast.info { border-left-color: var(--gold-primary); }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Login Screen Gate */
+    .login-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #090b0e radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.15) 0%, rgba(9, 11, 14, 0.98) 75%);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    .login-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .login-card {
+      background: rgba(18, 24, 34, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 420px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.12);
+      text-align: center;
+    }
+
+    .login-logo-box {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 1.25rem;
+    }
+
+    .login-logo-box svg {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    }
+
+    .login-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 0.25rem;
+    }
+
+    .login-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 1.75rem;
+    }
+
+    /* PRINTABLE DOCUMENT (A4 PAPER) */
+    .quotation-paper {
+      background: #ffffff;
+      color: #1a1a1a;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2.2rem 2.5rem;
+      box-shadow: 0 0 35px rgba(0,0,0,0.3);
+      border-radius: 4px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      box-sizing: border-box;
+      line-height: 1.45;
+    }
+
+    .quote-paper-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #d4af37;
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+      gap: 1.5rem;
+    }
+
+    .quote-paper-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .paper-logo {
+      width: 68px;
+      height: 68px;
+      flex-shrink: 0;
+    }
+
+    .paper-company-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0b0f19;
+      letter-spacing: 1.5px;
+      line-height: 1.15;
+    }
+
+    .paper-company-meta {
+      font-size: 0.76rem;
+      color: #4b5563;
+      margin-top: 0.3rem;
+      line-height: 1.4;
+      max-width: 320px;
+    }
+
+    .quote-doc-meta {
+      text-align: right;
+    }
+
+    .quote-doc-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #aa8214;
+      letter-spacing: 2px;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .quote-doc-number {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #111827;
+      letter-spacing: 0.5px;
+    }
+
+    .quote-doc-dates {
+      font-size: 0.76rem;
+      color: #4b5563;
+      margin-top: 0.3rem;
+    }
+
+    .quote-paper-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      background: #fafaf9;
+      padding: 1rem 1.25rem;
+      border-radius: 6px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .paper-info-block h4 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #997c1d;
+      margin-bottom: 0.4rem;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 0.25rem;
+    }
+
+    .paper-info-block p {
+      font-size: 0.82rem;
+      color: #1f2937;
+      margin: 0.15rem 0;
+      line-height: 1.35;
+    }
+
+    .paper-info-block .client-name {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: #0b0f19;
+    }
+
+    .paper-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+    }
+
+    .paper-table th {
+      background: #111827;
+      color: #f5e298;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 0.65rem 0.75rem;
+      border: 1px solid #111827;
+    }
+
+    .paper-table td {
+      padding: 0.6rem 0.75rem;
+      font-size: 0.82rem;
+      color: #1f2937;
+      border: 1px solid #e5e7eb;
+    }
+
+    .paper-table tr:nth-child(even) td {
+      background-color: #fafaf9;
+    }
+
+    .paper-financial-split {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .paper-terms h4 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      color: #997c1d;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.35rem;
+    }
+
+    .paper-terms p {
+      font-size: 0.73rem;
+      color: #4b5563;
+      white-space: pre-line;
+      line-height: 1.4;
+    }
+
+    .paper-calc-box {
+      background: #fafaf9;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+    }
+
+    .paper-calc-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #4b5563;
+      padding: 0.25rem 0;
+    }
+
+    .paper-calc-row.grand-total {
+      border-top: 2px solid #111827;
+      border-bottom: 1px solid #111827;
+      padding: 0.45rem 0;
+      margin-top: 0.35rem;
+      color: #0b0f19;
+      font-weight: 800;
+      font-size: 1rem;
+      font-family: 'Cinzel', serif;
+    }
+
+    .paper-calc-row.balance {
+      color: #059669;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding-top: 0.35rem;
+    }
+
+    /* Paper Signatures */
+    .paper-signatures {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px dashed #d1d5db;
+    }
+
+    .signature-slot {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sig-official-container {
+      width: 100%;
+      max-width: 250px;
+      text-align: center;
+    }
+
+    .sig-official-heading {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #0b0f19;
+      letter-spacing: 1px;
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+    }
+
+    .sig-vector-svg {
+      width: 190px;
+      height: 85px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .sig-dotted-line {
+      border-bottom: 2px dotted #0b0f19;
+      margin: 0.25rem 0 0.5rem;
+      width: 100%;
+    }
+
+    .sig-printed-name {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #0b0f19;
+      letter-spacing: 1.5px;
+    }
+
+    .sig-role {
+      font-size: 0.7rem;
+      color: #6b7280;
+    }
+
+    /* Print Setup */
+    @page {
+      size: A4 portrait;
+      margin: 10mm 12mm;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11pt;
+      }
+
+      .top-header,
+      .ambient-glow-orb,
+      .nav-links,
+      .toast-container,
+      .modal-header,
+      .modal-footer,
+      .btn,
+      .no-print,
+      #view-dashboard,
+      #view-create,
+      #view-history,
+      #view-settings {
+        display: none !important;
+      }
+
+      .modal-overlay {
+        position: static !important;
+        background: transparent !important;
+        padding: 0 !important;
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+
+      .modal-card {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        max-width: 100% !important;
+        max-height: none !important;
+        transform: none !important;
+      }
+
+      .modal-body {
+        padding: 0 !important;
+        overflow: visible !important;
+      }
+
+      .quotation-paper {
+        box-shadow: none !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+      }
+
+      .paper-table th {
+        background: #111827 !important;
+        color: #d4af37 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .col-8, .col-6, .col-4, .col-3 { grid-column: span 12; }
+      .quote-paper-header, .quote-paper-details, .paper-financial-split { grid-template-columns: 1fr; }
+      .quote-doc-meta { text-align: left; }
+    }
+
+    @media (max-width: 640px) {
+      .header-container { flex-wrap: wrap; }
+      .nav-links { order: 3; width: 100%; justify-content: space-around; overflow-x: auto; }
+      .nav-btn span { display: none; }
+      .theme-label-text { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN PAGE SCREEN (ID: aimidiana / Password: aimi123@) -->
+  <div class="login-screen" id="login-screen">
+    <div class="login-card">
+      <div class="login-logo-box">
+        <!-- EventPlannerPerak EP Interlocking Monogram Logo -->
+        <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="400" rx="20" fill="#000000"/>
+          <g transform="translate(130, 95)">
+            <path d="M 0 15 L 22 15 L 22 25 L 14 25 L 14 125 L 22 125 L 22 135 L 0 135 L 0 125 L 8 125 L 8 25 L 0 25 Z" fill="#cfb16e"/>
+            <path d="M 14 15 L 68 15 L 68 25 L 14 25 Z" fill="#cfb16e"/>
+            <path d="M 14 68 L 50 68 L 50 78 L 14 78 Z" fill="#cfb16e"/>
+            <path d="M 14 125 L 68 125 L 68 135 L 14 135 Z" fill="#cfb16e"/>
+            <path d="M 58 15 L 72 15 L 72 135 L 58 135 Z" fill="#cfb16e"/>
+            <path d="M 68 15 C 104 15, 126 32, 126 56 C 126 78, 106 95, 72 95 L 72 84 C 98 84, 113 72, 113 56 C 113 38, 96 26, 68 26 Z" fill="#cfb16e"/>
+          </g>
+          <text x="200" y="278" font-family="'Cinzel', 'Plus Jakarta Sans', serif" font-size="19" font-weight="700" fill="#cfb16e" text-anchor="middle" letter-spacing="6">EVENTPLANNERPERAK</text>
+        </svg>
+      </div>
+
+      <h2 class="login-title">EVENTPLANNERPERAK</h2>
+      <p class="login-sub">Log masuk untuk menguruskan sebut harga & resit</p>
+
+      <form id="login-form" onsubmit="event.preventDefault(); window.handleLogin();">
+        <div class="form-group" style="text-align: left; margin-bottom: 1rem;">
+          <label class="form-label required">ID Pengguna</label>
+          <input type="text" id="login-username" class="form-control" placeholder="aimidiana" required autocomplete="username">
+        </div>
+        <div class="form-group" style="text-align: left; margin-bottom: 1.5rem;">
+          <label class="form-label required">Kata Laluan</label>
+          <input type="password" id="login-password" class="form-control" placeholder="aimi123@" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-gold" style="width: 100%; padding: 0.75rem;">
+          Log Masuk Sistem
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FIXED TOP HEADER -->
+  <header class="top-header no-print">
+    <div class="header-container">
+      <div class="brand-section" onclick="window.navigateTo('dashboard')">
+        <svg class="brand-logo-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="400" rx="35" fill="#000000"/>
+          <g transform="translate(130, 95)">
+            <path d="M 0 15 L 22 15 L 22 25 L 14 25 L 14 125 L 22 125 L 22 135 L 0 135 L 0 125 L 8 125 L 8 25 L 0 25 Z" fill="#cfb16e"/>
+            <path d="M 14 15 L 68 15 L 68 25 L 14 25 Z" fill="#cfb16e"/>
+            <path d="M 14 68 L 50 68 L 50 78 L 14 78 Z" fill="#cfb16e"/>
+            <path d="M 14 125 L 68 125 L 68 135 L 14 135 Z" fill="#cfb16e"/>
+            <path d="M 58 15 L 72 15 L 72 135 L 58 135 Z" fill="#cfb16e"/>
+            <path d="M 68 15 C 104 15, 126 32, 126 56 C 126 78, 106 95, 72 95 L 72 84 C 98 84, 113 72, 113 56 C 113 38, 96 26, 68 26 Z" fill="#cfb16e"/>
+          </g>
+          <text x="200" y="278" font-family="'Cinzel', 'Plus Jakarta Sans', serif" font-size="19" font-weight="700" fill="#cfb16e" text-anchor="middle" letter-spacing="6">EVENTPLANNERPERAK</text>
+        </svg>
+
+        <div class="brand-info">
+          <span class="brand-name">EVENTPLANNERPERAK</span>
+          <span class="brand-tag">Quotation Management</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <button class="nav-btn active" id="nav-dashboard" onclick="window.navigateTo('dashboard')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-btn" id="nav-create" onclick="window.startNewQuotation()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>Create Quote</span>
+        </button>
+        <button class="nav-btn" id="nav-history" onclick="window.navigateTo('history')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span>History</span>
+        </button>
+        <button class="nav-btn" id="nav-settings" onclick="window.navigateTo('settings')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Company</span>
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Cloud Sync Pill -->
+        <div style="display: flex; align-items: center; gap: 0.45rem; background: rgba(255,255,255,0.06); padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid var(--border-color);">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;" id="cloud-status-dot"></div>
+          <span style="font-size: 0.76rem; font-weight: 600; color: var(--gold-light);" id="cloud-status-text">Cloud Sync</span>
+        </div>
+
+        <!-- Light / Night Mode Switcher -->
+        <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="window.toggleTheme()" title="Tukar Mod Cerah/Gelap">
+          <span id="theme-toggle-icon">🌙</span>
+          <span id="theme-toggle-label" class="theme-label-text">Night</span>
+        </button>
+
+        <button class="btn btn-gold btn-sm" onclick="window.startNewQuotation()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>+ New Quote</span>
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="window.handleLogout()" title="Log Keluar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Ambient Glow Orbs -->
+  <div class="ambient-glow-orb orb-purple"></div>
+  <div class="ambient-glow-orb orb-cyan"></div>
+  <div class="ambient-glow-orb orb-gold"></div>
+  <div class="ambient-glow-orb orb-pink"></div>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="app-main">
+
+    <!-- VIEW 1: DASHBOARD -->
+    <section id="view-dashboard" class="view-section active">
+      <!-- Colorful KPI Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card stat-card-total">
+          <div class="stat-label">Total Quotations</div>
+          <div class="stat-value" style="color: #a78bfa;" id="stat-total-count">0</div>
+          <div class="stat-sub">Semua rekod sebut harga</div>
+        </div>
+        <div class="stat-card stat-card-pending">
+          <div class="stat-label">Pending Decision</div>
+          <div class="stat-value" style="color: #fbbf24;" id="stat-pending-count">0</div>
+          <div class="stat-sub">Menunggu kelulusan</div>
+        </div>
+        <div class="stat-card stat-card-accepted">
+          <div class="stat-label">Accepted / Confirmed</div>
+          <div class="stat-value" style="color: #34d399;" id="stat-accepted-count">0</div>
+          <div class="stat-sub">Tawaran diterima</div>
+        </div>
+        <div class="stat-card stat-card-pipeline">
+          <div class="stat-label">Total Pipeline Value</div>
+          <div class="stat-value" style="color: var(--gold-light);" id="stat-total-val">RM 0.00</div>
+          <div class="stat-sub">Nilai keseluruhan sebut harga</div>
+        </div>
+      </div>
+
+      <!-- Glassmorphic Progress Bar Tracker -->
+      <div class="glass-panel progress-tracker-container">
+        <div class="progress-tracker-header">
+          <div>
+            <h3 style="font-size: 1.05rem; color: var(--gold-light); display: flex; align-items: center; gap: 0.5rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Quotation Pipeline & Package Progress Bar
+            </h3>
+            <p style="font-size: 0.74rem; color: var(--text-muted); margin-top: 0.25rem;">Pemantauan prestasi pakej dekorasi & penukaran jualan acara (Glassmorphic UI)</p>
+          </div>
+          <div class="progress-stats-summary">
+            <div class="progress-metric-pill">
+              <span>Kadar Kejayaan:</span>
+              <strong id="prog-overall-rate" style="color: #34d399;">0%</strong>
+            </div>
+            <div class="progress-metric-pill">
+              <span>Sasaran Bulanan:</span>
+              <strong id="prog-target-val" style="color: var(--gold-light);">RM 5,000</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-bars-grid" id="progress-bars-container">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </div>
+
+      <!-- Recent Quotations Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            Quotation Terkini
+          </h2>
+          <button class="btn btn-outline-gold btn-sm" onclick="window.navigateTo('history')">Lihat Semua →</button>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>No. Quote</th>
+                <th>Pelanggan</th>
+                <th>Tarikh Event</th>
+                <th>Jumlah (RM)</th>
+                <th>Status</th>
+                <th style="text-align: right;">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="dashboard-recent-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+        <div id="dashboard-empty-state" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); display: none;">
+          <p>Belum ada sebut harga dijana.</p>
+          <button class="btn btn-gold btn-sm" style="margin-top: 0.85rem;" onclick="window.startNewQuotation()">+ Jana Sebut Harga Baru</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: CREATE / EDIT QUOTATION -->
+    <section id="view-create" class="view-section">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <span id="form-heading">Jana Quotation Baru</span>
+          </h2>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" onclick="window.resetFormToBlank()">Set Semula</button>
+            <button class="btn btn-outline-gold btn-sm" onclick="window.previewCurrentForm()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              Preview
+            </button>
+            <button class="btn btn-gold btn-sm" onclick="window.saveQuotation()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline></svg>
+              Simpan
+            </button>
+          </div>
+        </div>
+
+        <form id="quotation-form" onsubmit="event.preventDefault(); window.saveQuotation();">
+          <input type="hidden" id="edit-quote-id">
+
+          <!-- Section 1: Client & Dates -->
+          <h3 style="color: var(--gold-light); font-size: 0.95rem; margin-bottom: 0.75rem; border-left: 3px solid var(--gold-primary); padding-left: 0.5rem;">1. Maklumat Quotation & Pelanggan</h3>
+          <div class="form-grid" style="margin-bottom: 1.5rem;">
+            <div class="col-4">
+              <div class="form-group">
+                <label class="form-label required">No. Quotation</label>
+                <input type="text" id="quote-number" class="form-control" required readonly style="background: rgba(0,0,0,0.25); color: var(--gold-light); font-weight: 700;">
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="form-group">
+                <label class="form-label required">Tarikh Dikeluarkan</label>
+                <input type="date" id="quote-date" class="form-control" required>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="form-group">
+                <label class="form-label required">Sah Sehingga</label>
+                <input type="date" id="quote-expiry" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label required">Nama Pelanggan</label>
+                <input type="text" id="client-name" class="form-control" placeholder="cth: Puan Siti Zulaikha" required>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label">Nama Syarikat / Organisasi</label>
+                <input type="text" id="client-company" class="form-control" placeholder="cth: SK Batu Kurau / Persendirian">
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label required">Nombor Telefon</label>
+                <input type="tel" id="client-phone" class="form-control" placeholder="cth: 012-3456789" required>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label">Alamat Email</label>
+                <input type="email" id="client-email" class="form-control" placeholder="cth: sitizulaikha@gmail.com">
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-label">Alamat Pelanggan</label>
+                <input type="text" id="client-address" class="form-control" placeholder="cth: No 12, Jalan Permai, 34000 Taiping, Perak">
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Event Details -->
+          <h3 style="color: var(--gold-light); font-size: 0.95rem; margin-bottom: 0.75rem; border-left: 3px solid var(--gold-primary); padding-left: 0.5rem;">2. Butiran Majlis & Acara</h3>
+          <div class="form-grid" style="margin-bottom: 1.5rem;">
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label">Tarikh Acara (Event Date)</label>
+                <input type="date" id="event-date" class="form-control">
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label">Status Quotation</label>
+                <select id="quote-status" class="form-control">
+                  <option value="Draft">Draft</option>
+                  <option value="Pending" selected>Pending</option>
+                  <option value="Accepted">Accepted</option>
+                  <option value="Rejected">Rejected</option>
+                  <option value="Expired">Expired</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-label">Lokasi Acara (Venue)</label>
+                <input type="text" id="event-location" class="form-control" placeholder="cth: Lake Gardens Taiping / Dewan Komuniti Batu Kurau">
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Line Items -->
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.5rem;">
+            <h3 style="color: var(--gold-light); font-size: 0.95rem; border-left: 3px solid var(--gold-primary); padding-left: 0.5rem;">3. Senarai Pakej & Perkhidmatan</h3>
+            <button type="button" class="btn btn-gold btn-sm" onclick="window.addItemRow()">+ Tambah Item</button>
+          </div>
+
+          <!-- Quick Presets -->
+          <div class="preset-container">
+            <span class="preset-label">Tambah Pakej Pantas:</span>
+            <button type="button" class="chip-btn" onclick="window.addPresetItem('Picnic Decoration Package', 'Pakej hiasan santai lengkap dengan karpet, bantal & props', 1, 250)">+ Picnic Deco (RM250)</button>
+            <button type="button" class="chip-btn" onclick="window.addPresetItem('Birthday Backdrop Decoration', 'Backdrop arch dengan fairy lights & signage hari lahir', 1, 180)">+ Birthday Backdrop (RM180)</button>
+            <button type="button" class="chip-btn" onclick="window.addPresetItem('Balloon Decoration & Garland', 'Garland belon tema warna pilihan bersama aksesori', 1, 80)">+ Balloon Deco (RM80)</button>
+            <button type="button" class="chip-btn" onclick="window.addPresetItem('Picnic Set Rental', 'Sewa set meja rendah, tikar boho & hiasan meja santai', 1, 120)">+ Picnic Set Rental (RM120)</button>
+            <button type="button" class="chip-btn" onclick="window.addPresetItem('Event Setup & Installation', 'Perkhidmatan pemasangan & pengemasan di tapak acara', 1, 100)">+ Setup & Install (RM100)</button>
+          </div>
+
+          <div class="items-table-wrapper">
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th style="width: 42%;">Item / Perkhidmatan</th>
+                  <th style="width: 14%; text-align: center;">Kuantiti</th>
+                  <th style="width: 20%; text-align: right;">Harga Seunit (RM)</th>
+                  <th style="width: 18%; text-align: right;">Jumlah (RM)</th>
+                  <th style="width: 6%; text-align: center;">Padam</th>
+                </tr>
+              </thead>
+              <tbody id="items-tbody">
+                <!-- Dynamically injected item rows -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Section 4: Notes & Financials -->
+          <div class="form-grid" style="align-items: flex-start;">
+            <div class="col-6">
+              <h3 style="color: var(--gold-light); font-size: 0.95rem; margin-bottom: 0.75rem; border-left: 3px solid var(--gold-primary); padding-left: 0.5rem;">4. Nota & Terma</h3>
+              
+              <div class="form-group" style="margin-bottom: 0.75rem;">
+                <label class="form-label">Nota Kepada Pelanggan</label>
+                <textarea id="quote-notes" class="form-control" rows="2" placeholder="Terima kasih atas sokongan anda memilih EventPlannerPerak."></textarea>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0.75rem;">
+                <label class="form-label">Polisi & Kaedah Pembayaran</label>
+                <textarea id="quote-payment-terms" class="form-control" rows="3"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Terma & Syarat</label>
+                <textarea id="quote-terms" class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="calc-card">
+                <h4 style="color: var(--gold-light); font-size: 1rem; margin-bottom: 0.75rem; font-family: 'Cinzel', serif;">Ringkasan Kewangan</h4>
+                
+                <div class="calc-row">
+                  <span>Subtotal</span>
+                  <span id="calc-subtotal" style="font-weight: 600; color: var(--text-white);">RM 0.00</span>
+                </div>
+
+                <div class="calc-row">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span>Diskaun:</span>
+                    <select id="discount-type" class="form-control" style="width: 75px; padding: 0.2rem 0.4rem; font-size: 0.75rem;" onchange="window.calculateFinancials()">
+                      <option value="RM">RM</option>
+                      <option value="%">%</option>
+                    </select>
+                    <input type="number" id="discount-val" class="form-control" style="width: 80px; padding: 0.2rem 0.4rem; font-size: 0.75rem;" value="0" min="0" step="any" oninput="window.calculateFinancials()">
+                  </div>
+                  <span id="calc-discount-display" style="color: #ef4444;">- RM 0.00</span>
+                </div>
+
+                <div class="calc-row">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span>Caj Tambahan / Setup:</span>
+                    <input type="number" id="extra-charge" class="form-control" style="width: 90px; padding: 0.2rem 0.4rem; font-size: 0.75rem;" value="0" min="0" step="any" oninput="window.calculateFinancials()">
+                  </div>
+                  <span id="calc-extra-display" style="color: var(--text-white);">+ RM 0.00</span>
+                </div>
+
+                <div class="calc-row total-row">
+                  <span>Jumlah Keseluruhan</span>
+                  <span id="calc-grand-total">RM 0.00</span>
+                </div>
+
+                <div class="calc-row">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span>Deposit Dibayar (RM):</span>
+                    <input type="number" id="deposit-amount" class="form-control" style="width: 100px; padding: 0.2rem 0.4rem; font-size: 0.75rem;" value="0" min="0" step="any" oninput="window.calculateFinancials()">
+                  </div>
+                  <span id="calc-deposit-display" style="color: #f59e0b;">- RM 0.00</span>
+                </div>
+
+                <div class="calc-row balance-row">
+                  <span>Baki Bayaran Selepas Deposit:</span>
+                  <span id="calc-balance-due">RM 0.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+            <button type="button" class="btn btn-secondary" onclick="window.navigateTo('dashboard')">Batal</button>
+            <button type="button" class="btn btn-outline-gold" onclick="window.previewCurrentForm()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              Preview Quotation
+            </button>
+            <button type="submit" class="btn btn-gold">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline></svg>
+              Simpan Quotation
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- VIEW 3: QUOTATION HISTORY -->
+    <section id="view-history" class="view-section">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            Senarai Rekod Quotation & Resit
+          </h2>
+          <button class="btn btn-gold btn-sm" onclick="window.startNewQuotation()">+ Tambah Quotation</button>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.25rem;">
+          <div style="flex: 1; min-width: 220px;">
+            <input type="text" id="search-input" class="form-control" placeholder="Cari nombor quote atau nama pelanggan..." oninput="window.filterQuotations()">
+          </div>
+          <div style="width: 180px;">
+            <select id="filter-status" class="form-control" onchange="window.filterQuotations()">
+              <option value="ALL">Semua Status</option>
+              <option value="Draft">Draft</option>
+              <option value="Pending">Pending</option>
+              <option value="Accepted">Accepted</option>
+              <option value="Rejected">Rejected</option>
+              <option value="Expired">Expired</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>No. Quote</th>
+                <th>Nama Pelanggan</th>
+                <th>Tarikh Dikeluarkan</th>
+                <th>Tarikh Acara</th>
+                <th>Jumlah Keseluruhan</th>
+                <th>Status</th>
+                <th style="text-align: right;">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="history-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="history-empty-state" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); display: none;">
+          <p>Tiada rekod sepadan ditemui.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: COMPANY SETTINGS -->
+    <section id="view-settings" class="view-section">
+      <div class="card" style="max-width: 800px; margin: 0 auto;">
+        <div class="card-header">
+          <h2 class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Profil & Maklumat Syarikat
+          </h2>
+          <button class="btn btn-gold btn-sm" onclick="window.saveCompanySettings()">Simpan Tetapan</button>
+        </div>
+
+        <form id="settings-form" onsubmit="event.preventDefault(); window.saveCompanySettings();">
+          <div class="form-grid">
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-label">Nama Syarikat</label>
+                <input type="text" id="setting-company-name" class="form-control" value="EVENTPLANNERPERAK">
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-label">Alamat Premis / Operasi</label>
+                <textarea id="setting-company-address" class="form-control" rows="2">7983 Kg. Tok Mydeen, Batu 21, 34520 Batu Kurau, Taiping, Perak.</textarea>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label">Nombor Telefon / WhatsApp</label>
+                <input type="text" id="setting-company-phone" class="form-control" value="011-20908746">
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="form-group">
+                <label class="form-label">Emel Rasmi</label>
+                <input type="email" id="setting-company-email" class="form-control" value="eventplannerperak@gmail.com">
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-label">Maklumat Bank / Pembayaran</label>
+                <textarea id="setting-company-bank" class="form-control" rows="2">Maybank:158051788426 (AIMI DIANA)
+DuitNow / Touch 'n Go: 011-20908746</textarea>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <label class="form-label">Terma & Syarat Lalai</label>
+                <textarea id="setting-company-terms" class="form-control" rows="4">1. Tempahan hanya disahkan setelah bayaran deposit 50% diterima.
+2. Baki bayaran hendaklah diselesaikan sepenuhnya sebelum hari majlis.
+3. Sebarang pembatalan dalam tempoh 7 hari dari tarikh majlis tidak akan dikembalikan deposit.</textarea>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: PREVIEW & PRINT QUOTATION (A4 DOCUMENT) -->
+  <div class="modal-overlay" id="preview-modal">
+    <div class="modal-card">
+      <div class="modal-header no-print">
+        <h3 class="modal-title">Pratonton Rasmi Dokumen Sebut Harga (A4)</h3>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn btn-gold btn-sm" onclick="window.print()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Cetak / Simpan PDF
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="window.closePreviewModal()">✕ Tutup</button>
+        </div>
+      </div>
+      
+      <div class="modal-body">
+        <div class="quotation-paper" id="quotation-print-area">
+          <!-- Header -->
+          <div class="quote-paper-header">
+            <div class="quote-paper-brand">
+              <svg class="paper-logo" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="400" height="400" rx="30" fill="#000000"/>
+                <g transform="translate(130, 95)">
+                  <path d="M 0 15 L 22 15 L 22 25 L 14 25 L 14 125 L 22 125 L 22 135 L 0 135 L 0 125 L 8 125 L 8 25 L 0 25 Z" fill="#cfb16e"/>
+                  <path d="M 14 15 L 68 15 L 68 25 L 14 25 Z" fill="#cfb16e"/>
+                  <path d="M 14 68 L 50 68 L 50 78 L 14 78 Z" fill="#cfb16e"/>
+                  <path d="M 14 125 L 68 125 L 68 135 L 14 135 Z" fill="#cfb16e"/>
+                  <path d="M 58 15 L 72 15 L 72 135 L 58 135 Z" fill="#cfb16e"/>
+                  <path d="M 68 15 C 104 15, 126 32, 126 56 C 126 78, 106 95, 72 95 L 72 84 C 98 84, 113 72, 113 56 C 113 38, 96 26, 68 26 Z" fill="#cfb16e"/>
+                </g>
+                <text x="200" y="278" font-family="'Cinzel', 'Plus Jakarta Sans', serif" font-size="19" font-weight="700" fill="#cfb16e" text-anchor="middle" letter-spacing="6">EVENTPLANNERPERAK</text>
+              </svg>
+              <div>
+                <div class="paper-company-title" id="paper-company-name">EVENTPLANNERPERAK</div>
+                <div class="paper-company-meta" id="paper-company-meta">
+                  7983 Kg. Tok Mydeen, Batu 21, 34520 Batu Kurau, Taiping, Perak.<br>
+                  Tel: 011-20908746 | Email: eventplannerperak@gmail.com
+                </div>
+              </div>
+            </div>
+
+            <div class="quote-doc-meta">
+              <div class="quote-doc-title">QUOTATION</div>
+              <div class="quote-doc-number" id="paper-quote-number">EPP-2026-0001</div>
+              <div class="quote-doc-dates">
+                <div><strong>Tarikh:</strong> <span id="paper-issue-date">-</span></div>
+                <div><strong>Sah Hingga:</strong> <span id="paper-expiry-date">-</span></div>
+                <div><strong>Status:</strong> <span id="paper-status-badge" style="font-weight: 700; color: #997c1d;">PENDING</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Client & Event Info -->
+          <div class="quote-paper-details">
+            <div class="paper-info-block">
+              <h4>Disediakan Untuk (Pelanggan)</h4>
+              <p class="client-name" id="paper-client-name">-</p>
+              <p id="paper-client-company">-</p>
+              <p id="paper-client-phone">-</p>
+              <p id="paper-client-email">-</p>
+              <p id="paper-client-address">-</p>
+            </div>
+            <div class="paper-info-block">
+              <h4>Maklumat Acara (Event Details)</h4>
+              <p><strong>Tarikh Majlis:</strong> <span id="paper-event-date">-</span></p>
+              <p><strong>Lokasi Majlis:</strong> <span id="paper-event-location">-</span></p>
+              <p><strong>Penyedia Perkhidmatan:</strong> EventPlannerPerak Team</p>
+            </div>
+          </div>
+
+          <!-- Items Table -->
+          <table class="paper-table">
+            <thead>
+              <tr>
+                <th style="width: 5%; text-align: center;">No.</th>
+                <th style="width: 50%; text-align: left;">Keterangan Item / Perkhidmatan</th>
+                <th style="width: 15%; text-align: center;">Kuantiti</th>
+                <th style="width: 15%; text-align: right;">Harga Seunit</th>
+                <th style="width: 15%; text-align: right;">Jumlah (RM)</th>
+              </tr>
+            </thead>
+            <tbody id="paper-items-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+
+          <!-- Financials & Terms -->
+          <div class="paper-financial-split">
+            <div class="paper-terms">
+              <h4>Nota & Terma Bayaran:</h4>
+              <p id="paper-payment-terms">-</p>
+              <div style="height: 0.5rem;"></div>
+              <h4>Terma & Syarat:</h4>
+              <p id="paper-terms-body">-</p>
+            </div>
+
+            <div class="paper-calc-box">
+              <div class="paper-calc-row">
+                <span>Subtotal:</span>
+                <span id="paper-subtotal">RM 0.00</span>
+              </div>
+              <div class="paper-calc-row" id="paper-row-discount">
+                <span>Diskaun:</span>
+                <span id="paper-discount" style="color: #dc2626;">- RM 0.00</span>
+              </div>
+              <div class="paper-calc-row" id="paper-row-extra">
+                <span>Caj Tambahan / Setup:</span>
+                <span id="paper-extra">+ RM 0.00</span>
+              </div>
+              <div class="paper-calc-row grand-total">
+                <span>JUMLAH BESAR:</span>
+                <span id="paper-grand-total">RM 0.00</span>
+              </div>
+              <div class="paper-calc-row" id="paper-row-deposit">
+                <span>Deposit Diterima:</span>
+                <span id="paper-deposit" style="color: #d97706;">- RM 0.00</span>
+              </div>
+              <div class="paper-calc-row balance">
+                <span>Baki Perlu Dibayar:</span>
+                <span id="paper-balance">RM 0.00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Official Signature from User Image (Purple ink cursive flourish) -->
+          <div class="paper-signatures">
+            <div class="signature-slot">
+              <div class="sig-official-container">
+                <div class="sig-official-heading">DISEDIAKAN OLEH :</div>
+                
+                <svg class="sig-vector-svg" viewBox="0 0 320 135" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 1px 1.5px rgba(71, 45, 130, 0.3));">
+                  <!-- Outer large looping flourish -->
+                  <path d="M 132 52 C 122 36, 75 32, 52 46 C 34 58, 32 82, 40 96 C 50 114, 82 118, 106 112 C 124 106, 136 86, 134 64 C 132 46, 122 38, 108 42" stroke="#472d82" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Horizontal entry stroke inside the loop -->
+                  <path d="M 68 53 C 82 52, 102 53, 126 55" stroke="#472d82" stroke-width="2.5" stroke-linecap="round"/>
+                  <!-- Cursive inner character loops -->
+                  <path d="M 65 82 C 68 74, 76 72, 80 84 C 84 94, 80 98, 74 97 C 69 96, 72 85, 82 78 C 90 73, 96 82, 95 93 C 94 97, 98 97, 104 88 C 108 81, 114 82, 114 92" stroke="#472d82" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Tall middle ascending loop into central oval -->
+                  <path d="M 114 92 C 118 78, 126 52, 132 46 C 136 43, 140 48, 138 58 C 135 72, 132 86, 138 91 C 144 95, 154 94, 162 86 C 172 76, 175 62, 166 58 C 155 54, 144 65, 146 78 C 148 90, 160 95, 174 90" stroke="#472d82" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Connector into the high right ascender -->
+                  <path d="M 172 88 C 182 78, 192 68, 200 82 C 205 88, 212 88, 218 84" stroke="#472d82" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Dramatic high vertical stroke & descending tail -->
+                  <path d="M 198 80 C 212 56, 222 26, 228 14 C 230 10, 229 16, 225 38 L 216 126" stroke="#472d82" stroke-width="2.8" stroke-linecap="round"/>
+                  <!-- Cross horizontal bar and right flourish wing -->
+                  <path d="M 186 82 C 200 80, 220 79, 236 82" stroke="#472d82" stroke-width="2.4" stroke-linecap="round"/>
+                  <path d="M 218 74 C 228 73, 235 78, 233 86 C 230 92, 214 93, 208 90 C 202 88, 210 84, 226 84 C 232 84, 236 87, 232 92" stroke="#472d82" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+                <div class="sig-dotted-line"></div>
+                <div class="sig-printed-name">AIMI DIANA</div>
+                <div class="sig-role">Pengurus Acara / EventPlannerPerak</div>
+              </div>
+            </div>
+
+            <div class="signature-slot">
+              <div class="sig-official-container">
+                <div class="sig-official-heading" style="color: #6b7280;">DITERIMA & DISETUJUI :</div>
+                <div style="height: 85px;"></div>
+                <div class="sig-dotted-line"></div>
+                <div class="sig-printed-name" id="paper-sig-client">PENGESAHAN PELANGGAN</div>
+                <div class="sig-role">Tandatangan & Tarikh Penerimaan</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CONFIRM DELETE -->
+  <div class="modal-overlay" id="confirm-modal">
+    <div class="modal-card" style="max-width: 420px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: #ef4444;">Pengesahan Padam</h3>
+        <button class="btn btn-secondary btn-sm" onclick="window.closeConfirmModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-modal-msg" style="font-size: 0.9rem; line-height: 1.5;">Adakah anda pasti ingin memadamkan sebut harga ini?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="window.closeConfirmModal()">Batal</button>
+        <button class="btn btn-danger btn-sm" id="confirm-delete-btn">Ya, Padam</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- FIREBASE SCRIPTS (MODULAR) & CORE SYSTEM LOGIC -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { 
+      getFirestore, 
+      collection, 
+      doc, 
+      setDoc, 
+      deleteDoc, 
+      onSnapshot 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // Firebase Config provided by user
+    const firebaseConfig = {
+      apiKey: "AIzaSyDqjO6bK9WXbwnsIyNjdEpX8f-LKvCbDNU",
+      authDomain: "eventplannerperak-5bfc0.firebaseapp.com",
+      databaseURL: "https://eventplannerperak-5bfc0-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "eventplannerperak-5bfc0",
+      storageBucket: "eventplannerperak-5bfc0.firebasestorage.app",
+      messagingSenderId: "644512764915",
+      appId: "1:644512764915:web:c5676cc42fbac8dbffb886",
+      measurementId: "G-039NBLHSZ3"
+    };
+
+    const fbApp = initializeApp(firebaseConfig);
+    const auth = getAuth(fbApp);
+    const db = getFirestore(fbApp);
+
+    // App State
+    const STORAGE_KEY_AUTH = 'EPP_AUTH_STATE_2026';
+    const STORAGE_KEY_THEME = 'EPP_THEME_PREF';
+    const STORAGE_KEY_QUOTES = 'EPP_LOCAL_QUOTES';
+    
+    // User credentials specified in prompt
+    const AUTH_CREDENTIALS = {
+      username: "aimidiana",
+      password: "aimi123@"
+    };
+
+    let quotations = [];
+    let deleteTargetId = null;
+
+    let companySettings = {
+      name: "EVENTPLANNERPERAK",
+      address: "7983 Kg. Tok Mydeen, Batu 21, 34520 Batu Kurau, Taiping, Perak.",
+      phone: "011-20908746",
+      email: "eventplannerperak@gmail.com",
+      bank: "Maybank: 158051788426 (AIMI DIANA)",
+      terms: "1. Tempahan hanya disahkan setelah bayaran deposit 50% diterima.\n2. Baki bayaran hendaklah diselesaikan sepenuhnya sebelum hari majlis.\n3. Sebarang pembatalan dalam tempoh 7 hari dari tarikh majlis tidak akan dikembalikan deposit."
+    };
+
+    // Initialize Theme
+    function initTheme() {
+      const savedTheme = localStorage.getItem(STORAGE_KEY_THEME) || 'dark';
+      applyTheme(savedTheme);
+    }
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+      localStorage.setItem(STORAGE_KEY_THEME, newTheme);
+      showToast(`Mod ${newTheme === 'dark' ? 'Malam (Night)' : 'Cerah (Light)'} diaktifkan`, 'info');
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      const icon = document.getElementById('theme-toggle-icon');
+      const label = document.getElementById('theme-toggle-label');
+      if (icon && label) {
+        if (theme === 'light') {
+          icon.textContent = '☀️';
+          label.textContent = 'Light';
+        } else {
+          icon.textContent = '🌙';
+          label.textContent = 'Night';
+        }
+      }
+    }
+
+    // Check Login Auth State
+    function checkAuthState() {
+      const isAuth = localStorage.getItem(STORAGE_KEY_AUTH) === 'true';
+      const screen = document.getElementById('login-screen');
+      if (isAuth) {
+        screen.classList.add('hidden');
+      } else {
+        screen.classList.remove('hidden');
+      }
+    }
+
+    function handleLogin() {
+      const user = document.getElementById('login-username').value.trim();
+      const pass = document.getElementById('login-password').value.trim();
+
+      if (user === AUTH_CREDENTIALS.username && pass === AUTH_CREDENTIALS.password) {
+        localStorage.setItem(STORAGE_KEY_AUTH, 'true');
+        document.getElementById('login-screen').classList.add('hidden');
+        showToast('Selamat kembali, Aimi Diana!', 'success');
+        renderDashboard();
+        renderProgressBars();
+      } else {
+        showToast('ID atau Kata Laluan tidak sah! Sila semak semula.', 'error');
+      }
+    }
+
+    function handleLogout() {
+      localStorage.removeItem(STORAGE_KEY_AUTH);
+      document.getElementById('login-screen').classList.remove('hidden');
+      document.getElementById('login-password').value = '';
+      showToast('Anda telah log keluar.', 'info');
+    }
+
+    // Firebase Sync with LocalStorage Fallback
+    async function initFirebaseSync() {
+      try {
+        await signInAnonymously(auth);
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            updateCloudStatus(true);
+            listenToFirestore();
+          } else {
+            updateCloudStatus(false);
+          }
+        });
+      } catch (err) {
+        console.warn("Firestore offline, using local storage mode:", err);
+        updateCloudStatus(false);
+        loadLocalData();
+      }
+    }
+
+    function updateCloudStatus(connected) {
+      const dot = document.getElementById('cloud-status-dot');
+      const text = document.getElementById('cloud-status-text');
+      if (dot && text) {
+        if (connected) {
+          dot.style.background = '#10b981';
+          text.textContent = 'Cloud Connected';
+        } else {
+          dot.style.background = '#f59e0b';
+          text.textContent = 'Local Mode';
+        }
+      }
+    }
+
+    function listenToFirestore() {
+      const quotesCol = collection(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations');
+      onSnapshot(quotesCol, (snapshot) => {
+        const cloudData = [];
+        snapshot.forEach((docSnap) => {
+          cloudData.push({ id: docSnap.id, ...docSnap.data() });
+        });
+
+        cloudData.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+        quotations = cloudData;
+        saveLocalData();
+        renderDashboard();
+        renderProgressBars();
+        renderHistoryTable();
+      }, (err) => {
+        console.warn("Firestore snapshot error, falling back to local:", err);
+        loadLocalData();
+      });
+
+      const settingsDoc = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'companySettings', 'main');
+      onSnapshot(settingsDoc, (docSnap) => {
+        if (docSnap.exists()) {
+          companySettings = { ...companySettings, ...docSnap.data() };
+          populateSettingsForm();
+        }
+      });
+    }
+
+    function saveLocalData() {
+      try {
+        localStorage.setItem(STORAGE_KEY_QUOTES, JSON.stringify(quotations));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function loadLocalData() {
+      const stored = localStorage.getItem(STORAGE_KEY_QUOTES);
+      if (stored) {
+        try {
+          quotations = JSON.parse(stored);
+        } catch (e) {
+          quotations = [];
+        }
+      }
+      renderDashboard();
+      renderProgressBars();
+      renderHistoryTable();
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      
+      let icon = 'ℹ️';
+      if (type === 'success') icon = '✓';
+      if (type === 'error') icon = '⚠';
+
+      toast.innerHTML = `<span style="font-weight: bold;">${icon}</span> <span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        if (toast && toast.parentNode) {
+          toast.remove();
+        }
+      }, 3500);
+    }
+
+    function formatCurrency(amount) {
+      return `RM ${(Number(amount) || 0).toLocaleString('en-MY', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}`;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function getNextQuotationNumber() {
+      const year = new Date().getFullYear();
+      let highestSeq = 0;
+
+      quotations.forEach(q => {
+        if (q.quoteNumber && q.quoteNumber.startsWith(`EPP-${year}-`)) {
+          const parts = q.quoteNumber.split('-');
+          const num = parseInt(parts[2], 10);
+          if (!isNaN(num) && num > highestSeq) highestSeq = num;
+        }
+      });
+
+      const nextNum = String(highestSeq + 1).padStart(4, '0');
+      return `EPP-${year}-${nextNum}`;
+    }
+
+    function navigateTo(viewName) {
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+      const targetView = document.getElementById(`view-${viewName}`);
+      const targetNav = document.getElementById(`nav-${viewName}`);
+
+      if (targetView) targetView.classList.add('active');
+      if (targetNav) targetNav.classList.add('active');
+
+      if (viewName === 'dashboard') {
+        renderDashboard();
+        renderProgressBars();
+      } else if (viewName === 'history') {
+        renderHistoryTable();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function initDefaultFormDates() {
+      const today = new Date();
+      const expiry = new Date(Date.now() + 14 * 86400000);
+      document.getElementById('quote-date').value = today.toISOString().split('T')[0];
+      document.getElementById('quote-expiry').value = expiry.toISOString().split('T')[0];
+      document.getElementById('quote-notes').value = "Terima kasih atas sokongan anda memilih EventPlannerPerak.";
+      document.getElementById('quote-payment-terms').value = companySettings.bank;
+      document.getElementById('quote-terms').value = companySettings.terms;
+    }
+
+    function startNewQuotation() {
+      resetFormToBlank();
+      document.getElementById('form-heading').textContent = "Jana Quotation Baru";
+      document.getElementById('edit-quote-id').value = "";
+      document.getElementById('quote-number').value = getNextQuotationNumber();
+      addItemRow("", "", 1, 0);
+      navigateTo('create');
+    }
+
+    function resetFormToBlank() {
+      document.getElementById('quotation-form').reset();
+      document.getElementById('items-tbody').innerHTML = '';
+      initDefaultFormDates();
+      document.getElementById('discount-val').value = 0;
+      document.getElementById('extra-charge').value = 0;
+      document.getElementById('deposit-amount').value = 0;
+      calculateFinancials();
+    }
+
+    function addItemRow(name = '', desc = '', qty = 1, unitPrice = 0) {
+      const tbody = document.getElementById('items-tbody');
+      const row = document.createElement('tr');
+      row.className = 'item-row';
+
+      row.innerHTML = `
+        <td>
+          <input type="text" class="form-control item-name" placeholder="Nama Pakej / Servis" value="${escapeHtml(name)}" required style="margin-bottom: 0.35rem; font-weight: 600;">
+          <input type="text" class="form-control item-desc" placeholder="Keterangan ringkas / spesifikasi" value="${escapeHtml(desc)}" style="font-size: 0.78rem;">
+        </td>
+        <td style="text-align: center;">
+          <input type="number" class="form-control item-qty" value="${qty}" min="1" step="1" style="text-align: center; width: 70px; margin: 0 auto;">
+        </td>
+        <td style="text-align: right;">
+          <input type="number" class="form-control item-price" value="${unitPrice}" min="0" step="any" style="text-align: right; width: 110px; margin-left: auto;">
+        </td>
+        <td style="text-align: right; vertical-align: middle; font-weight: 700; color: var(--text-white);">
+          <span class="row-total">RM 0.00</span>
+        </td>
+        <td style="text-align: center; vertical-align: middle;">
+          <button type="button" class="btn btn-danger btn-sm" onclick="window.removeItemRow(this)" title="Padam">✕</button>
+        </td>
+      `;
+
+      tbody.appendChild(row);
+
+      const qtyInput = row.querySelector('.item-qty');
+      const priceInput = row.querySelector('.item-price');
+      qtyInput.addEventListener('input', () => updateRowTotal(qtyInput));
+      priceInput.addEventListener('input', () => updateRowTotal(qtyInput));
+
+      updateRowTotal(qtyInput);
+    }
+
+    function addPresetItem(name, desc, qty, unitPrice) {
+      addItemRow(name, desc, qty, unitPrice);
+      showToast(`Pakej "${name}" dimasukkan!`, 'info');
+    }
+
+    function removeItemRow(btn) {
+      const tbody = document.getElementById('items-tbody');
+      if (tbody.children.length <= 1) {
+        showToast('Quotation memerlukan sekurang-kurangnya satu item.', 'error');
+        return;
+      }
+      btn.closest('tr').remove();
+      calculateFinancials();
+    }
+
+    function updateRowTotal(inputElement) {
+      const row = inputElement.closest('tr');
+      const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+      const price = parseFloat(row.querySelector('.item-price').value) || 0;
+      row.querySelector('.row-total').textContent = formatCurrency(qty * price);
+      calculateFinancials();
+    }
+
+    function calculateFinancials() {
+      let subtotal = 0;
+      document.querySelectorAll('#items-tbody .item-row').forEach(row => {
+        const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+        const price = parseFloat(row.querySelector('.item-price').value) || 0;
+        subtotal += (qty * price);
+      });
+
+      const discountType = document.getElementById('discount-type').value;
+      const discountInput = parseFloat(document.getElementById('discount-val').value) || 0;
+      let discountAmount = 0;
+
+      if (discountType === '%') {
+        discountAmount = subtotal * (Math.min(discountInput, 100) / 100);
+      } else {
+        discountAmount = Math.min(discountInput, subtotal);
+      }
+
+      const extraCharge = parseFloat(document.getElementById('extra-charge').value) || 0;
+      const grandTotal = Math.max(0, subtotal - discountAmount + extraCharge);
+      const depositAmount = parseFloat(document.getElementById('deposit-amount').value) || 0;
+      const balanceDue = Math.max(0, grandTotal - depositAmount);
+
+      document.getElementById('calc-subtotal').textContent = formatCurrency(subtotal);
+      document.getElementById('calc-discount-display').textContent = `- ${formatCurrency(discountAmount)}`;
+      document.getElementById('calc-extra-display').textContent = `+ ${formatCurrency(extraCharge)}`;
+      document.getElementById('calc-grand-total').textContent = formatCurrency(grandTotal);
+      document.getElementById('calc-deposit-display').textContent = `- ${formatCurrency(depositAmount)}`;
+      document.getElementById('calc-balance-due').textContent = formatCurrency(balanceDue);
+
+      return { subtotal, discountType, discountVal: discountInput, discountAmount, extraCharge, grandTotal, depositAmount, balanceDue };
+    }
+
+    async function saveQuotation() {
+      const clientName = document.getElementById('client-name').value.trim();
+      if (!clientName) {
+        showToast('Sila masukkan Nama Pelanggan.', 'error');
+        document.getElementById('client-name').focus();
+        return;
+      }
+
+      const items = [];
+      document.querySelectorAll('#items-tbody .item-row').forEach(row => {
+        const name = row.querySelector('.item-name').value.trim();
+        const desc = row.querySelector('.item-desc').value.trim();
+        const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+        const unitPrice = parseFloat(row.querySelector('.item-price').value) || 0;
+        if (name) {
+          items.push({ name, desc, qty, unitPrice, total: qty * unitPrice });
+        }
+      });
+
+      if (items.length === 0) {
+        showToast('Sila masukkan sekurang-kurangnya 1 item.', 'error');
+        return;
+      }
+
+      const fin = calculateFinancials();
+      const editId = document.getElementById('edit-quote-id').value;
+      const isEdit = Boolean(editId);
+
+      let quoteNum = document.getElementById('quote-number').value;
+      if (!isEdit && !quoteNum) quoteNum = getNextQuotationNumber();
+
+      const docId = isEdit ? editId : 'EPP_' + Date.now();
+
+      const quoteData = {
+        id: docId,
+        quoteNumber: quoteNum,
+        issueDate: document.getElementById('quote-date').value,
+        expiryDate: document.getElementById('quote-expiry').value,
+        clientName: clientName,
+        clientCompany: document.getElementById('client-company').value.trim(),
+        clientPhone: document.getElementById('client-phone').value.trim(),
+        clientEmail: document.getElementById('client-email').value.trim(),
+        clientAddress: document.getElementById('client-address').value.trim(),
+        eventDate: document.getElementById('event-date').value,
+        eventLocation: document.getElementById('event-location').value.trim(),
+        status: document.getElementById('quote-status').value,
+        items: items,
+        subtotal: fin.subtotal,
+        discountType: fin.discountType,
+        discountVal: fin.discountVal,
+        discountAmount: fin.discountAmount,
+        extraCharge: fin.extraCharge,
+        depositAmount: fin.depositAmount,
+        grandTotal: fin.grandTotal,
+        balanceDue: fin.balanceDue,
+        notes: document.getElementById('quote-notes').value.trim(),
+        paymentTerms: document.getElementById('quote-payment-terms').value.trim(),
+        terms: document.getElementById('quote-terms').value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+
+      if (!isEdit) quoteData.createdAt = new Date().toISOString();
+
+      try {
+        const quoteDocRef = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations', docId);
+        await setDoc(quoteDocRef, quoteData, { merge: true });
+      } catch (err) {
+        // Fallback local update
+        const idx = quotations.findIndex(q => q.id === docId);
+        if (idx >= 0) quotations[idx] = quoteData;
+        else quotations.unshift(quoteData);
+        saveLocalData();
+      }
+
+      showToast(`Quotation ${quoteNum} berjaya disimpan!`, 'success');
+      navigateTo('history');
+    }
+
+    function editQuotation(quoteId) {
+      const quote = quotations.find(q => q.id === quoteId);
+      if (!quote) return;
+
+      document.getElementById('form-heading').textContent = `Edit Quotation (${quote.quoteNumber})`;
+      document.getElementById('edit-quote-id').value = quote.id;
+      document.getElementById('quote-number').value = quote.quoteNumber;
+      document.getElementById('quote-date').value = quote.issueDate;
+      document.getElementById('quote-expiry').value = quote.expiryDate;
+      document.getElementById('client-name').value = quote.clientName;
+      document.getElementById('client-company').value = quote.clientCompany || '';
+      document.getElementById('client-phone').value = quote.clientPhone || '';
+      document.getElementById('client-email').value = quote.clientEmail || '';
+      document.getElementById('client-address').value = quote.clientAddress || '';
+      document.getElementById('event-date').value = quote.eventDate || '';
+      document.getElementById('event-location').value = quote.eventLocation || '';
+      document.getElementById('quote-status').value = quote.status || 'Pending';
+      document.getElementById('quote-notes').value = quote.notes || '';
+      document.getElementById('quote-payment-terms').value = quote.paymentTerms || companySettings.bank;
+      document.getElementById('quote-terms').value = quote.terms || companySettings.terms;
+
+      document.getElementById('discount-type').value = quote.discountType || 'RM';
+      document.getElementById('discount-val').value = quote.discountVal || 0;
+      document.getElementById('extra-charge').value = quote.extraCharge || 0;
+      document.getElementById('deposit-amount').value = quote.depositAmount || 0;
+
+      const tbody = document.getElementById('items-tbody');
+      tbody.innerHTML = '';
+      if (quote.items && quote.items.length > 0) {
+        quote.items.forEach(it => addItemRow(it.name, it.desc, it.qty, it.unitPrice));
+      } else {
+        addItemRow();
+      }
+
+      calculateFinancials();
+      navigateTo('create');
+    }
+
+    async function duplicateQuotation(quoteId) {
+      const quote = quotations.find(q => q.id === quoteId);
+      if (!quote) return;
+
+      const newQuoteNum = getNextQuotationNumber();
+      const newDocId = 'EPP_' + Date.now();
+      const duplicated = {
+        ...JSON.parse(JSON.stringify(quote)),
+        id: newDocId,
+        quoteNumber: newQuoteNum,
+        issueDate: new Date().toISOString().split('T')[0],
+        expiryDate: new Date(Date.now() + 14 * 86400000).toISOString().split('T')[0],
+        status: 'Draft',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      try {
+        const quoteDocRef = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations', newDocId);
+        await setDoc(quoteDocRef, duplicated);
+      } catch (err) {
+        quotations.unshift(duplicated);
+        saveLocalData();
+      }
+
+      showToast(`Quotation diduplikasi sebagai ${newQuoteNum}!`, 'success');
+      renderHistoryTable();
+    }
+
+    function confirmDeleteQuotation(quoteId) {
+      const quote = quotations.find(q => q.id === quoteId);
+      if (!quote) return;
+
+      deleteTargetId = quoteId;
+      document.getElementById('confirm-modal-msg').textContent = `Adakah anda pasti ingin memadamkan ${quote.quoteNumber} untuk pelanggan "${quote.clientName}"?`;
+      document.getElementById('confirm-delete-btn').onclick = executeDelete;
+      document.getElementById('confirm-modal').classList.add('active');
+    }
+
+    function closeConfirmModal() {
+      document.getElementById('confirm-modal').classList.remove('active');
+      deleteTargetId = null;
+    }
+
+    async function executeDelete() {
+      if (!deleteTargetId) return;
+      try {
+        const quoteDocRef = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations', deleteTargetId);
+        await deleteDoc(quoteDocRef);
+      } catch (err) {
+        quotations = quotations.filter(q => q.id !== deleteTargetId);
+        saveLocalData();
+      }
+      closeConfirmModal();
+      showToast('Quotation berjaya dipadam.', 'info');
+      renderDashboard();
+      renderHistoryTable();
+      renderProgressBars();
+    }
+
+    function renderDashboard() {
+      const totalCount = quotations.length;
+      const pendingCount = quotations.filter(q => q.status === 'Pending').length;
+      const acceptedCount = quotations.filter(q => q.status === 'Accepted').length;
+      const totalPipelineVal = quotations.reduce((acc, cur) => acc + (cur.grandTotal || 0), 0);
+
+      document.getElementById('stat-total-count').textContent = totalCount;
+      document.getElementById('stat-pending-count').textContent = pendingCount;
+      document.getElementById('stat-accepted-count').textContent = acceptedCount;
+      document.getElementById('stat-total-val').textContent = formatCurrency(totalPipelineVal);
+
+      const recentTbody = document.getElementById('dashboard-recent-tbody');
+      const emptyState = document.getElementById('dashboard-empty-state');
+      recentTbody.innerHTML = '';
+
+      if (quotations.length === 0) {
+        emptyState.style.display = 'block';
+        return;
+      }
+      emptyState.style.display = 'none';
+
+      quotations.slice(0, 5).forEach(q => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong style="color: var(--gold-light);">${q.quoteNumber}</strong></td>
+          <td>
+            <div style="font-weight: 600;">${escapeHtml(q.clientName)}</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted);">${escapeHtml(q.clientPhone || '')}</div>
+          </td>
+          <td>${q.eventDate || q.issueDate}</td>
+          <td style="font-weight: 700;">${formatCurrency(q.grandTotal)}</td>
+          <td>${getStatusBadge(q.status)}</td>
+          <td style="text-align: right;">
+            <div style="display: flex; gap: 0.35rem; justify-content: flex-end;">
+              <button class="btn btn-secondary btn-sm" onclick="window.previewQuotationById('${q.id}')" title="Preview">👁️</button>
+              <button class="btn btn-outline-gold btn-sm" onclick="window.editQuotation('${q.id}')" title="Edit">✏️</button>
+            </div>
+          </td>
+        `;
+        recentTbody.appendChild(tr);
+      });
+    }
+
+    function renderProgressBars() {
+      const container = document.getElementById('progress-bars-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const totalQuotes = quotations.length;
+      const acceptedQuotes = quotations.filter(q => q.status === 'Accepted');
+      const overallRate = totalQuotes > 0 ? Math.round((acceptedQuotes.length / totalQuotes) * 100) : 0;
+      
+      const overallRateEl = document.getElementById('prog-overall-rate');
+      if (overallRateEl) overallRateEl.textContent = `${overallRate}%`;
+
+      const categories = [
+        { key: "Picnic", name: "Picnic Package Setup", target: 1500, color: "gold", icon: "🧺" },
+        { key: "Birthday", name: "Birthday & Backdrop Deco", target: 1800, color: "green", icon: "🎂" },
+        { key: "Balloon", name: "Balloon Garland & Props", target: 800, color: "purple", icon: "🎈" },
+        { key: "Rental", name: "Equipment / Set Rental", target: 900, color: "blue", icon: "🪑" }
+      ];
+
+      categories.forEach(cat => {
+        let earned = 0;
+        quotations.forEach(q => {
+          (q.items || []).forEach(it => {
+            if (it.name && it.name.toLowerCase().includes(cat.key.toLowerCase())) {
+              earned += (it.total || 0);
+            }
+          });
+        });
+
+        const pct = Math.min(100, Math.round((earned / cat.target) * 100));
+        const card = document.createElement('div');
+        card.className = 'progress-bar-card';
+        card.innerHTML = `
+          <div class="progress-info-row">
+            <span class="progress-title-tag">${cat.icon} ${cat.name}</span>
+            <span class="progress-percentage">${pct}%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill ${cat.color}" style="width: ${pct}%;"></div>
+          </div>
+          <div class="progress-footer-row">
+            <span>Terkumpul: <strong>${formatCurrency(earned)}</strong></span>
+            <span>Sasaran: ${formatCurrency(cat.target)}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderHistoryTable() {
+      const tbody = document.getElementById('history-tbody');
+      const emptyState = document.getElementById('history-empty-state');
+      const searchTerm = (document.getElementById('search-input')?.value || '').toLowerCase().trim();
+      const statusFilter = document.getElementById('filter-status')?.value || 'ALL';
+
+      tbody.innerHTML = '';
+
+      const filtered = quotations.filter(q => {
+        const matchSearch = q.quoteNumber.toLowerCase().includes(searchTerm) ||
+                            q.clientName.toLowerCase().includes(searchTerm) ||
+                            (q.clientPhone && q.clientPhone.toLowerCase().includes(searchTerm));
+        const matchStatus = (statusFilter === 'ALL') || (q.status === statusFilter);
+        return matchSearch && matchStatus;
+      });
+
+      if (filtered.length === 0) {
+        emptyState.style.display = 'block';
+        return;
+      }
+      emptyState.style.display = 'none';
+
+      filtered.forEach(q => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong style="color: var(--gold-light);">${q.quoteNumber}</strong></td>
+          <td>
+            <div style="font-weight: 600;">${escapeHtml(q.clientName)}</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted);">${escapeHtml(q.clientCompany || '')}</div>
+          </td>
+          <td>${q.issueDate}</td>
+          <td>${q.eventDate || '-'}</td>
+          <td style="font-weight: 700;">${formatCurrency(q.grandTotal)}</td>
+          <td>${getStatusBadge(q.status)}</td>
+          <td style="text-align: right;">
+            <div style="display: flex; gap: 0.35rem; justify-content: flex-end;">
+              <button class="btn btn-secondary btn-sm" onclick="window.previewQuotationById('${q.id}')" title="Preview">👁️</button>
+              <button class="btn btn-outline-gold btn-sm" onclick="window.editQuotation('${q.id}')" title="Edit">✏️</button>
+              <button class="btn btn-secondary btn-sm" onclick="window.duplicateQuotation('${q.id}')" title="Duplicate">📋</button>
+              <button class="btn btn-danger btn-sm" onclick="window.confirmDeleteQuotation('${q.id}')" title="Padam">🗑️</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterQuotations() {
+      renderHistoryTable();
+    }
+
+    function getStatusBadge(status) {
+      const s = status || 'Draft';
+      const map = {
+        'Accepted': 'badge-accepted',
+        'Pending': 'badge-pending',
+        'Rejected': 'badge-rejected',
+        'Draft': 'badge-draft',
+        'Expired': 'badge-expired'
+      };
+      return `<span class="status-badge ${map[s] || 'badge-draft'}">${s}</span>`;
+    }
+
+    function previewCurrentForm() {
+      const clientName = document.getElementById('client-name').value.trim() || 'Pelanggan Dihormati';
+      const items = [];
+      document.querySelectorAll('#items-tbody .item-row').forEach(row => {
+        const name = row.querySelector('.item-name').value.trim();
+        const desc = row.querySelector('.item-desc').value.trim();
+        const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+        const unitPrice = parseFloat(row.querySelector('.item-price').value) || 0;
+        if (name) items.push({ name, desc, qty, unitPrice, total: qty * unitPrice });
+      });
+
+      if (items.length === 0) {
+        showToast('Sila masukkan sekurang-kurangnya satu item untuk pratonton.', 'error');
+        return;
+      }
+
+      const fin = calculateFinancials();
+      renderPrintDocument({
+        quoteNumber: document.getElementById('quote-number').value || 'EPP-PREVIEW',
+        issueDate: document.getElementById('quote-date').value,
+        expiryDate: document.getElementById('quote-expiry').value,
+        clientName: clientName,
+        clientCompany: document.getElementById('client-company').value.trim(),
+        clientPhone: document.getElementById('client-phone').value.trim(),
+        clientEmail: document.getElementById('client-email').value.trim(),
+        clientAddress: document.getElementById('client-address').value.trim(),
+        eventDate: document.getElementById('event-date').value,
+        eventLocation: document.getElementById('event-location').value.trim(),
+        status: document.getElementById('quote-status').value,
+        items: items,
+        subtotal: fin.subtotal,
+        discountAmount: fin.discountAmount,
+        extraCharge: fin.extraCharge,
+        depositAmount: fin.depositAmount,
+        grandTotal: fin.grandTotal,
+        balanceDue: fin.balanceDue,
+        notes: document.getElementById('quote-notes').value.trim(),
+        paymentTerms: document.getElementById('quote-payment-terms').value.trim(),
+        terms: document.getElementById('quote-terms').value.trim()
+      });
+      openPreviewModal();
+    }
+
+    function previewQuotationById(quoteId) {
+      const quote = quotations.find(q => q.id === quoteId);
+      if (!quote) return;
+      renderPrintDocument(quote);
+      openPreviewModal();
+    }
+
+    function renderPrintDocument(data) {
+      document.getElementById('paper-company-name').textContent = companySettings.name;
+      document.getElementById('paper-company-meta').innerHTML = `
+        ${escapeHtml(companySettings.address)}<br>
+        <strong>Tel:</strong> ${escapeHtml(companySettings.phone)} | <strong>Emel:</strong> ${escapeHtml(companySettings.email)}
+      `;
+
+      document.getElementById('paper-quote-number').textContent = data.quoteNumber;
+      document.getElementById('paper-issue-date').textContent = data.issueDate || '-';
+      document.getElementById('paper-expiry-date').textContent = data.expiryDate || '-';
+      document.getElementById('paper-status-badge').textContent = (data.status || 'PENDING').toUpperCase();
+
+      document.getElementById('paper-client-name').textContent = data.clientName || '-';
+      document.getElementById('paper-client-company').textContent = data.clientCompany ? `Syarikat: ${data.clientCompany}` : '';
+      document.getElementById('paper-client-phone').textContent = data.clientPhone ? `Tel: ${data.clientPhone}` : '';
+      document.getElementById('paper-client-email').textContent = data.clientEmail ? `Email: ${data.clientEmail}` : '';
+      document.getElementById('paper-client-address').textContent = data.clientAddress || '';
+
+      document.getElementById('paper-event-date').textContent = data.eventDate || 'Akan Ditetapkan';
+      document.getElementById('paper-event-location').textContent = data.eventLocation || 'Tapak Acara Pilihan Pelanggan';
+
+      const itemsTbody = document.getElementById('paper-items-tbody');
+      itemsTbody.innerHTML = '';
+      (data.items || []).forEach((it, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align: center;">${idx + 1}</td>
+          <td>
+            <div style="font-weight: 600; color: #111827;">${escapeHtml(it.name)}</div>
+            ${it.desc ? `<div style="font-size: 0.72rem; color: #6b7280; margin-top: 0.15rem;">${escapeHtml(it.desc)}</div>` : ''}
+          </td>
+          <td style="text-align: center;">${it.qty}</td>
+          <td style="text-align: right;">${formatCurrency(it.unitPrice)}</td>
+          <td style="text-align: right; font-weight: 600;">${formatCurrency(it.total)}</td>
+        `;
+        itemsTbody.appendChild(tr);
+      });
+
+      document.getElementById('paper-subtotal').textContent = formatCurrency(data.subtotal);
+      
+      const discountRow = document.getElementById('paper-row-discount');
+      if (data.discountAmount && data.discountAmount > 0) {
+        discountRow.style.display = 'flex';
+        document.getElementById('paper-discount').textContent = `- ${formatCurrency(data.discountAmount)}`;
+      } else {
+        discountRow.style.display = 'none';
+      }
+
+      const extraRow = document.getElementById('paper-row-extra');
+      if (data.extraCharge && data.extraCharge > 0) {
+        extraRow.style.display = 'flex';
+        document.getElementById('paper-extra').textContent = `+ ${formatCurrency(data.extraCharge)}`;
+      } else {
+        extraRow.style.display = 'none';
+      }
+
+      document.getElementById('paper-grand-total').textContent = formatCurrency(data.grandTotal);
+
+      const depositRow = document.getElementById('paper-row-deposit');
+      if (data.depositAmount && data.depositAmount > 0) {
+        depositRow.style.display = 'flex';
+        document.getElementById('paper-deposit').textContent = `- ${formatCurrency(data.depositAmount)}`;
+      } else {
+        depositRow.style.display = 'none';
+      }
+
+      document.getElementById('paper-balance').textContent = formatCurrency(data.balanceDue);
+      document.getElementById('paper-payment-terms').textContent = data.paymentTerms || companySettings.bank;
+      document.getElementById('paper-terms-body').textContent = data.terms || companySettings.terms;
+      document.getElementById('paper-sig-client').textContent = data.clientName || 'Pelanggan';
+    }
+
+    function openPreviewModal() {
+      document.getElementById('preview-modal').classList.add('active');
+    }
+
+    function closePreviewModal() {
+      document.getElementById('preview-modal').classList.remove('active');
+    }
+
+    function populateSettingsForm() {
+      const n = document.getElementById('setting-company-name');
+      const a = document.getElementById('setting-company-address');
+      const p = document.getElementById('setting-company-phone');
+      const e = document.getElementById('setting-company-email');
+      const b = document.getElementById('setting-company-bank');
+      const t = document.getElementById('setting-company-terms');
+
+      if (n) n.value = companySettings.name;
+      if (a) a.value = companySettings.address;
+      if (p) p.value = companySettings.phone;
+      if (e) e.value = companySettings.email;
+      if (b) b.value = companySettings.bank;
+      if (t) t.value = companySettings.terms;
+    }
+
+    async function saveCompanySettings() {
+      companySettings.name = document.getElementById('setting-company-name').value.trim();
+      companySettings.address = document.getElementById('setting-company-address').value.trim();
+      companySettings.phone = document.getElementById('setting-company-phone').value.trim();
+      companySettings.email = document.getElementById('setting-company-email').value.trim();
+      companySettings.bank = document.getElementById('setting-company-bank').value.trim();
+      companySettings.terms = document.getElementById('setting-company-terms').value.trim();
+
+      try {
+        const settingsDoc = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'companySettings', 'main');
+        await setDoc(settingsDoc, companySettings);
+      } catch (err) {
+        console.warn("Saved settings locally");
+      }
+
+      showToast('Maklumat syarikat berjaya dikemaskini!', 'success');
+    }
+
+    // Attach to window object for inline HTML event access
+    window.handleLogin = handleLogin;
+    window.handleLogout = handleLogout;
+    window.toggleTheme = toggleTheme;
+    window.navigateTo = navigateTo;
+    window.startNewQuotation = startNewQuotation;
+    window.resetFormToBlank = resetFormToBlank;
+    window.previewCurrentForm = previewCurrentForm;
+    window.saveQuotation = saveQuotation;
+    window.saveCompanySettings = saveCompanySettings;
+    window.closePreviewModal = closePreviewModal;
+    window.closeConfirmModal = closeConfirmModal;
+    window.executeDelete = executeDelete;
+    window.addItemRow = addItemRow;
+    window.addPresetItem = addPresetItem;
+    window.removeItemRow = removeItemRow;
+    window.updateRowTotal = updateRowTotal;
+    window.calculateFinancials = calculateFinancials;
+    window.editQuotation = editQuotation;
+    window.duplicateQuotation = duplicateQuotation;
+    window.confirmDeleteQuotation = confirmDeleteQuotation;
+    window.filterQuotations = filterQuotations;
+    window.previewQuotationById = previewQuotationById;
+
+    // Boot system
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      checkAuthState();
+      initFirebaseSync();
+      populateSettingsForm();
+      initDefaultFormDates();
+      renderDashboard();
+      renderProgressBars();
+      renderHistoryTable();
+    });
+  </script>
+</body>
+</html>
