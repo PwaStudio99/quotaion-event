@@ -3,9 +3,22 @@
 <html lang="ms" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>EventPlannerPerak — Quotation Management System</title>
   
+  <!-- PWA & Mobile Standalone Meta Tags -->
+  <meta name="application-name" content="EventPlannerPerak">
+  <meta name="apple-mobile-web-app-title" content="EPPerak">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#080b11" id="theme-color-meta">
+  <link rel="manifest" id="pwa-manifest">
+
+  <!-- Apple Touch & PWA Icon (Data URI SVG from Official EP Logo) -->
+  <link rel="apple-touch-icon" id="apple-touch-icon">
+  <link rel="icon" type="image/svg+xml" id="favicon-svg">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,19 +40,20 @@
       --text-muted: #94a3b8;
       --border-color: rgba(255, 255, 255, 0.1);
       --border-gold: rgba(212, 175, 55, 0.35);
-      --glass-bg: rgba(18, 24, 38, 0.72);
+      --glass-bg: rgba(18, 24, 38, 0.75);
       --glass-border: rgba(255, 255, 255, 0.12);
       --glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
       --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
       --shadow-sm: 0 4px 16px rgba(0,0,0,0.3);
-      --transition: all 0.25s ease;
+      --transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      --bottom-nav-height: 68px;
     }
 
     [data-theme="light"] {
       --bg-dark: #f1f4fb;
-      --bg-card: rgba(255, 255, 255, 0.82);
+      --bg-card: rgba(255, 255, 255, 0.85);
       --bg-card-solid: #ffffff;
       --bg-input: #ffffff;
       --gold-primary: #b89322;
@@ -52,9 +66,9 @@
       --text-muted: #64748b;
       --border-color: rgba(0, 0, 0, 0.09);
       --border-gold: rgba(184, 147, 34, 0.4);
-      --glass-bg: rgba(255, 255, 255, 0.8);
+      --glass-bg: rgba(255, 255, 255, 0.82);
       --glass-border: rgba(255, 255, 255, 0.95);
-      --glass-shadow: 0 12px 32px rgba(148, 163, 184, 0.22);
+      --glass-shadow: 0 12px 32px rgba(148, 163, 184, 0.25);
       --shadow-sm: 0 4px 16px rgba(0,0,0,0.06);
     }
 
@@ -62,6 +76,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -69,57 +84,60 @@
       background-color: var(--bg-dark);
       color: var(--text-white);
       min-height: 100vh;
+      min-height: -webkit-fill-available;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
       position: relative;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.35s ease, color 0.35s ease;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     /* Ambient Colorful Glow Orbs */
     .ambient-glow-orb {
       position: fixed;
       border-radius: 50%;
-      filter: blur(110px);
+      filter: blur(120px);
       pointer-events: none;
       z-index: 0;
-      opacity: 0.5;
+      opacity: 0.45;
       transition: opacity 0.5s ease;
+      will-change: transform;
     }
 
     [data-theme="light"] .ambient-glow-orb {
-      opacity: 0.28;
+      opacity: 0.25;
     }
 
     .orb-purple {
-      width: 460px;
-      height: 460px;
-      top: -120px;
-      left: -100px;
+      width: 440px;
+      height: 440px;
+      top: -100px;
+      left: -80px;
       background: radial-gradient(circle, #8b5cf6 0%, rgba(139, 92, 246, 0) 70%);
     }
 
     .orb-cyan {
-      width: 440px;
-      height: 440px;
+      width: 420px;
+      height: 420px;
       top: 25%;
-      right: -100px;
+      right: -80px;
       background: radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0) 70%);
     }
 
     .orb-gold {
-      width: 500px;
-      height: 500px;
-      bottom: 5%;
-      left: 20%;
+      width: 480px;
+      height: 480px;
+      bottom: 10%;
+      left: 15%;
       background: radial-gradient(circle, #f59e0b 0%, rgba(245, 158, 11, 0) 70%);
     }
 
     .orb-pink {
-      width: 380px;
-      height: 380px;
-      bottom: -60px;
-      right: 15%;
+      width: 360px;
+      height: 360px;
+      bottom: -40px;
+      right: 10%;
       background: radial-gradient(circle, #ec4899 0%, rgba(236, 72, 153, 0) 70%);
     }
 
@@ -136,11 +154,12 @@
       top: 0;
       z-index: 100;
       background: var(--glass-bg);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border-color);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 25px rgba(0,0,0,0.12);
       transition: var(--transition);
+      padding-top: env(safe-area-inset-top);
     }
 
     .header-container {
@@ -158,13 +177,15 @@
       align-items: center;
       gap: 0.85rem;
       cursor: pointer;
+      user-select: none;
     }
 
     .brand-logo-svg {
-      width: 44px;
-      height: 44px;
-      filter: drop-shadow(0 2px 6px rgba(212,175,55,0.4));
+      width: 42px;
+      height: 42px;
+      filter: drop-shadow(0 2px 8px rgba(212,175,55,0.4));
       flex-shrink: 0;
+      border-radius: 8px;
     }
 
     .brand-info {
@@ -173,7 +194,7 @@
     }
 
     .brand-name {
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 700;
       color: var(--gold-light);
       letter-spacing: 1.5px;
@@ -181,12 +202,13 @@
     }
 
     .brand-tag {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: var(--text-muted);
       letter-spacing: 1px;
       text-transform: uppercase;
     }
 
+    /* Desktop Navigation Links */
     .nav-links {
       display: flex;
       gap: 0.4rem;
@@ -204,7 +226,7 @@
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 0.5rem 0.9rem;
+      padding: 0.5rem 0.95rem;
       border-radius: var(--radius-sm);
       font-size: 0.82rem;
       font-weight: 600;
@@ -225,7 +247,7 @@
       background: var(--gold-gradient);
       color: #0b0d10;
       font-weight: 700;
-      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.35);
+      box-shadow: 0 2px 12px rgba(212, 175, 55, 0.38);
     }
 
     .header-actions {
@@ -251,17 +273,21 @@
       white-space: nowrap;
     }
 
+    .btn:active {
+      transform: scale(0.97);
+    }
+
     .btn-gold {
       background: var(--gold-gradient);
       color: #0d0f13;
       border-color: #ffd700;
       font-weight: 700;
-      box-shadow: 0 2px 12px rgba(212,175,55,0.3);
+      box-shadow: 0 3px 14px rgba(212,175,55,0.35);
     }
 
     .btn-gold:hover {
       transform: translateY(-1px);
-      box-shadow: 0 4px 18px rgba(212,175,55,0.45);
+      box-shadow: 0 5px 20px rgba(212,175,55,0.48);
       filter: brightness(1.08);
     }
 
@@ -331,40 +357,39 @@
       max-width: 1400px;
       width: 100%;
       margin: 0 auto;
-      padding: 1.5rem 1.25rem 4rem 1.25rem;
+      padding: 1.5rem 1.25rem calc(var(--bottom-nav-height) + 2rem) 1.25rem;
       position: relative;
       z-index: 1;
     }
 
     .view-section {
       display: none;
-      animation: fadeIn 0.3s ease;
+      opacity: 0;
+      transform: translateY(10px) scale(0.995);
+      transition: opacity 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     .view-section.active {
       display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
 
     /* Colorful Glassmorphism Stat Cards */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 1.75rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.15rem;
+      margin-bottom: 1.65rem;
     }
 
     .stat-card {
       background: var(--glass-bg);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
-      padding: 1.35rem;
+      padding: 1.25rem;
       position: relative;
       overflow: hidden;
       box-shadow: var(--glass-shadow);
@@ -373,7 +398,7 @@
 
     .stat-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
     }
 
     .stat-card::before {
@@ -410,48 +435,48 @@
     .stat-card-pipeline::before { background: var(--gold-gradient); }
 
     .stat-label {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
       letter-spacing: 0.8px;
       color: var(--text-muted);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
     }
 
     .stat-value {
-      font-size: 1.85rem;
+      font-size: 1.8rem;
       font-weight: 700;
       color: var(--text-white);
       font-family: 'Cinzel', serif;
     }
 
     .stat-sub {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
-      margin-top: 0.35rem;
+      margin-top: 0.3rem;
     }
 
     /* Glass Panels */
     .glass-panel {
       background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
       border: 1px solid var(--border-gold);
       border-radius: var(--radius-lg);
       box-shadow: var(--glass-shadow);
-      padding: 1.5rem;
+      padding: 1.45rem;
       position: relative;
       overflow: hidden;
     }
 
     .progress-tracker-container {
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.65rem;
     }
 
     .progress-tracker-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.2rem;
       border-bottom: 1px solid var(--border-color);
       padding-bottom: 0.85rem;
       flex-wrap: wrap;
@@ -460,8 +485,9 @@
 
     .progress-stats-summary {
       display: flex;
-      gap: 1rem;
+      gap: 0.85rem;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .progress-metric-pill {
@@ -478,8 +504,8 @@
 
     .progress-bars-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.15rem;
     }
 
     .progress-bar-card {
@@ -534,7 +560,7 @@
     .progress-fill {
       height: 100%;
       border-radius: 999px;
-      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: width 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     .progress-fill.gold {
@@ -573,11 +599,11 @@
     /* Cards */
     .card {
       background: var(--glass-bg);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
-      padding: 1.5rem;
+      padding: 1.45rem;
       box-shadow: var(--shadow-sm);
     }
 
@@ -585,13 +611,15 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.2rem;
       padding-bottom: 0.85rem;
       border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 0.75rem;
     }
 
     .card-title {
-      font-size: 1.1rem;
+      font-size: 1.08rem;
       color: var(--gold-light);
       display: flex;
       align-items: center;
@@ -618,7 +646,7 @@
     }
 
     .form-label {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
       color: var(--text-muted);
       text-transform: uppercase;
@@ -682,7 +710,7 @@
       gap: 0.3rem;
     }
 
-    .chip-btn:hover {
+    .chip-btn:hover, .chip-btn:active {
       background: rgba(212, 175, 55, 0.25);
       border-color: var(--gold-primary);
       transform: translateY(-1px);
@@ -694,12 +722,13 @@
       margin: 1rem 0;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
+      -webkit-overflow-scrolling: touch;
     }
 
     .items-table, .data-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 650px;
+      min-width: 640px;
     }
 
     .items-table th, .data-table th {
@@ -736,7 +765,7 @@
       border: 1px solid var(--border-gold);
       border-radius: var(--radius-md);
       padding: 1.25rem;
-      margin-top: 1.5rem;
+      margin-top: 1.25rem;
     }
 
     .calc-row {
@@ -796,7 +825,7 @@
       right: 0;
       bottom: 0;
       background: rgba(5, 7, 10, 0.85);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       z-index: 1000;
       display: flex;
       align-items: center;
@@ -804,7 +833,7 @@
       padding: 1.5rem;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.25s ease;
+      transition: all 0.3s ease;
     }
 
     .modal-overlay.active {
@@ -821,13 +850,13 @@
       max-height: 90vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-      transform: translateY(20px);
-      transition: all 0.3s ease;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.65);
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     .modal-overlay.active .modal-card {
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
     .modal-header {
@@ -863,8 +892,8 @@
     /* Toast */
     .toast-container {
       position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
+      bottom: calc(var(--bottom-nav-height) + 1.25rem);
+      right: 1.25rem;
       z-index: 2000;
       display: flex;
       flex-direction: column;
@@ -921,8 +950,8 @@
 
     .login-card {
       background: rgba(18, 24, 34, 0.88);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
       border: 1px solid rgba(212, 175, 55, 0.35);
       border-radius: var(--radius-lg);
       width: 100%;
@@ -941,8 +970,8 @@
     .login-logo-box svg {
       width: 100%;
       height: 100%;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
     }
 
     .login-title {
@@ -956,6 +985,122 @@
       font-size: 0.78rem;
       color: var(--text-muted);
       margin-bottom: 1.75rem;
+    }
+
+    /* ==============================================================
+       MOBILE PWA BOTTOM TAB NAVIGATION (Smooth & Glassmorphic)
+       ============================================================== */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 95;
+      background: var(--glass-bg);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-top: 1px solid var(--border-gold);
+      box-shadow: 0 -8px 30px rgba(0,0,0,0.35);
+      padding: 0.45rem 0.85rem calc(0.45rem + env(safe-area-inset-bottom)) 0.85rem;
+      justify-content: space-around;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .mobile-tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.45rem 0.75rem;
+      border-radius: 16px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      font-family: inherit;
+      flex: 1;
+      max-width: 82px;
+      touch-action: manipulation;
+    }
+
+    .mobile-tab-item svg {
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.3s ease;
+    }
+
+    .mobile-tab-item span {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      transition: color 0.3s ease, font-weight 0.3s ease;
+    }
+
+    .mobile-tab-item:active {
+      transform: scale(0.92);
+    }
+
+    .mobile-tab-item.active {
+      color: var(--gold-light);
+    }
+
+    .mobile-tab-item.active svg {
+      stroke: var(--gold-light);
+      transform: translateY(-2px) scale(1.12);
+      filter: drop-shadow(0 2px 8px var(--gold-glow));
+    }
+
+    .mobile-tab-item.active span {
+      color: var(--gold-light);
+      font-weight: 800;
+    }
+
+    .mobile-tab-indicator {
+      position: absolute;
+      bottom: 2px;
+      width: 18px;
+      height: 3px;
+      background: var(--gold-gradient);
+      border-radius: 999px;
+      box-shadow: 0 0 8px var(--gold-primary);
+      opacity: 0;
+      transform: scaleX(0.2);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .mobile-tab-item.active .mobile-tab-indicator {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    /* Floating Center "Add Quote" Button for PWA Mobile */
+    .mobile-tab-item.fab-tab {
+      background: var(--gold-gradient);
+      color: #0d0f13;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      flex: 0 0 50px;
+      margin-top: -18px;
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.55), 0 0 12px rgba(212, 175, 55, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      padding: 0;
+    }
+
+    .mobile-tab-item.fab-tab svg {
+      stroke: #0d0f13;
+      stroke-width: 2.6;
+    }
+
+    .mobile-tab-item.fab-tab:hover, .mobile-tab-item.fab-tab:active {
+      transform: scale(1.06);
+    }
+
+    .mobile-tab-item.fab-tab .mobile-tab-indicator {
+      display: none;
     }
 
     /* PRINTABLE DOCUMENT (A4 PAPER) */
@@ -993,6 +1138,7 @@
       width: 68px;
       height: 68px;
       flex-shrink: 0;
+      border-radius: 10px;
     }
 
     .paper-company-title {
@@ -1175,7 +1321,7 @@
 
     .sig-official-container {
       width: 100%;
-      max-width: 250px;
+      max-width: 260px;
       text-align: center;
     }
 
@@ -1189,7 +1335,7 @@
     }
 
     .sig-vector-svg {
-      width: 190px;
+      width: 210px;
       height: 85px;
       display: block;
       margin: 0 auto;
@@ -1227,6 +1373,7 @@
       }
 
       .top-header,
+      .mobile-bottom-nav,
       .ambient-glow-orb,
       .nav-links,
       .toast-container,
@@ -1286,32 +1433,92 @@
       .quote-doc-meta { text-align: left; }
     }
 
-    @media (max-width: 640px) {
-      .header-container { flex-wrap: wrap; }
-      .nav-links { order: 3; width: 100%; justify-content: space-around; overflow-x: auto; }
-      .nav-btn span { display: none; }
-      .theme-label-text { display: none; }
+    /* Responsive Mobile Screen Optimizations */
+    @media (max-width: 768px) {
+      .top-header .nav-links {
+        display: none; /* Hidden on mobile; replaced by bottom tab bar */
+      }
+
+      .mobile-bottom-nav {
+        display: flex; /* Active floating glass tab bar */
+      }
+
+      .header-container {
+        padding: 0.6rem 1rem;
+      }
+
+      .brand-name {
+        font-size: 1rem;
+        letter-spacing: 1px;
+      }
+
+      .brand-tag {
+        font-size: 0.62rem;
+      }
+
+      .header-btn-new-quote {
+        display: none; /* Available in mobile tab bar as primary gold action */
+      }
+
+      .theme-label-text {
+        display: none;
+      }
+
+      .app-main {
+        padding: 1rem 0.85rem calc(var(--bottom-nav-height) + 1.5rem) 0.85rem;
+      }
+
+      .card {
+        padding: 1.15rem;
+      }
+
+      .glass-panel {
+        padding: 1.15rem;
+      }
+
+      .stat-card {
+        padding: 1.1rem;
+      }
+
+      .toast-container {
+        right: 0.85rem;
+        left: 0.85rem;
+        bottom: calc(var(--bottom-nav-height) + 1rem);
+      }
+
+      .toast {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Hidden SVG Template for Official EP Monogram Logo -->
+  <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <g id="epp-official-logo-symbol">
+        <rect width="400" height="400" rx="28" fill="#000000"/>
+        <!-- Interlocking Serif EP Monogram -->
+        <g transform="translate(130, 95)">
+          <path d="M 0 15 L 22 15 L 22 25 L 14 25 L 14 125 L 22 125 L 22 135 L 0 135 L 0 125 L 8 125 L 8 25 L 0 25 Z" fill="#cfb16e"/>
+          <path d="M 14 15 L 68 15 L 68 25 L 14 25 Z" fill="#cfb16e"/>
+          <path d="M 14 68 L 50 68 L 50 78 L 14 78 Z" fill="#cfb16e"/>
+          <path d="M 14 125 L 68 125 L 68 135 L 14 135 Z" fill="#cfb16e"/>
+          <path d="M 58 15 L 72 15 L 72 135 L 58 135 Z" fill="#cfb16e"/>
+          <path d="M 68 15 C 104 15, 126 32, 126 56 C 126 78, 106 95, 72 95 L 72 84 C 98 84, 113 72, 113 56 C 113 38, 96 26, 68 26 Z" fill="#cfb16e"/>
+        </g>
+        <text x="200" y="278" font-family="'Cinzel', 'Plus Jakarta Sans', serif" font-size="19" font-weight="700" fill="#cfb16e" text-anchor="middle" letter-spacing="6">EVENTPLANNERPERAK</text>
+      </g>
+    </defs>
+  </svg>
+
   <!-- LOGIN PAGE SCREEN (ID: aimidiana / Password: aimi123@) -->
   <div class="login-screen" id="login-screen">
     <div class="login-card">
       <div class="login-logo-box">
-        <!-- EventPlannerPerak EP Interlocking Monogram Logo -->
-        <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="400" height="400" rx="20" fill="#000000"/>
-          <g transform="translate(130, 95)">
-            <path d="M 0 15 L 22 15 L 22 25 L 14 25 L 14 125 L 22 125 L 22 135 L 0 135 L 0 125 L 8 125 L 8 25 L 0 25 Z" fill="#cfb16e"/>
-            <path d="M 14 15 L 68 15 L 68 25 L 14 25 Z" fill="#cfb16e"/>
-            <path d="M 14 68 L 50 68 L 50 78 L 14 78 Z" fill="#cfb16e"/>
-            <path d="M 14 125 L 68 125 L 68 135 L 14 135 Z" fill="#cfb16e"/>
-            <path d="M 58 15 L 72 15 L 72 135 L 58 135 Z" fill="#cfb16e"/>
-            <path d="M 68 15 C 104 15, 126 32, 126 56 C 126 78, 106 95, 72 95 L 72 84 C 98 84, 113 72, 113 56 C 113 38, 96 26, 68 26 Z" fill="#cfb16e"/>
-          </g>
-          <text x="200" y="278" font-family="'Cinzel', 'Plus Jakarta Sans', serif" font-size="19" font-weight="700" fill="#cfb16e" text-anchor="middle" letter-spacing="6">EVENTPLANNERPERAK</text>
+        <svg viewBox="0 0 400 400">
+          <use href="#epp-official-logo-symbol"></use>
         </svg>
       </div>
 
@@ -1338,17 +1545,8 @@
   <header class="top-header no-print">
     <div class="header-container">
       <div class="brand-section" onclick="window.navigateTo('dashboard')">
-        <svg class="brand-logo-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="400" height="400" rx="35" fill="#000000"/>
-          <g transform="translate(130, 95)">
-            <path d="M 0 15 L 22 15 L 22 25 L 14 25 L 14 125 L 22 125 L 22 135 L 0 135 L 0 125 L 8 125 L 8 25 L 0 25 Z" fill="#cfb16e"/>
-            <path d="M 14 15 L 68 15 L 68 25 L 14 25 Z" fill="#cfb16e"/>
-            <path d="M 14 68 L 50 68 L 50 78 L 14 78 Z" fill="#cfb16e"/>
-            <path d="M 14 125 L 68 125 L 68 135 L 14 135 Z" fill="#cfb16e"/>
-            <path d="M 58 15 L 72 15 L 72 135 L 58 135 Z" fill="#cfb16e"/>
-            <path d="M 68 15 C 104 15, 126 32, 126 56 C 126 78, 106 95, 72 95 L 72 84 C 98 84, 113 72, 113 56 C 113 38, 96 26, 68 26 Z" fill="#cfb16e"/>
-          </g>
-          <text x="200" y="278" font-family="'Cinzel', 'Plus Jakarta Sans', serif" font-size="19" font-weight="700" fill="#cfb16e" text-anchor="middle" letter-spacing="6">EVENTPLANNERPERAK</text>
+        <svg class="brand-logo-svg" viewBox="0 0 400 400">
+          <use href="#epp-official-logo-symbol"></use>
         </svg>
 
         <div class="brand-info">
@@ -1357,6 +1555,7 @@
         </div>
       </div>
 
+      <!-- Desktop Nav -->
       <nav class="nav-links">
         <button class="nav-btn active" id="nav-dashboard" onclick="window.navigateTo('dashboard')">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
@@ -1380,7 +1579,7 @@
         <!-- Cloud Sync Pill -->
         <div style="display: flex; align-items: center; gap: 0.45rem; background: rgba(255,255,255,0.06); padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid var(--border-color);">
           <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;" id="cloud-status-dot"></div>
-          <span style="font-size: 0.76rem; font-weight: 600; color: var(--gold-light);" id="cloud-status-text">Cloud Sync</span>
+          <span style="font-size: 0.74rem; font-weight: 600; color: var(--gold-light);" id="cloud-status-text">Cloud Sync</span>
         </div>
 
         <!-- Light / Night Mode Switcher -->
@@ -1389,7 +1588,7 @@
           <span id="theme-toggle-label" class="theme-label-text">Night</span>
         </button>
 
-        <button class="btn btn-gold btn-sm" onclick="window.startNewQuotation()">
+        <button class="btn btn-gold btn-sm header-btn-new-quote" onclick="window.startNewQuotation()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           <span>+ New Quote</span>
         </button>
@@ -1504,7 +1703,7 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
             <span id="form-heading">Jana Quotation Baru</span>
           </h2>
-          <div style="display: flex; gap: 0.5rem;">
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
             <button class="btn btn-secondary btn-sm" onclick="window.resetFormToBlank()">Set Semula</button>
             <button class="btn btn-outline-gold btn-sm" onclick="window.previewCurrentForm()">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -1606,7 +1805,7 @@
           </div>
 
           <!-- Section 3: Line Items -->
-          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
             <h3 style="color: var(--gold-light); font-size: 0.95rem; border-left: 3px solid var(--gold-primary); padding-left: 0.5rem;">3. Senarai Pakej & Perkhidmatan</h3>
             <button type="button" class="btn btn-gold btn-sm" onclick="window.addItemRow()">+ Tambah Item</button>
           </div>
@@ -1709,7 +1908,7 @@
             </div>
           </div>
 
-          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; flex-wrap: wrap;">
             <button type="button" class="btn btn-secondary" onclick="window.navigateTo('dashboard')">Batal</button>
             <button type="button" class="btn btn-outline-gold" onclick="window.previewCurrentForm()">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -1820,7 +2019,7 @@
             <div class="col-12">
               <div class="form-group">
                 <label class="form-label">Maklumat Bank / Pembayaran</label>
-                <textarea id="setting-company-bank" class="form-control" rows="2">Maybank:158051788426 (AIMI DIANA)
+                <textarea id="setting-company-bank" class="form-control" rows="2">Maybank: 158051788426 (AIMI DIANA)
 DuitNow / Touch 'n Go: 011-20908746</textarea>
               </div>
             </div>
@@ -1840,6 +2039,43 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
   </main>
 
+  <!-- ==============================================================
+       MOBILE PWA BOTTOM TAB NAVIGATION (Ultra-Smooth, Glassmorphism)
+       ============================================================== -->
+  <nav class="mobile-bottom-nav no-print" id="mobile-bottom-nav">
+    <!-- Tab 1: Dashboard -->
+    <button class="mobile-tab-item active" id="mob-nav-dashboard" onclick="window.navigateTo('dashboard')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span>Utama</span>
+      <div class="mobile-tab-indicator"></div>
+    </button>
+
+    <!-- Tab 2: History -->
+    <button class="mobile-tab-item" id="mob-nav-history" onclick="window.navigateTo('history')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+      <span>Sejarah</span>
+      <div class="mobile-tab-indicator"></div>
+    </button>
+
+    <!-- Center Floating Action Button: Create Quote -->
+    <button class="mobile-tab-item fab-tab" id="mob-nav-create" onclick="window.startNewQuotation()" title="Jana Sebut Harga Baru">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    </button>
+
+    <!-- Tab 3: Settings / Company -->
+    <button class="mobile-tab-item" id="mob-nav-settings" onclick="window.navigateTo('settings')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <span>Syarikat</span>
+      <div class="mobile-tab-indicator"></div>
+    </button>
+
+    <!-- Tab 4: Theme Toggle Shortcut -->
+    <button class="mobile-tab-item" onclick="window.toggleTheme()" title="Tukar Tema">
+      <span style="font-size: 1.15rem; line-height: 1; margin-bottom: 2px;" id="mob-theme-icon">🌙</span>
+      <span id="mob-theme-text">Mod</span>
+    </button>
+  </nav>
+
   <!-- MODAL: PREVIEW & PRINT QUOTATION (A4 DOCUMENT) -->
   <div class="modal-overlay" id="preview-modal">
     <div class="modal-card">
@@ -1848,7 +2084,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         <div style="display: flex; gap: 0.5rem;">
           <button class="btn btn-gold btn-sm" onclick="window.print()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-            Cetak / Simpan PDF
+            Cetak / PDF
           </button>
           <button class="btn btn-secondary btn-sm" onclick="window.closePreviewModal()">✕ Tutup</button>
         </div>
@@ -1859,17 +2095,8 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
           <!-- Header -->
           <div class="quote-paper-header">
             <div class="quote-paper-brand">
-              <svg class="paper-logo" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="400" height="400" rx="30" fill="#000000"/>
-                <g transform="translate(130, 95)">
-                  <path d="M 0 15 L 22 15 L 22 25 L 14 25 L 14 125 L 22 125 L 22 135 L 0 135 L 0 125 L 8 125 L 8 25 L 0 25 Z" fill="#cfb16e"/>
-                  <path d="M 14 15 L 68 15 L 68 25 L 14 25 Z" fill="#cfb16e"/>
-                  <path d="M 14 68 L 50 68 L 50 78 L 14 78 Z" fill="#cfb16e"/>
-                  <path d="M 14 125 L 68 125 L 68 135 L 14 135 Z" fill="#cfb16e"/>
-                  <path d="M 58 15 L 72 15 L 72 135 L 58 135 Z" fill="#cfb16e"/>
-                  <path d="M 68 15 C 104 15, 126 32, 126 56 C 126 78, 106 95, 72 95 L 72 84 C 98 84, 113 72, 113 56 C 113 38, 96 26, 68 26 Z" fill="#cfb16e"/>
-                </g>
-                <text x="200" y="278" font-family="'Cinzel', 'Plus Jakarta Sans', serif" font-size="19" font-weight="700" fill="#cfb16e" text-anchor="middle" letter-spacing="6">EVENTPLANNERPERAK</text>
+              <svg class="paper-logo" viewBox="0 0 400 400">
+                <use href="#epp-official-logo-symbol"></use>
               </svg>
               <div>
                 <div class="paper-company-title" id="paper-company-name">EVENTPLANNERPERAK</div>
@@ -1963,28 +2190,29 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
             </div>
           </div>
 
-          <!-- Official Signature from User Image (Purple ink cursive flourish) -->
+          <!-- Official Signatures (Owner signature in purple ink on the bottom-left) -->
           <div class="paper-signatures">
             <div class="signature-slot">
               <div class="sig-official-container">
                 <div class="sig-official-heading">DISEDIAKAN OLEH :</div>
                 
-                <svg class="sig-vector-svg" viewBox="0 0 320 135" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 1px 1.5px rgba(71, 45, 130, 0.3));">
-                  <!-- Outer large looping flourish -->
-                  <path d="M 132 52 C 122 36, 75 32, 52 46 C 34 58, 32 82, 40 96 C 50 114, 82 118, 106 112 C 124 106, 136 86, 134 64 C 132 46, 122 38, 108 42" stroke="#472d82" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
-                  <!-- Horizontal entry stroke inside the loop -->
-                  <path d="M 68 53 C 82 52, 102 53, 126 55" stroke="#472d82" stroke-width="2.5" stroke-linecap="round"/>
-                  <!-- Cursive inner character loops -->
-                  <path d="M 65 82 C 68 74, 76 72, 80 84 C 84 94, 80 98, 74 97 C 69 96, 72 85, 82 78 C 90 73, 96 82, 95 93 C 94 97, 98 97, 104 88 C 108 81, 114 82, 114 92" stroke="#472d82" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <!-- Tall middle ascending loop into central oval -->
-                  <path d="M 114 92 C 118 78, 126 52, 132 46 C 136 43, 140 48, 138 58 C 135 72, 132 86, 138 91 C 144 95, 154 94, 162 86 C 172 76, 175 62, 166 58 C 155 54, 144 65, 146 78 C 148 90, 160 95, 174 90" stroke="#472d82" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-                  <!-- Connector into the high right ascender -->
-                  <path d="M 172 88 C 182 78, 192 68, 200 82 C 205 88, 212 88, 218 84" stroke="#472d82" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  <!-- Dramatic high vertical stroke & descending tail -->
-                  <path d="M 198 80 C 212 56, 222 26, 228 14 C 230 10, 229 16, 225 38 L 216 126" stroke="#472d82" stroke-width="2.8" stroke-linecap="round"/>
-                  <!-- Cross horizontal bar and right flourish wing -->
-                  <path d="M 186 82 C 200 80, 220 79, 236 82" stroke="#472d82" stroke-width="2.4" stroke-linecap="round"/>
-                  <path d="M 218 74 C 228 73, 235 78, 233 86 C 230 92, 214 93, 208 90 C 202 88, 210 84, 226 84 C 232 84, 236 87, 232 92" stroke="#472d82" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Official Purple Pen Signature SVG -->
+                <svg class="sig-vector-svg" viewBox="0 0 320 135" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Initial wide cursive curve loop -->
+                  <path d="M 125 45 C 95 35, 45 42, 38 68 C 30 92, 55 115, 88 112 C 118 108, 138 82, 134 58 C 130 42, 114 36, 95 40" stroke="#2e2778" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Horizontal internal flow stroke -->
+                  <path d="M 52 55 C 75 54, 105 55, 128 58" stroke="#2e2778" stroke-width="2.3" stroke-linecap="round"/>
+                  <!-- Lower cursive loops -->
+                  <path d="M 58 84 C 62 76, 70 74, 75 86 C 80 96, 74 100, 68 98 C 64 96, 68 86, 78 79 C 86 74, 92 83, 91 94 C 90 98, 94 98, 100 89 C 104 82, 110 83, 110 93" stroke="#2e2778" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Middle tall loop into oval body -->
+                  <path d="M 110 93 C 114 79, 122 53, 128 47 C 132 44, 136 49, 134 59 C 131 73, 128 87, 134 92 C 140 96, 150 95, 158 87 C 168 77, 171 63, 162 59 C 151 55, 140 66, 142 79 C 144 91, 156 96, 170 91" stroke="#2e2778" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Transition connector -->
+                  <path d="M 168 89 C 178 79, 188 69, 196 83 C 201 89, 208 89, 214 85" stroke="#2e2778" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Right sharp vertical stem and loop -->
+                  <path d="M 194 81 C 208 57, 218 27, 224 15 C 226 11, 225 17, 221 39 L 212 127" stroke="#2e2778" stroke-width="2.6" stroke-linecap="round"/>
+                  <!-- Cross bar and right side wing -->
+                  <path d="M 182 83 C 196 81, 216 80, 232 83" stroke="#2e2778" stroke-width="2.2" stroke-linecap="round"/>
+                  <path d="M 214 75 C 224 74, 231 79, 229 87 C 226 93, 210 94, 204 91 C 198 89, 206 85, 222 85 C 228 85, 232 88, 228 93" stroke="#2e2778" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
 
                 <div class="sig-dotted-line"></div>
@@ -2028,7 +2256,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
 
-  <!-- FIREBASE SCRIPTS (MODULAR) & CORE SYSTEM LOGIC -->
+  <!-- FIREBASE & CORE SYSTEM SCRIPTS -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -2062,7 +2290,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
     const STORAGE_KEY_THEME = 'EPP_THEME_PREF';
     const STORAGE_KEY_QUOTES = 'EPP_LOCAL_QUOTES';
     
-    // User credentials specified in prompt
+    // Credentials specified by user
     const AUTH_CREDENTIALS = {
       username: "aimidiana",
       password: "aimi123@"
@@ -2076,9 +2304,86 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       address: "7983 Kg. Tok Mydeen, Batu 21, 34520 Batu Kurau, Taiping, Perak.",
       phone: "011-20908746",
       email: "eventplannerperak@gmail.com",
-      bank: "Maybank: 158051788426 (AIMI DIANA)",
+      bank: "Maybank: 158051788426(AIMI DIANA)",
       terms: "1. Tempahan hanya disahkan setelah bayaran deposit 50% diterima.\n2. Baki bayaran hendaklah diselesaikan sepenuhnya sebelum hari majlis.\n3. Sebarang pembatalan dalam tempoh 7 hari dari tarikh majlis tidak akan dikembalikan deposit."
     };
+
+    // ==============================================================
+    // PWA STANDALONE & SERVICE WORKER SETUP
+    // ==============================================================
+    function setupPWA() {
+      // 1. Generate SVG Data URI for EP Logo Icon
+      const svgIconRaw = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+        <rect width="400" height="400" rx="30" fill="#000000"/>
+        <g transform="translate(130, 95)">
+          <path d="M 0 15 L 22 15 L 22 25 L 14 25 L 14 125 L 22 125 L 22 135 L 0 135 L 0 125 L 8 125 L 8 25 L 0 25 Z" fill="#cfb16e"/>
+          <path d="M 14 15 L 68 15 L 68 25 L 14 25 Z" fill="#cfb16e"/>
+          <path d="M 14 68 L 50 68 L 50 78 L 14 78 Z" fill="#cfb16e"/>
+          <path d="M 14 125 L 68 125 L 68 135 L 14 135 Z" fill="#cfb16e"/>
+          <path d="M 58 15 L 72 15 L 72 135 L 58 135 Z" fill="#cfb16e"/>
+          <path d="M 68 15 C 104 15, 126 32, 126 56 C 126 78, 106 95, 72 95 L 72 84 C 98 84, 113 72, 113 56 C 113 38, 96 26, 68 26 Z" fill="#cfb16e"/>
+        </g>
+        <text x="200" y="278" font-family="'Cinzel', serif" font-size="19" font-weight="700" fill="#cfb16e" text-anchor="middle" letter-spacing="6">EVENTPLANNERPERAK</text>
+      </svg>`;
+
+      const svgDataUri = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgIconRaw);
+
+      const favIconEl = document.getElementById('favicon-svg');
+      if (favIconEl) favIconEl.setAttribute('href', svgDataUri);
+
+      const appleIconEl = document.getElementById('apple-touch-icon');
+      if (appleIconEl) appleIconEl.setAttribute('href', svgDataUri);
+
+      // 2. Generate and attach Web App Manifest dynamically
+      const manifestObject = {
+        name: "EventPlannerPerak Quotation",
+        short_name: "EPPerak",
+        description: "EventPlannerPerak Quotation & Receipt Management System",
+        start_url: "./",
+        display: "standalone",
+        background_color: "#080b11",
+        theme_color: "#080b11",
+        icons: [
+          {
+            src: svgDataUri,
+            sizes: "512x512",
+            type: "image/svg+xml",
+            purpose: "any maskable"
+          }
+        ]
+      };
+
+      try {
+        const manifestBlob = new Blob([JSON.stringify(manifestObject)], { type: "application/manifest+json" });
+        const manifestUrl = URL.createObjectURL(manifestBlob);
+        const manifestTag = document.getElementById('pwa-manifest');
+        if (manifestTag) manifestTag.setAttribute('href', manifestUrl);
+      } catch (e) {
+        console.warn("Manifest Blob creation fallback:", e);
+      }
+
+      // 3. Register lightweight Service Worker for standalone caching
+      if ('serviceWorker' in navigator) {
+        try {
+          const swCode = `
+            const CACHE_NAME = 'epperak-v1';
+            self.addEventListener('install', e => { self.skipWaiting(); });
+            self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
+            self.addEventListener('fetch', e => {
+              e.respondWith(
+                fetch(e.request).catch(() => caches.match(e.request))
+              );
+            });
+          `;
+          const swBlob = new Blob([swCode], { type: 'application/javascript' });
+          navigator.serviceWorker.register(URL.createObjectURL(swBlob))
+            .then(() => console.log('PWA Service Worker Active'))
+            .catch(err => console.log('SW Note:', err));
+        } catch (err) {
+          console.warn('SW registration skipped:', err);
+        }
+      }
+    }
 
     // Initialize Theme
     function initTheme() {
@@ -2098,14 +2403,19 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       document.documentElement.setAttribute('data-theme', theme);
       const icon = document.getElementById('theme-toggle-icon');
       const label = document.getElementById('theme-toggle-label');
-      if (icon && label) {
-        if (theme === 'light') {
-          icon.textContent = '☀️';
-          label.textContent = 'Light';
-        } else {
-          icon.textContent = '🌙';
-          label.textContent = 'Night';
-        }
+      const mobIcon = document.getElementById('mob-theme-icon');
+      const metaThemeColor = document.getElementById('theme-color-meta');
+
+      if (theme === 'light') {
+        if (icon) icon.textContent = '☀️';
+        if (label) label.textContent = 'Light';
+        if (mobIcon) mobIcon.textContent = '☀️';
+        if (metaThemeColor) metaThemeColor.setAttribute('content', '#f1f4fb');
+      } else {
+        if (icon) icon.textContent = '🌙';
+        if (label) label.textContent = 'Night';
+        if (mobIcon) mobIcon.textContent = '🌙';
+        if (metaThemeColor) metaThemeColor.setAttribute('content', '#080b11');
       }
     }
 
@@ -2276,15 +2586,19 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
       return `EPP-${year}-${nextNum}`;
     }
 
+    // Synchronized Navigation for both Desktop Top-Header & Mobile Bottom Tab Bar
     function navigateTo(viewName) {
       document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.mobile-tab-item').forEach(tab => tab.classList.remove('active'));
 
       const targetView = document.getElementById(`view-${viewName}`);
       const targetNav = document.getElementById(`nav-${viewName}`);
+      const targetMobNav = document.getElementById(`mob-nav-${viewName}`);
 
       if (targetView) targetView.classList.add('active');
       if (targetNav) targetNav.classList.add('active');
+      if (targetMobNav) targetMobNav.classList.add('active');
 
       if (viewName === 'dashboard') {
         renderDashboard();
@@ -2481,7 +2795,6 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
         const quoteDocRef = doc(db, 'artifacts', firebaseConfig.appId, 'public', 'data', 'quotations', docId);
         await setDoc(quoteDocRef, quoteData, { merge: true });
       } catch (err) {
-        // Fallback local update
         const idx = quotations.findIndex(q => q.id === docId);
         if (idx >= 0) quotations[idx] = quoteData;
         else quotations.unshift(quoteData);
@@ -2935,6 +3248,7 @@ DuitNow / Touch 'n Go: 011-20908746</textarea>
 
     // Boot system
     document.addEventListener('DOMContentLoaded', () => {
+      setupPWA();
       initTheme();
       checkAuthState();
       initFirebaseSync();
